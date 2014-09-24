@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  HeadlinesViewController.h
 //  n3ws
 //
 //  Created by Jian Yao Ang on 9/24/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface HeadlinesViewController : UIViewController
 
 @end
