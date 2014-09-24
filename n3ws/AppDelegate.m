@@ -6,13 +6,20 @@
 //  Copyright (c) 2014 Jian Yao Ang. All rights reserved.
 //
 
+#define clientID @"0389991472714e9e9a6e9da76c166a9e"
+
 #import "AppDelegate.h"
+#import <SimpleAuth.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window.tintColor = [UIColor purpleColor];
+    
+    SimpleAuth.configuration[@"instagram"] = @{@"client_id": clientID,
+                                               SimpleAuthRedirectURIKey: @"http://idrawcode.tumblr.com"};
+    
     return YES;
 }
 							

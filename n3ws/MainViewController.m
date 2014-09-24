@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import <SWRevealViewController.h>
+#import "Instagram.h"
 
 @interface MainViewController ()
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *menuBarButtonItem;
@@ -16,11 +17,11 @@
 
 @implementation MainViewController
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self configureBarButtonItemAbility];
+    [self configureInstagram];
 }
 
 -(void)configureBarButtonItemAbility
@@ -34,6 +35,15 @@
         [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
 }
+
+-(void)configureInstagram
+{
+    Instagram *instagram = [Instagram new];
+    
+    [instagram accessingInstagram];
+}
+
+
 
 
 @end

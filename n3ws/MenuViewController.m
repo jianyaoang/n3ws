@@ -25,15 +25,18 @@
     self.view.backgroundColor = [UIColor blackColor];
 
     self.menuTitles = [NSArray new];
+    
     [self settingUpMenuTable];
 }
 
 -(void)settingUpMenuTable
 {
-    self.menuTitles = @[@"Home",@"Headlines", @"Finance", @"Entertainment", @"Sports"];
+    self.menuTitles = @[@"Home", @"Headlines", @"Finance", @"Entertainment", @"Sports"];
     
     self.tableView.backgroundColor = [UIColor clearColor];
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     self.tableView.separatorColor = [UIColor clearColor];
 }
 
@@ -47,17 +50,24 @@
     NSString *cellID = [self.menuTitles objectAtIndex:indexPath.row];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
+    
     cell.textLabel.text = [self.menuTitles objectAtIndex:indexPath.row];
     cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.highlightedTextColor = [UIColor purpleColor];
+    
     cell.backgroundColor = [UIColor blackColor];
     cell.contentView.backgroundColor = [UIColor blackColor];
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    
     return cell;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    
     UINavigationController *destinationVC = (UINavigationController*)segue.destinationViewController;
+    
     destinationVC.title = [self.menuTitles objectAtIndex:indexPath.row];
 }
 
