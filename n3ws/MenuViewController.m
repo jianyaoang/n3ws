@@ -21,6 +21,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor blackColor];
 
     self.menuTitles = [NSArray new];
     [self settingUpMenuTable];
@@ -46,15 +48,17 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
     cell.textLabel.text = [self.menuTitles objectAtIndex:indexPath.row];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.backgroundColor = [UIColor blackColor];
+    cell.contentView.backgroundColor = [UIColor blackColor];
     return cell;
-
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    UINavigationController *destViewController = (UINavigationController*)segue.destinationViewController;
-    destViewController.title = [self.menuTitles objectAtIndex:indexPath.row];
+    UINavigationController *destinationVC = (UINavigationController*)segue.destinationViewController;
+    destinationVC.title = [self.menuTitles objectAtIndex:indexPath.row];
 }
 
 @end
