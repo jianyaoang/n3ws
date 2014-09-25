@@ -118,15 +118,15 @@
              dispatch_async(dispatch_get_main_queue(), ^{
                  self.temperatureLabel.text = [NSString stringWithFormat:@"%.f ºC",self.weather.locationWeatherCelcius];
                  
-//                 if (self.weather.locationWeatherCelcius < 20.f)
-//                 {
+                 if (self.weather.locationWeatherCelcius < 20.f)
+                 {
                      NSArray *hotWeatherImage = @[[UIImage imageNamed:@"hot1"],
                                                   [UIImage imageNamed:@"hot2"]];
                  
                      self.temperatureImage.animationImages = hotWeatherImage;
-                 self.temperatureImage.animationDuration = 2;
+                     self.temperatureImage.animationDuration = 2;
                     [self.temperatureImage startAnimating];
-//                 }
+                 }
              });
          }
          
