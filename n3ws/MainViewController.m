@@ -17,6 +17,11 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLLocation *currentLocation;
 
+@property (strong, nonatomic) IBOutlet UILabel *temperatureLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *temperatureImage;
+
+@property (strong, nonatomic) Weather *weather;
+
 @end
 
 @implementation MainViewController
@@ -24,6 +29,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.weather = [Weather new];
+    
     [self configureBarButtonItemAbility];
     [self configureInstagram];
     [self configureCLLocationManager];
@@ -50,7 +58,7 @@
     [instagram accessingInstagram];
 }
 
-#pragma mark - Weather
+#pragma mark - CLLocation
 -(void)configureCLLocationManager
 {
     self.locationManager = [CLLocationManager new];
@@ -63,12 +71,14 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     self.currentLocation = [locations lastObject];
-    
     NSLog(@"current coordinates location -- latitude: %f, longitude: %f", self.currentLocation.coordinate.latitude, self.currentLocation.coordinate.longitude);
     
-    Weather *weather = [Weather new];
-    weather.userLatitudeCoordinate = self.currentLocation.coordinate.latitude;
-    weather.userLongitudeCoordinate = self.currentLocation.coordinate.longitude;
+    self.weather.userLatitudeCoordinate = self.currentLocation.coordinate.latitude;
+    self.weather.userLongitudeCoordinate = self.currentLocation.coordinate.longitude;
+    
+    [self obtainWeatherInfoForUserLocation];
+    
+    [self.locationManager stopUpdatingLocation];
 
 //    CLGeocoder *geocoder = [CLGeocoder new];
 //    [geocoder reverseGeocodeLocation:self.currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
@@ -91,6 +101,13 @@
 //        }
 //    }];
 }
+
+#pragma mark - weather
+-(void)obtainWeatherInfoForUserLocation
+{
+    [self.weather userLatitudeCoordinate:self.weather.userLatitudeCoordinate userLongitudeCoordinate:self.weather.userLongitudeCoordinate];
+}
+
 
 
 

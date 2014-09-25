@@ -13,5 +13,9 @@
 @property float userLatitudeCoordinate;
 @property float userLongitudeCoordinate;
 
+@property id locationWeatherCelcius;
+
+
+-(void)userLatitudeCoordinate:(float)userLatitudeCoordinate userLongitudeCoordinate:(float)userLongitudeCoordinate;
 
 @end
