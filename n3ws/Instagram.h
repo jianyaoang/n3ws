@@ -9,9 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <SimpleAuth.h>
 
+#import "Weather.h"
+
 @interface Instagram : NSObject
 @property (strong, nonatomic) NSString *accessToken;
 @property (strong, nonatomic) NSData *data;
+@property (strong, nonatomic) Weather *weather;
 
 -(void)accessingInstagram;
 

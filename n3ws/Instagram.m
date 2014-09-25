@@ -18,7 +18,9 @@
     
     if (self.accessToken == nil)
     {
-        [SimpleAuth authorize:@"instagram" completion:^(id responseObject, NSError *error) {
+        [SimpleAuth authorize:@"instagram" completion:^(id responseObject, NSError *error)
+        {
+            
             NSString *accessToken = responseObject[@"credentials"][@"token"];
             [userDefaults setObject:accessToken forKey:@"accessToken"];
             [userDefaults synchronize];
@@ -31,8 +33,8 @@
         NSURLSession *session = [NSURLSession sharedSession];
         NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/locations/search?lat=41.8819&lng=-87.6278&access_token=%@",self.accessToken];
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-            
+        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
+        {
             self.data = [[NSData alloc] initWithContentsOfURL:location];
             
             NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:self.data options:NSJSONReadingAllowFragments error:&error];
@@ -42,5 +44,6 @@
         [task resume];
     }
 }
+
 
 @end

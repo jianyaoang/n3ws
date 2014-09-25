@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4147C0B519D3C7AA002737C2 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = 4147C0B419D3C7AA002737C2 /* Weather.m */; };
+		4147C0B719D3C891002737C2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4147C0B619D3C891002737C2 /* CoreLocation.framework */; };
 		414D238419D2928C001A7112 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414D238319D2928C001A7112 /* Foundation.framework */; };
 		414D238619D2928C001A7112 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414D238519D2928C001A7112 /* CoreGraphics.framework */; };
 		414D238819D2928C001A7112 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414D238719D2928C001A7112 /* UIKit.framework */; };
@@ -41,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4147C0B319D3C7AA002737C2 /* Weather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weather.h; sourceTree = "<group>"; };
+		4147C0B419D3C7AA002737C2 /* Weather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weather.m; sourceTree = "<group>"; };
+		4147C0B619D3C891002737C2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		414D238019D2928C001A7112 /* n3ws.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = n3ws.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		414D238319D2928C001A7112 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		414D238519D2928C001A7112 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -81,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4147C0B719D3C891002737C2 /* CoreLocation.framework in Frameworks */,
 				414D238619D2928C001A7112 /* CoreGraphics.framework in Frameworks */,
 				414D238819D2928C001A7112 /* UIKit.framework in Frameworks */,
 				414D238419D2928C001A7112 /* Foundation.framework in Frameworks */,
@@ -124,6 +130,7 @@
 		414D238219D2928C001A7112 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4147C0B619D3C891002737C2 /* CoreLocation.framework */,
 				414D238319D2928C001A7112 /* Foundation.framework */,
 				414D238519D2928C001A7112 /* CoreGraphics.framework */,
 				414D238719D2928C001A7112 /* UIKit.framework */,
@@ -146,6 +153,8 @@
 				41BD94C619D2A15800E785F1 /* MainViewController.m */,
 				41FCCAC319D2C658000CEF62 /* Instagram.h */,
 				41FCCAC419D2C658000CEF62 /* Instagram.m */,
+				4147C0B319D3C7AA002737C2 /* Weather.h */,
+				4147C0B419D3C7AA002737C2 /* Weather.m */,
 				414D239B19D2928E001A7112 /* Images.xcassets */,
 				414D238A19D2928C001A7112 /* Supporting Files */,
 			);
@@ -332,6 +341,7 @@
 				414D239419D2928D001A7112 /* AppDelegate.m in Sources */,
 				414D239019D2928D001A7112 /* main.m in Sources */,
 				41FCCAC119D2BC4A000CEF62 /* SportsViewController.m in Sources */,
+				4147C0B519D3C7AA002737C2 /* Weather.m in Sources */,
 				41FCCABB19D2BB56000CEF62 /* FinanceViewController.m in Sources */,
 				41BD94C719D2A15800E785F1 /* MainViewController.m in Sources */,
 				41BD94C419D296A600E785F1 /* MenuViewController.m in Sources */,
