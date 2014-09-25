@@ -35,6 +35,7 @@
     [self configureBarButtonItemAbility];
     [self configureInstagram];
     [self configureCLLocationManager];
+
 }
 
 #pragma mark - Menu Bar Button Item
@@ -70,6 +71,7 @@
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    self.currentLocation = [CLLocation new];
     self.currentLocation = [locations lastObject];
     NSLog(@"current coordinates location -- latitude: %f, longitude: %f", self.currentLocation.coordinate.latitude, self.currentLocation.coordinate.longitude);
     
@@ -79,36 +81,57 @@
     [self obtainWeatherInfoForUserLocation];
     
     [self.locationManager stopUpdatingLocation];
-
-//    CLGeocoder *geocoder = [CLGeocoder new];
-//    [geocoder reverseGeocodeLocation:self.currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-//        
-//        if (!error)
-//        {
-//            CLPlacemark *placemark = [placemarks lastObject];
-//            NSLog(@"placemark : %@", placemark);
-//            
-//            NSLog(@"placemark.ISOcountryCode %@",placemark.ISOcountryCode);
-//            NSLog(@"placemark.country %@",placemark.country);
-//            NSLog(@"placemark.administrativeArea %@",placemark.administrativeArea);
-//                [self.locationManager stopUpdatingLocation];
-//        }
-//        else
-//        {
-//            NSLog(@"error found: %@", error);
-////            UIAlertView *unableToDetectLocation = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Yikes..we can't seem to locate you" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-////            [unableToDetectLocation show];
-//        }
-//    }];
 }
 
 #pragma mark - weather
 -(void)obtainWeatherInfoForUserLocation
 {
-    [self.weather userLatitudeCoordinate:self.weather.userLatitudeCoordinate userLongitudeCoordinate:self.weather.userLongitudeCoordinate];
+    [self userLatitudeCoordinate:self.weather.userLatitudeCoordinate userLongitudeCoordinate:self.weather.userLongitudeCoordinate];
 }
 
-
+-(void)userLatitudeCoordinate:(float)userLatitudeCoordinate userLongitudeCoordinate:(float)userLongitudeCoordinate
+{
+    NSString *urlString = [NSString stringWithFormat:@"http://api.wunderground.com/api/0ceb96c5a0bd0b04/geolookup/conditions/q/%f,%f.json", userLatitudeCoordinate, userLongitudeCoordinate];
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
+     {
+         if (connectionError)
+         {
+             UIAlertView *connectionError = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Hmm..there is a strong disturbance in the connection" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+             [connectionError show];
+         }
+         else
+         {
+             NSError *error;
+             
+             NSDictionary *weatherForecastDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+             
+             NSDictionary *current_observation = weatherForecastDetails[@"current_observation"];
+             
+             self.weather = [Weather new];
+             self.weather.locationWeatherCelcius = [current_observation[@"temp_c"]floatValue];
+             
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 self.temperatureLabel.text = [NSString stringWithFormat:@"%.f ºC",self.weather.locationWeatherCelcius];
+                 
+//                 if (self.weather.locationWeatherCelcius < 20.f)
+//                 {
+                     NSArray *hotWeatherImage = @[[UIImage imageNamed:@"hot1"],
+                                                  [UIImage imageNamed:@"hot2"]];
+                 
+                     self.temperatureImage.animationImages = hotWeatherImage;
+                 self.temperatureImage.animationDuration = 2;
+                    [self.temperatureImage startAnimating];
+//                 }
+             });
+         }
+         
+     }];
+}
 
 
 
