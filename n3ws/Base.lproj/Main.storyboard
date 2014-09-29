@@ -9,8 +9,8 @@
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="SWRevealViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
-                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                        <viewControllerLayoutGuide type="top" id="2wU-XW-47t"/>
+                        <viewControllerLayoutGuide type="bottom" id="1BR-34-Gii"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -31,8 +31,8 @@
             <objects>
                 <viewController id="rCZ-AA-mTw" customClass="MenuViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="oFh-6g-YqZ"/>
-                        <viewControllerLayoutGuide type="bottom" id="SCv-Ft-qK1"/>
+                        <viewControllerLayoutGuide type="top" id="z27-cG-AzF"/>
+                        <viewControllerLayoutGuide type="bottom" id="mE6-rn-Qof"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="j3E-7S-bra">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -120,8 +120,8 @@
             <objects>
                 <viewController id="qXk-Rb-Cy4" customClass="EntertainmentViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="fD6-jD-8ZR"/>
-                        <viewControllerLayoutGuide type="bottom" id="ZQL-Hk-MYh"/>
+                        <viewControllerLayoutGuide type="top" id="WVf-Qe-Zxv"/>
+                        <viewControllerLayoutGuide type="bottom" id="LQB-tA-O15"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="gki-dP-NsM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -144,8 +144,8 @@
             <objects>
                 <viewController id="Wb4-t6-pXZ" customClass="HeadlinesViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jVS-mc-d6Q"/>
-                        <viewControllerLayoutGuide type="bottom" id="AKr-Q6-pvX"/>
+                        <viewControllerLayoutGuide type="top" id="9Y6-9z-prG"/>
+                        <viewControllerLayoutGuide type="bottom" id="Hud-eD-X5D"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="v2K-Yx-N3M">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -177,8 +177,8 @@
             <objects>
                 <viewController id="cqJ-mx-Chf" customClass="FinanceViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="M41-g4-XOy"/>
-                        <viewControllerLayoutGuide type="bottom" id="CY8-fO-Qb7"/>
+                        <viewControllerLayoutGuide type="top" id="5SW-KG-2A8"/>
+                        <viewControllerLayoutGuide type="bottom" id="wrn-OI-OvU"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Sjw-9g-t4d">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -201,8 +201,8 @@
             <objects>
                 <viewController id="m3o-yF-iqr" customClass="SportsViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="P3O-yz-5pX"/>
-                        <viewControllerLayoutGuide type="bottom" id="mW7-Jg-uZB"/>
+                        <viewControllerLayoutGuide type="top" id="eo5-lt-Z4C"/>
+                        <viewControllerLayoutGuide type="bottom" id="VwT-DC-vIf"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="NKl-3c-KtU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -225,8 +225,8 @@
             <objects>
                 <viewController id="26k-f5-YLb" customClass="MainViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="bUS-In-Uoa"/>
-                        <viewControllerLayoutGuide type="bottom" id="tYa-pe-uJG"/>
+                        <viewControllerLayoutGuide type="top" id="3Ei-tK-moK"/>
+                        <viewControllerLayoutGuide type="bottom" id="uFf-Es-p5w"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Kke-1X-HIz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -261,23 +261,43 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Oe-ZK-Bo6">
-                                <rect key="frame" x="0.0" y="222" width="320" height="250"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="niy-E2-wDJ" userLabel="Headlines View">
+                                <rect key="frame" x="0.0" y="451" width="221" height="117"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91h-GH-4XA">
-                                        <rect key="frame" x="17" y="150" width="286" height="61"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DBa-9z-gv9">
+                                        <rect key="frame" x="10" y="13" width="204" height="96"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="F1B-jw-VI7">
-                                        <rect key="frame" x="17" y="213" width="283" height="37"/>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V9f-SR-gxj">
+                                <rect key="frame" x="0.0" y="222" width="320" height="221"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="bN2-CO-40s">
+                                        <rect key="frame" x="45" y="0.0" width="240" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </pageControl>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mIV-m3-saA" userLabel="News view">
+                                        <rect key="frame" x="0.0" y="121" width="320" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dgm-vb-8jN">
+                                                <rect key="frame" x="20" y="11" width="280" height="85"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <connections>
-                                    <outlet property="delegate" destination="26k-f5-YLb" id="cCt-GA-lBz"/>
+                                    <outlet property="delegate" destination="26k-f5-YLb" id="O6y-4Q-596"/>
                                 </connections>
                             </scrollView>
                         </subviews>
@@ -287,10 +307,13 @@
                         <barButtonItem key="leftBarButtonItem" title="Menu" id="0dm-8T-aMi"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="headlineTags" destination="DBa-9z-gv9" id="UE5-wJ-YkK"/>
+                        <outlet property="headlinesView" destination="niy-E2-wDJ" id="xsV-L5-s4I"/>
                         <outlet property="menuBarButtonItem" destination="0dm-8T-aMi" id="aFj-uc-Uzo"/>
-                        <outlet property="newsHeadlineTag" destination="91h-GH-4XA" id="qoW-mf-WKi"/>
-                        <outlet property="newsPageControl" destination="F1B-jw-VI7" id="EGL-11-vVc"/>
-                        <outlet property="newsScrollView" destination="5Oe-ZK-Bo6" id="SC4-bA-JJm"/>
+                        <outlet property="newsHeadlineLabel" destination="dgm-vb-8jN" id="VsC-ie-q63"/>
+                        <outlet property="newsPageControl" destination="bN2-CO-40s" id="FaW-4i-a2j"/>
+                        <outlet property="newsScrollView" destination="V9f-SR-gxj" id="eTV-iD-3K4"/>
+                        <outlet property="newsView" destination="mIV-m3-saA" id="Qhh-7t-aCb"/>
                         <outlet property="temperatureImage" destination="E0B-M1-2Xk" id="VTE-l8-d52"/>
                         <outlet property="temperatureLabel" destination="0k7-Xh-hO6" id="JwH-ZF-Uz1"/>
                         <outlet property="timeLabel" destination="c8u-eK-drR" id="ZQG-dK-bNa"/>

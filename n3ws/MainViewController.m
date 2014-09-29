@@ -29,10 +29,17 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 @property (strong, nonatomic) IBOutlet UIImageView *temperatureImage;
 
 @property (strong, nonatomic) IBOutlet UIScrollView *newsScrollView;
-@property (strong, nonatomic) IBOutlet UILabel *newsHeadlineTag;
+@property (strong, nonatomic) IBOutlet UIView *newsView;
+@property (strong, nonatomic) IBOutlet UILabel *newsHeadlineLabel;
 @property (strong, nonatomic) IBOutlet UIPageControl *newsPageControl;
+
+
+
 @property (strong, nonatomic) NSArray *newsImages;
 @property (strong, nonatomic) NSMutableArray *headlineNews;
+
+@property (strong, nonatomic) IBOutlet UIView *headlinesView;
+@property (strong, nonatomic) IBOutlet UILabel *headlineTags;
 
 
 @property (strong, nonatomic) Weather *weather;
@@ -55,6 +62,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     [self configureCLLocationManager];
     [self obtainAndDisplayTime];
     [self obtainNewsArticles];
+
 }
 
 #pragma mark - Menu Bar Button Item
@@ -118,9 +126,17 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     NSLog(@"this is the currentTime: %@",currentTime);
 }
 
+#pragma mark - Headlines
+-(void)displayHeadlineNews
+{
+    
+}
+
 #pragma mark - news
 -(void)obtainNewsArticles
 {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
     NSURL *url = [NSURL URLWithString:@"http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=news_desk:(%22Business%22)&begin_date=20140929&sort=newest&api-key=c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340"];
 
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -137,81 +153,75 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
             
             NSDictionary *newsDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             
-            //retrieve headlines images
-            NSDictionary *headlinesImages = [newsDetails valueForKeyPath:@"response.docs.multimedia.legacy.xlarge"];
-            
-            for (NSArray *headlineImagesLink in headlinesImages)
-            {
-                
-                if (headlineImagesLink.count != 0)
-                {
-                    self.news.image = [headlineImagesLink objectAtIndex:1];
-                    NSLog(@"news.image = %@", self.news.image);
-                    NSLog(@"objectAtIndex2 :::::: %@",[headlineImagesLink objectAtIndex:1]);
-                    
-                    [self.headlineNews addObject:self.news];
-                }
-                else if (headlineImagesLink.count == 0)
-                {
-                    NSLog(@"headlineImagesLink is nil");
-                }
-                
-                NSLog(@"self.headlineNews ======------ %@", self.headlineNews);
-            }
-            
             //getting headlines
             NSDictionary *headlines = [newsDetails valueForKeyPath:@"response.docs.headline.main"];
-         
+            
             for (NSString *headline in headlines)
             {
-                self.news.headlines = headline;
-                [self.headlineNews addObject:self.news];
+                News *news = [News new];
+                news.headlines = headline;
+               [self.headlineNews addObject:news];
             }
-            NSLog(@"self.headlineNews ~~~~~ %@", self.headlineNews);
-            
-            
-            
-//            NSMutableArray *headlineMutableArray = [NSMutableArray arrayWithObjects:headlines,headlinesImages, nil];
         }
+               dispatch_async(dispatch_get_main_queue(), ^{
+                [self configureScrollView];
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        });
+        
+            //retrieve headlines images
+//            NSDictionary *headlinesImages = [newsDetails valueForKeyPath:@"response.docs.multimedia.legacy.xlarge"];
+//            
+//            [self.headlineNews removeAllObjects];
+//            for (NSArray *headlineImagesLink in headlinesImages)
+//            {
+//                
+//                if (headlineImagesLink.count != 0)
+//                {
+//                    self.news.image = [headlineImagesLink objectAtIndex:1];                    
+//                    [self.headlineNews addObject:self.news];
+//                }
+//                else if (headlineImagesLink.count == 0)
+//                {
+//                    NSLog(@"headlineImagesLink is nil");
+//                }
+//                
+//                NSLog(@"self.headlineNews ======------ %@", self.headlineNews);
+//            }
         
     }];
 }
 
--(void)configuringNewsScrollView
+-(void)configureScrollView
 {
     CGFloat width = 0.0f;
     
-    NSArray *images = @[[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot1"]],
-                        [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot2"]]];
-
-    for (UIImageView *newsImages in images)
+    for (News *news in self.headlineNews)
     {
-//        [self.newsScrollView addSubview:newsImages];
-//        
-//        newsImages.frame = CGRectMake(width, 0, self.view.frame.size.width, self.view.frame.size.height);
-//        newsImages.contentMode = UIViewContentModeScaleAspectFit;
-//        width += newsImages.frame.size.width;
-
-//        UIImage *image = [UIImage imageWithData:imageData];
         
-        UIImage *image;
-        //resize image block
-        CGSize newSize = CGSizeMake(self.newsScrollView.frame.size.width, self.newsScrollView.frame.size.height);
+        UIImage *testingImage = [UIImage imageNamed:@"hot1"];
+        
+        CGSize newSize = CGSizeMake(320, 221);
         UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
-        [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+        [testingImage drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
         UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
         UIImageView *newsImageView = [[UIImageView alloc] initWithImage:newImage];
         [self.newsScrollView addSubview:newsImageView];
         
-        newsImageView.frame = CGRectOffset(self.newsScrollView.bounds, width, 0);
+        newsImageView.frame = CGRectMake(width, 0, self.view.frame.size.width, self.view.frame.size.height);
         newsImageView.contentMode = UIViewContentModeScaleAspectFit;
         newsImageView.clipsToBounds = YES;
-        width += newsImageView.frame.size.width;
+        [self.newsView addSubview:newsImageView];
+        [self.newsView bringSubviewToFront:newsImageView];
+        
+        [self.newsScrollView addSubview:self.newsView];
+        self.newsHeadlineLabel.text = news.headlines;
+        self.newsView.contentMode = UIViewContentModeScaleAspectFit;
+        width += self.newsView.frame.size.width;
+
     }
-    
-    self.newsScrollView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.newsScrollView setContentMode:UIViewContentModeScaleAspectFit];
     self.newsScrollView.contentSize = CGSizeMake(width, self.newsScrollView.frame.size.height);
     self.newsScrollView.delegate = self;
 }
@@ -221,7 +231,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     CGFloat pageWidth = self.newsScrollView.frame.size.width;
     int page = floor((self.newsScrollView.contentOffset.x - pageWidth/2)/pageWidth)+1;
     self.newsPageControl.currentPage = page;
-//    self.newsPageControl.numberOfPages = newsImageArray.count;
+    self.newsPageControl.numberOfPages = 10;
 }
 
 #pragma mark - weather
