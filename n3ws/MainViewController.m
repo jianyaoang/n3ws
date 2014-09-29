@@ -47,6 +47,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     [super viewDidLoad];
     
     self.weather = [Weather new];
+    self.news = [News new];
     self.headlineNews = [NSMutableArray new];
     
     [self configureBarButtonItemAbility];
@@ -139,15 +140,32 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
             //retrieve headlines images
             NSDictionary *headlinesImages = [newsDetails valueForKeyPath:@"response.docs.multimedia.legacy.xlarge"];
             
-        
+            for (NSArray *headlineImagesLink in headlinesImages)
+            {
+                
+                if (headlineImagesLink.count != 0)
+                {
+                    self.news.image = [headlineImagesLink objectAtIndex:1];
+                    NSLog(@"news.image = %@", self.news.image);
+                    NSLog(@"objectAtIndex2 :::::: %@",[headlineImagesLink objectAtIndex:1]);
+                    
+                    [self.headlineNews addObject:self.news];
+                }
+                else if (headlineImagesLink.count == 0)
+                {
+                    NSLog(@"headlineImagesLink is nil");
+                }
+                
+                NSLog(@"self.headlineNews ======------ %@", self.headlineNews);
+            }
+            
             //getting headlines
             NSDictionary *headlines = [newsDetails valueForKeyPath:@"response.docs.headline.main"];
          
             for (NSString *headline in headlines)
             {
-                News *news = [News new];
-                news.headlines = headline;
-                [self.headlineNews addObject:news];
+                self.news.headlines = headline;
+                [self.headlineNews addObject:self.news];
             }
             NSLog(@"self.headlineNews ~~~~~ %@", self.headlineNews);
             
