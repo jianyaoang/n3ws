@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Jian Yao Ang. All rights reserved.
 //
 
+static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
+
 #import "MainViewController.h"
 #import <SWRevealViewController.h>
 #import <CoreLocation/CoreLocation.h>
@@ -40,7 +42,7 @@
     [self configureInstagram];
     [self configureCLLocationManager];
     [self obtainAndDisplayTime];
-
+    [self obtainNewsArticles];
 }
 
 #pragma mark - Menu Bar Button Item
@@ -104,6 +106,31 @@
     NSLog(@"this is the currentTime: %@",currentTime);
 }
 
+#pragma mark - news
+-(void)obtainNewsArticles
+{
+    NSURL *url = [NSURL URLWithString:@"http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=news_desk:(%22Business%22)&begin_date=20140929&sort=newest&api-key=c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340"];
+
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
+    {
+        if (connectionError)
+        {
+            NSLog(@"%@", connectionError);
+        }
+        else
+        {
+            NSError *error;
+            
+            NSDictionary *newsDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+            
+            NSLog(@"newsDetails :==== %@",newsDetails);
+        }
+        
+    }];
+}
+
 #pragma mark - weather
 -(void)obtainWeatherInfoForUserLocation
 {
@@ -156,6 +183,7 @@
         self.temperatureImage.animationImages = coldWeatherImage;
         self.temperatureImage.animationDuration = 2;
         [self.temperatureImage startAnimating];
+        
     }
     else if (self.weather.locationWeatherCelcius > 20.f)
     {
@@ -165,6 +193,7 @@
         self.temperatureImage.animationImages = hotWeatherImage;
         self.temperatureImage.animationDuration = 2;
         [self.temperatureImage startAnimating];
+        
     }
 }
 
