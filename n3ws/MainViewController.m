@@ -14,7 +14,8 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 #import "Instagram.h"
 #import "Weather.h"
 
-@interface MainViewController () <CLLocationManagerDelegate>
+@interface MainViewController () <CLLocationManagerDelegate, UIScrollViewDelegate>
+
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *menuBarButtonItem;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLLocation *currentLocation;
@@ -25,6 +26,11 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 @property (strong, nonatomic) IBOutlet UILabel *temperatureLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *temperatureImage;
+
+@property (strong, nonatomic) IBOutlet UIScrollView *newsScrollView;
+@property (strong, nonatomic) IBOutlet UILabel *newsHeadlineTag;
+@property (strong, nonatomic) IBOutlet UIPageControl *newsPageControl;
+
 
 @property (strong, nonatomic) Weather *weather;
 
@@ -129,6 +135,53 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         }
         
     }];
+}
+
+-(void)configuringNewsScrollView
+{
+    CGFloat width = 0.0f;
+    
+    NSArray *images = @[[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot1"]],
+                        [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hot2"]]];
+
+    for (UIImageView *newsImages in images)
+    {
+//        [self.newsScrollView addSubview:newsImages];
+//        
+//        newsImages.frame = CGRectMake(width, 0, self.view.frame.size.width, self.view.frame.size.height);
+//        newsImages.contentMode = UIViewContentModeScaleAspectFit;
+//        width += newsImages.frame.size.width;
+
+//        UIImage *image = [UIImage imageWithData:imageData];
+        
+        UIImage *image;
+        //resize image block
+        CGSize newSize = CGSizeMake(self.newsScrollView.frame.size.width, self.newsScrollView.frame.size.height);
+        UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+        [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        UIImageView *newsImageView = [[UIImageView alloc] initWithImage:newImage];
+        [self.newsScrollView addSubview:newsImageView];
+        
+        newsImageView.frame = CGRectOffset(self.newsScrollView.bounds, width, 0);
+        newsImageView.contentMode = UIViewContentModeScaleAspectFit;
+        newsImageView.clipsToBounds = YES;
+        width += newsImageView.frame.size.width;
+    }
+    
+    self.newsScrollView.contentMode = UIViewContentModeScaleAspectFit;
+    self.newsScrollView.contentSize = CGSizeMake(width, self.newsScrollView.frame.size.height);
+    self.newsScrollView.delegate = self;
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat pageWidth = self.newsScrollView.frame.size.width;
+    int page = floor((self.newsScrollView.contentOffset.x - pageWidth/2)/pageWidth)+1;
+    self.newsPageControl.currentPage = page;
+//    self.newsPageControl.numberOfPages = newsImageArray.count;
 }
 
 #pragma mark - weather
