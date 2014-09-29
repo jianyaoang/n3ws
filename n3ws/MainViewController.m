@@ -19,6 +19,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeNumberLabel;
+@property (strong, nonatomic) IBOutlet UIView *timeView;
 
 @property (strong, nonatomic) IBOutlet UILabel *temperatureLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *temperatureImage;
