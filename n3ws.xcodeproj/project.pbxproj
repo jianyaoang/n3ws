@@ -22,6 +22,7 @@
 		414D23A519D2928F001A7112 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414D238719D2928C001A7112 /* UIKit.framework */; };
 		414D23AD19D29290001A7112 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 414D23AB19D29290001A7112 /* InfoPlist.strings */; };
 		414D23AF19D29290001A7112 /* n3wsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 414D23AE19D29290001A7112 /* n3wsTests.m */; };
+		4151901E19D94E3F0058684D /* News.m in Sources */ = {isa = PBXBuildFile; fileRef = 4151901D19D94E3F0058684D /* News.m */; };
 		41BD94C419D296A600E785F1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C319D296A600E785F1 /* MenuViewController.m */; };
 		41BD94C719D2A15800E785F1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C619D2A15800E785F1 /* MainViewController.m */; };
 		41BD94CA19D2A43000E785F1 /* HeadlinesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C919D2A43000E785F1 /* HeadlinesViewController.m */; };
@@ -63,6 +64,8 @@
 		414D23AA19D29290001A7112 /* n3wsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "n3wsTests-Info.plist"; sourceTree = "<group>"; };
 		414D23AC19D29290001A7112 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		414D23AE19D29290001A7112 /* n3wsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = n3wsTests.m; sourceTree = "<group>"; };
+		4151901C19D94E3F0058684D /* News.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = News.h; sourceTree = "<group>"; };
+		4151901D19D94E3F0058684D /* News.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = News.m; sourceTree = "<group>"; };
 		41BD94C219D296A600E785F1 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		41BD94C319D296A600E785F1 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		41BD94C519D2A15800E785F1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -155,6 +158,8 @@
 				41FCCAC419D2C658000CEF62 /* Instagram.m */,
 				4147C0B319D3C7AA002737C2 /* Weather.h */,
 				4147C0B419D3C7AA002737C2 /* Weather.m */,
+				4151901C19D94E3F0058684D /* News.h */,
+				4151901D19D94E3F0058684D /* News.m */,
 				414D239B19D2928E001A7112 /* Images.xcassets */,
 				414D238A19D2928C001A7112 /* Supporting Files */,
 			);
@@ -346,6 +351,7 @@
 				41BD94C719D2A15800E785F1 /* MainViewController.m in Sources */,
 				41BD94C419D296A600E785F1 /* MenuViewController.m in Sources */,
 				41FCCABE19D2BC0D000CEF62 /* EntertainmentViewController.m in Sources */,
+				4151901E19D94E3F0058684D /* News.m in Sources */,
 				41FCCAC519D2C658000CEF62 /* Instagram.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

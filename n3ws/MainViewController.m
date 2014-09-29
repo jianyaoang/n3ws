@@ -13,6 +13,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 #import <CoreLocation/CoreLocation.h>
 #import "Instagram.h"
 #import "Weather.h"
+#import "News.h"
 
 @interface MainViewController () <CLLocationManagerDelegate, UIScrollViewDelegate>
 
@@ -30,9 +31,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 @property (strong, nonatomic) IBOutlet UIScrollView *newsScrollView;
 @property (strong, nonatomic) IBOutlet UILabel *newsHeadlineTag;
 @property (strong, nonatomic) IBOutlet UIPageControl *newsPageControl;
+@property (strong, nonatomic) NSArray *newsImages;
+@property (strong, nonatomic) NSMutableArray *headlineNews;
 
 
 @property (strong, nonatomic) Weather *weather;
+@property (strong, nonatomic) News *news;
 
 @end
 
@@ -43,6 +47,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     [super viewDidLoad];
     
     self.weather = [Weather new];
+    self.headlineNews = [NSMutableArray new];
     
     [self configureBarButtonItemAbility];
     [self configureInstagram];
@@ -131,7 +136,24 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
             
             NSDictionary *newsDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             
-            NSLog(@"newsDetails :==== %@",newsDetails);
+            //retrieve headlines images
+            NSDictionary *headlinesImages = [newsDetails valueForKeyPath:@"response.docs.multimedia.legacy.xlarge"];
+            
+        
+            //getting headlines
+            NSDictionary *headlines = [newsDetails valueForKeyPath:@"response.docs.headline.main"];
+         
+            for (NSString *headline in headlines)
+            {
+                News *news = [News new];
+                news.headlines = headline;
+                [self.headlineNews addObject:news];
+            }
+            NSLog(@"self.headlineNews ~~~~~ %@", self.headlineNews);
+            
+            
+            
+//            NSMutableArray *headlineMutableArray = [NSMutableArray arrayWithObjects:headlines,headlinesImages, nil];
         }
         
     }];
