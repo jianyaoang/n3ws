@@ -17,6 +17,9 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLLocation *currentLocation;
 
+@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *timeNumberLabel;
+
 @property (strong, nonatomic) IBOutlet UILabel *temperatureLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *temperatureImage;
 
@@ -35,6 +38,7 @@
     [self configureBarButtonItemAbility];
     [self configureInstagram];
     [self configureCLLocationManager];
+    [self obtainAndDisplayTime];
 
 }
 
@@ -83,6 +87,22 @@
     [self.locationManager stopUpdatingLocation];
 }
 
+#pragma mark - Time
+-(void)obtainAndDisplayTime
+{
+    NSDate *today = [NSDate date];
+    
+    NSDateFormatter *dateFormmatter = [NSDateFormatter new];
+    [dateFormmatter setTimeStyle:NSDateFormatterShortStyle];
+    [dateFormmatter setTimeZone:[NSTimeZone localTimeZone]];
+    
+    NSString *currentTime = [dateFormmatter stringFromDate:today];
+    
+    self.timeNumberLabel.text = currentTime;
+    
+    NSLog(@"this is the currentTime: %@",currentTime);
+}
+
 #pragma mark - weather
 -(void)obtainWeatherInfoForUserLocation
 {
@@ -91,7 +111,7 @@
 
 -(void)userLatitudeCoordinate:(float)userLatitudeCoordinate userLongitudeCoordinate:(float)userLongitudeCoordinate
 {
-    NSString *urlString = [NSString stringWithFormat:@"http://api.wunderground.com/api/0ceb96c5a0bd0b04/geolookup/conditions/q/%f,%f.json", userLatitudeCoordinate, userLongitudeCoordinate];
+    NSString *urlString = [NSString stringWithFormat:@"http://api.wunderground.com/api/2a2305a7d918131c/geolookup/conditions/q/%f,%f.json", userLatitudeCoordinate, userLongitudeCoordinate];
     
     NSURL *url = [NSURL URLWithString:urlString];
     
