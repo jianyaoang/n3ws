@@ -15,6 +15,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 #import "Instagram.h"
 #import "Weather.h"
 #import "News.h"
+#import "YQL.h"
 
 @interface MainViewController () <CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -53,7 +54,30 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     [self configureCLLocationManager];
     [self obtainAndDisplayTime];
     [self obtainNewsArticles];
+    [self configureYQL];
 
+}
+
+#pragma mark - YQL
+-(void)configureYQL
+{
+    NSURL *stockURL = [NSURL URLWithString:@"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22AAPL+MSFT%22)&format=json&env=store://datatables.org/alltableswithkeys"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:stockURL];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
+    {
+        if (connectionError)
+        {
+            NSLog(@"YQL Connection Error: %@",connectionError);
+        }
+        else
+        {
+            NSError *error;
+            NSDictionary *mainStockInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+            
+            
+        }
+    }];
+    
 }
 
 #pragma mark - Menu Bar Button Item
