@@ -28,19 +28,8 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 @property (strong, nonatomic) IBOutlet UILabel *temperatureLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *temperatureImage;
 
-@property (strong, nonatomic) IBOutlet UIScrollView *newsScrollView;
-@property (strong, nonatomic) IBOutlet UIView *newsView;
-@property (strong, nonatomic) IBOutlet UILabel *newsHeadlineLabel;
-@property (strong, nonatomic) IBOutlet UIPageControl *newsPageControl;
-
-
-
 @property (strong, nonatomic) NSArray *newsImages;
 @property (strong, nonatomic) NSMutableArray *headlineNews;
-
-@property (strong, nonatomic) IBOutlet UIView *headlinesView;
-@property (strong, nonatomic) IBOutlet UILabel *headlineTags;
-
 
 @property (strong, nonatomic) Weather *weather;
 @property (strong, nonatomic) News *news;
@@ -126,12 +115,6 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     NSLog(@"this is the currentTime: %@",currentTime);
 }
 
-#pragma mark - Headlines
--(void)displayHeadlineNews
-{
-    
-}
-
 #pragma mark - news
 -(void)obtainNewsArticles
 {
@@ -164,7 +147,6 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
             }
         }
                dispatch_async(dispatch_get_main_queue(), ^{
-                [self configureScrollView];
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         });
         
@@ -189,49 +171,6 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 //            }
         
     }];
-}
-
--(void)configureScrollView
-{
-    CGFloat width = 0.0f;
-    
-    for (News *news in self.headlineNews)
-    {
-        
-        UIImage *testingImage = [UIImage imageNamed:@"hot1"];
-        
-        CGSize newSize = CGSizeMake(320, 221);
-        UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
-        [testingImage drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        UIImageView *newsImageView = [[UIImageView alloc] initWithImage:newImage];
-        [self.newsScrollView addSubview:newsImageView];
-        
-        newsImageView.frame = CGRectMake(width, 0, self.view.frame.size.width, self.view.frame.size.height);
-        newsImageView.contentMode = UIViewContentModeScaleAspectFit;
-        newsImageView.clipsToBounds = YES;
-        [self.newsView addSubview:newsImageView];
-        [self.newsView bringSubviewToFront:newsImageView];
-        
-        [self.newsScrollView addSubview:self.newsView];
-        self.newsHeadlineLabel.text = news.headlines;
-        self.newsView.contentMode = UIViewContentModeScaleAspectFit;
-        width += self.newsView.frame.size.width;
-
-    }
-    [self.newsScrollView setContentMode:UIViewContentModeScaleAspectFit];
-    self.newsScrollView.contentSize = CGSizeMake(width, self.newsScrollView.frame.size.height);
-    self.newsScrollView.delegate = self;
-}
-
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat pageWidth = self.newsScrollView.frame.size.width;
-    int page = floor((self.newsScrollView.contentOffset.x - pageWidth/2)/pageWidth)+1;
-    self.newsPageControl.currentPage = page;
-    self.newsPageControl.numberOfPages = 10;
 }
 
 #pragma mark - weather
