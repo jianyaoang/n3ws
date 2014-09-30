@@ -15,7 +15,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 #import "Weather.h"
 #import "News.h"
 
-@interface MainViewController () <CLLocationManagerDelegate, UIScrollViewDelegate>
+@interface MainViewController () <CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *menuBarButtonItem;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -30,6 +30,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 @property (strong, nonatomic) NSArray *newsImages;
 @property (strong, nonatomic) NSMutableArray *headlineNews;
+@property (strong, nonatomic) IBOutlet UITableView *newsTableView;
 
 @property (strong, nonatomic) Weather *weather;
 @property (strong, nonatomic) News *news;
@@ -147,6 +148,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
             }
         }
                dispatch_async(dispatch_get_main_queue(), ^{
+                [self.newsTableView reloadData];
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         });
         
@@ -171,6 +173,20 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 //            }
         
     }];
+}
+
+#pragma mark - News TableView
+-(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.headlineNews.count;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    News *news = [self.headlineNews objectAtIndex:indexPath.row];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsCell"];
+    cell.textLabel.text = news.headlines;
+    return cell;
 }
 
 #pragma mark - weather
