@@ -10,12 +10,13 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 #import "MainViewController.h"
 #import "WebNewsViewController.h"
+#import "ANBlurredTableView.h"
 #import <SWRevealViewController.h>
 #import <CoreLocation/CoreLocation.h>
 #import "Instagram.h"
 #import "Weather.h"
 #import "News.h"
-#import "YQL.h"
+#import "Stock.h"
 
 @interface MainViewController () <CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -32,10 +33,14 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 @property (strong, nonatomic) NSArray *newsImages;
 @property (strong, nonatomic) NSMutableArray *headlineNews;
-@property (strong, nonatomic) IBOutlet UITableView *newsTableView;
+@property (strong, nonatomic) IBOutlet ANBlurredTableView *newsTableView;
+@property (strong, nonatomic) UIRefreshControl *refreshNewsTable;
+
+@property (strong, nonatomic) NSMutableArray *stockInfoMutableArray;
 
 @property (strong, nonatomic) Weather *weather;
 @property (strong, nonatomic) News *news;
+@property (strong, nonatomic) Stock *stock;
 
 @end
 
@@ -48,18 +53,20 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     self.weather = [Weather new];
     self.news = [News new];
     self.headlineNews = [NSMutableArray new];
+    self.stockInfoMutableArray = [NSMutableArray new];
     
     [self configureBarButtonItemAbility];
+    [self configureANBlurredTableView];
     [self configureInstagram];
     [self configureCLLocationManager];
     [self obtainAndDisplayTime];
     [self obtainNewsArticles];
-    [self configureYQL];
+    [self configureYahooFinanceAPI];
 
 }
 
 #pragma mark - YQL
--(void)configureYQL
+-(void)configureYahooFinanceAPI
 {
     NSURL *stockURL = [NSURL URLWithString:@"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22AAPL+MSFT%22)&format=json&env=store://datatables.org/alltableswithkeys"];
     NSURLRequest *request = [NSURLRequest requestWithURL:stockURL];
@@ -74,6 +81,19 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
             NSError *error;
             NSDictionary *mainStockInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             
+            NSDictionary *queryStock = [mainStockInfo valueForKeyPath:@"query.results.quote"];
+            
+            [self.stockInfoMutableArray removeAllObjects];
+            for (NSDictionary *companies in queryStock)
+            {
+                Stock *stock = [Stock new];
+                stock.name          = [companies valueForKeyPath:@"Name"];
+                stock.ask           = [companies valueForKeyPath:@"Ask"];
+                stock.symbol        = [companies valueForKeyPath:@"symbol"];
+                stock.percentChange = [companies valueForKeyPath:@"PercentChange"];
+                
+                [self.stockInfoMutableArray addObject:stock];
+            }
             
         }
     }];
@@ -165,6 +185,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
             //getting headlines
             NSDictionary *headlines = [newsDetails valueForKeyPath:@"response.docs"];
             
+            [self.headlineNews removeAllObjects];
             for (NSDictionary *docs in headlines)
             {
                 News *news = [News new];
@@ -182,6 +203,29 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 }
 
 #pragma mark - News TableView
+-(void)configureANBlurredTableView
+{
+    self.refreshNewsTable = [UIRefreshControl new];
+    self.refreshNewsTable.tintColor = [UIColor colorWithWhite:0.11 alpha:0.9];
+    self.refreshNewsTable.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull down to update news"];
+    [self.refreshNewsTable addTarget:self action:@selector(updateNewsTable) forControlEvents:UIControlEventValueChanged];
+    [self.newsTableView addSubview:self.refreshNewsTable];
+    
+    [self.newsTableView setBlurTintColor:[UIColor colorWithWhite:0.11 alpha:0.1]];
+    [self.newsTableView setAnimateTintAlpha:YES];
+    [self.newsTableView setStartTintAlpha:0.45f];
+    [self.newsTableView setEndTintAlpha:0.75f];
+    [self.newsTableView setBackgroundImage:[UIImage imageNamed:@"background"]];
+}
+
+-(void)updateNewsTable
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.newsTableView reloadData];
+        [self.refreshNewsTable endRefreshing];
+    });
+}
+
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.headlineNews.count;
@@ -191,10 +235,13 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 {
     News *news = [self.headlineNews objectAtIndex:indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsCell"];
+    cell.backgroundColor = [UIColor clearColor];
+    cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.text = news.headlines;
     cell.textLabel.numberOfLines = 0;
     cell.detailTextLabel.text = news.snippet;
     cell.detailTextLabel.numberOfLines = 0;
+    cell.detailTextLabel.textColor = [UIColor whiteColor];
     return cell;
 }
 

@@ -24,7 +24,11 @@
 		414D23AF19D29290001A7112 /* n3wsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 414D23AE19D29290001A7112 /* n3wsTests.m */; };
 		4151901E19D94E3F0058684D /* News.m in Sources */ = {isa = PBXBuildFile; fileRef = 4151901D19D94E3F0058684D /* News.m */; };
 		418AB4A719DA75F800F16AE2 /* WebNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 418AB4A619DA75F800F16AE2 /* WebNewsViewController.m */; };
-		418AB4C519DA990100F16AE2 /* YQL.m in Sources */ = {isa = PBXBuildFile; fileRef = 418AB4C419DA990100F16AE2 /* YQL.m */; };
+		418AB4C819DAA44A00F16AE2 /* Stock.m in Sources */ = {isa = PBXBuildFile; fileRef = 418AB4C719DAA44A00F16AE2 /* Stock.m */; };
+		418AB4CA19DACCC600F16AE2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418AB4C919DACCC600F16AE2 /* QuartzCore.framework */; };
+		418AB4CC19DACCD000F16AE2 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418AB4CB19DACCD000F16AE2 /* Accelerate.framework */; };
+		418AB4D219DACD4200F16AE2 /* ANBlurredTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 418AB4CF19DACD4200F16AE2 /* ANBlurredTableView.m */; };
+		418AB4D319DACD4200F16AE2 /* UIImage+BoxBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 418AB4D119DACD4200F16AE2 /* UIImage+BoxBlur.m */; };
 		41BD94C419D296A600E785F1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C319D296A600E785F1 /* MenuViewController.m */; };
 		41BD94C719D2A15800E785F1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C619D2A15800E785F1 /* MainViewController.m */; };
 		41BD94CA19D2A43000E785F1 /* HeadlinesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C919D2A43000E785F1 /* HeadlinesViewController.m */; };
@@ -70,8 +74,14 @@
 		4151901D19D94E3F0058684D /* News.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = News.m; sourceTree = "<group>"; };
 		418AB4A519DA75F800F16AE2 /* WebNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebNewsViewController.h; sourceTree = "<group>"; };
 		418AB4A619DA75F800F16AE2 /* WebNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebNewsViewController.m; sourceTree = "<group>"; };
-		418AB4C319DA990100F16AE2 /* YQL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQL.h; sourceTree = "<group>"; };
-		418AB4C419DA990100F16AE2 /* YQL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQL.m; sourceTree = "<group>"; };
+		418AB4C619DAA44900F16AE2 /* Stock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stock.h; path = ../Stock.h; sourceTree = "<group>"; };
+		418AB4C719DAA44A00F16AE2 /* Stock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Stock.m; path = ../Stock.m; sourceTree = "<group>"; };
+		418AB4C919DACCC600F16AE2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		418AB4CB19DACCD000F16AE2 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		418AB4CE19DACD4200F16AE2 /* ANBlurredTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANBlurredTableView.h; sourceTree = "<group>"; };
+		418AB4CF19DACD4200F16AE2 /* ANBlurredTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANBlurredTableView.m; sourceTree = "<group>"; };
+		418AB4D019DACD4200F16AE2 /* UIImage+BoxBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+BoxBlur.h"; sourceTree = "<group>"; };
+		418AB4D119DACD4200F16AE2 /* UIImage+BoxBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+BoxBlur.m"; sourceTree = "<group>"; };
 		41BD94C219D296A600E785F1 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		41BD94C319D296A600E785F1 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		41BD94C519D2A15800E785F1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -95,6 +105,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				418AB4CC19DACCD000F16AE2 /* Accelerate.framework in Frameworks */,
+				418AB4CA19DACCC600F16AE2 /* QuartzCore.framework in Frameworks */,
 				4147C0B719D3C891002737C2 /* CoreLocation.framework in Frameworks */,
 				414D238619D2928C001A7112 /* CoreGraphics.framework in Frameworks */,
 				414D238819D2928C001A7112 /* UIKit.framework in Frameworks */,
@@ -139,6 +151,8 @@
 		414D238219D2928C001A7112 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				418AB4CB19DACCD000F16AE2 /* Accelerate.framework */,
+				418AB4C919DACCC600F16AE2 /* QuartzCore.framework */,
 				4147C0B619D3C891002737C2 /* CoreLocation.framework */,
 				414D238319D2928C001A7112 /* Foundation.framework */,
 				414D238519D2928C001A7112 /* CoreGraphics.framework */,
@@ -152,11 +166,10 @@
 		414D238919D2928C001A7112 /* n3ws */ = {
 			isa = PBXGroup;
 			children = (
+				418AB4CD19DACD2A00F16AE2 /* ANBlurredTableView */,
 				414D239219D2928D001A7112 /* AppDelegate.h */,
 				414D239319D2928D001A7112 /* AppDelegate.m */,
 				414D239519D2928D001A7112 /* Main.storyboard */,
-				418AB4C319DA990100F16AE2 /* YQL.h */,
-				418AB4C419DA990100F16AE2 /* YQL.m */,
 				41FCCAC219D2BF0F000CEF62 /* ViewControllers */,
 				41BD94C219D296A600E785F1 /* MenuViewController.h */,
 				41BD94C319D296A600E785F1 /* MenuViewController.m */,
@@ -170,6 +183,8 @@
 				4147C0B419D3C7AA002737C2 /* Weather.m */,
 				4151901C19D94E3F0058684D /* News.h */,
 				4151901D19D94E3F0058684D /* News.m */,
+				418AB4C619DAA44900F16AE2 /* Stock.h */,
+				418AB4C719DAA44A00F16AE2 /* Stock.m */,
 				414D239B19D2928E001A7112 /* Images.xcassets */,
 				414D238A19D2928C001A7112 /* Supporting Files */,
 			);
@@ -203,6 +218,17 @@
 				414D23AB19D29290001A7112 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		418AB4CD19DACD2A00F16AE2 /* ANBlurredTableView */ = {
+			isa = PBXGroup;
+			children = (
+				418AB4CE19DACD4200F16AE2 /* ANBlurredTableView.h */,
+				418AB4CF19DACD4200F16AE2 /* ANBlurredTableView.m */,
+				418AB4D019DACD4200F16AE2 /* UIImage+BoxBlur.h */,
+				418AB4D119DACD4200F16AE2 /* UIImage+BoxBlur.m */,
+			);
+			name = ANBlurredTableView;
 			sourceTree = "<group>";
 		};
 		41FCCAC219D2BF0F000CEF62 /* ViewControllers */ = {
@@ -355,14 +381,16 @@
 				41BD94CA19D2A43000E785F1 /* HeadlinesViewController.m in Sources */,
 				414D239419D2928D001A7112 /* AppDelegate.m in Sources */,
 				414D239019D2928D001A7112 /* main.m in Sources */,
+				418AB4D319DACD4200F16AE2 /* UIImage+BoxBlur.m in Sources */,
 				41FCCAC119D2BC4A000CEF62 /* SportsViewController.m in Sources */,
-				418AB4C519DA990100F16AE2 /* YQL.m in Sources */,
 				418AB4A719DA75F800F16AE2 /* WebNewsViewController.m in Sources */,
 				4147C0B519D3C7AA002737C2 /* Weather.m in Sources */,
 				41FCCABB19D2BB56000CEF62 /* FinanceViewController.m in Sources */,
+				418AB4C819DAA44A00F16AE2 /* Stock.m in Sources */,
 				41BD94C719D2A15800E785F1 /* MainViewController.m in Sources */,
 				41BD94C419D296A600E785F1 /* MenuViewController.m in Sources */,
 				41FCCABE19D2BC0D000CEF62 /* EntertainmentViewController.m in Sources */,
+				418AB4D219DACD4200F16AE2 /* ANBlurredTableView.m in Sources */,
 				4151901E19D94E3F0058684D /* News.m in Sources */,
 				41FCCAC519D2C658000CEF62 /* Instagram.m in Sources */,
 			);
