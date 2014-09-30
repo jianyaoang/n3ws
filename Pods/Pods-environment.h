@@ -1,0 +1,146 @@
+
+// To check if a library is compiled with CocoaPods you
+// can use the `COCOAPODS` macro definition which is
+// defined in the xcconfigs so it is available in
+// headers also when they are imported in the client
+// project.
+
+
+// CMDQueryStringSerialization
+#define COCOAPODS_POD_AVAILABLE_CMDQueryStringSerialization
+#define COCOAPODS_VERSION_MAJOR_CMDQueryStringSerialization 0
+#define COCOAPODS_VERSION_MINOR_CMDQueryStringSerialization 3
+#define COCOAPODS_VERSION_PATCH_CMDQueryStringSerialization 1
+
+// ISO8601
+#define COCOAPODS_POD_AVAILABLE_ISO8601
+#define COCOAPODS_VERSION_MAJOR_ISO8601 0
+#define COCOAPODS_VERSION_MINOR_ISO8601 1
+#define COCOAPODS_VERSION_PATCH_ISO8601 1
+
+// NSData+Base64
+#define COCOAPODS_POD_AVAILABLE_NSData_Base64
+#define COCOAPODS_VERSION_MAJOR_NSData_Base64 1
+#define COCOAPODS_VERSION_MINOR_NSData_Base64 0
+#define COCOAPODS_VERSION_PATCH_NSData_Base64 0
+
+// ReactiveCocoa
+#define COCOAPODS_POD_AVAILABLE_ReactiveCocoa
+#define COCOAPODS_VERSION_MAJOR_ReactiveCocoa 2
+#define COCOAPODS_VERSION_MINOR_ReactiveCocoa 3
+#define COCOAPODS_VERSION_PATCH_ReactiveCocoa 1
+
+// ReactiveCocoa/Core
+#define COCOAPODS_POD_AVAILABLE_ReactiveCocoa_Core
+#define COCOAPODS_VERSION_MAJOR_ReactiveCocoa_Core 2
+#define COCOAPODS_VERSION_MINOR_ReactiveCocoa_Core 3
+#define COCOAPODS_VERSION_PATCH_ReactiveCocoa_Core 1
+
+// ReactiveCocoa/UI
+#define COCOAPODS_POD_AVAILABLE_ReactiveCocoa_UI
+#define COCOAPODS_VERSION_MAJOR_ReactiveCocoa_UI 2
+#define COCOAPODS_VERSION_MINOR_ReactiveCocoa_UI 3
+#define COCOAPODS_VERSION_PATCH_ReactiveCocoa_UI 1
+
+// ReactiveCocoa/no-arc
+#define COCOAPODS_POD_AVAILABLE_ReactiveCocoa_no_arc
+#define COCOAPODS_VERSION_MAJOR_ReactiveCocoa_no_arc 2
+#define COCOAPODS_VERSION_MINOR_ReactiveCocoa_no_arc 3
+#define COCOAPODS_VERSION_PATCH_ReactiveCocoa_no_arc 1
+
+// SWRevealViewController
+#define COCOAPODS_POD_AVAILABLE_SWRevealViewController
+#define COCOAPODS_VERSION_MAJOR_SWRevealViewController 2
+#define COCOAPODS_VERSION_MINOR_SWRevealViewController 3
+#define COCOAPODS_VERSION_PATCH_SWRevealViewController 0
+
+// SimpleAuth
+#define COCOAPODS_POD_AVAILABLE_SimpleAuth
+#define COCOAPODS_VERSION_MAJOR_SimpleAuth 0
+#define COCOAPODS_VERSION_MINOR_SimpleAuth 3
+#define COCOAPODS_VERSION_PATCH_SimpleAuth 5
+
+// SimpleAuth/Core
+#define COCOAPODS_POD_AVAILABLE_SimpleAuth_Core
+#define COCOAPODS_VERSION_MAJOR_SimpleAuth_Core 0
+#define COCOAPODS_VERSION_MINOR_SimpleAuth_Core 3
+#define COCOAPODS_VERSION_PATCH_SimpleAuth_Core 5
+
+// SimpleAuth/DropboxWeb
+#define COCOAPODS_POD_AVAILABLE_SimpleAuth_DropboxWeb
+#define COCOAPODS_VERSION_MAJOR_SimpleAuth_DropboxWeb 0
+#define COCOAPODS_VERSION_MINOR_SimpleAuth_DropboxWeb 3
+#define COCOAPODS_VERSION_PATCH_SimpleAuth_DropboxWeb 5
+
+// SimpleAuth/Facebook
+#define COCOAPODS_POD_AVAILABLE_SimpleAuth_Facebook
+#define COCOAPODS_VERSION_MAJOR_SimpleAuth_Facebook 0
+#define COCOAPODS_VERSION_MINOR_SimpleAuth_Facebook 3
+#define COCOAPODS_VERSION_PATCH_SimpleAuth_Facebook 5
+
+// SimpleAuth/FacebookWeb
+#define COCOAPODS_POD_AVAILABLE_SimpleAuth_FacebookWeb
+#define COCOAPODS_VERSION_MAJOR_SimpleAuth_FacebookWeb 0
+#define COCOAPODS_VERSION_MINOR_SimpleAuth_FacebookWeb 3
+#define COCOAPODS_VERSION_PATCH_SimpleAuth_FacebookWeb 5
+
+// SimpleAuth/FoursquareWeb
+#define COCOAPODS_POD_AVAILABLE_SimpleAuth_FoursquareWeb
+#define COCOAPODS_VERSION_MAJOR_SimpleAuth_FoursquareWeb 0
+#define COCOAPODS_VERSION_MINOR_SimpleAuth_FoursquareWeb 3
+#define COCOAPODS_VERSION_PATCH_SimpleAuth_FoursquareWeb 5
+
+// SimpleAuth/Instagram
+#define COCOAPODS_POD_AVAILABLE_SimpleAuth_Instagram
+#define COCOAPODS_VERSION_MAJOR_SimpleAuth_Instagram 0
+#define COCOAPODS_VERSION_MINOR_SimpleAuth_Instagram 3
+#define COCOAPODS_VERSION_PATCH_SimpleAuth_Instagram 5
+
+// SimpleAuth/LinkedInWeb
+#define COCOAPODS_POD_AVAILABLE_SimpleAuth_LinkedInWeb
+#define COCOAPODS_VERSION_MAJOR_SimpleAuth_LinkedInWeb 0
+#define COCOAPODS_VERSION_MINOR_SimpleAuth_LinkedInWeb 3
+#define COCOAPODS_VERSION_PATCH_SimpleAuth_LinkedInWeb 5
+
+// SimpleAuth/Meetup
+#define COCOAPODS_POD_AVAILABLE_SimpleAuth_Meetup
+#define COCOAPODS_VERSION_MAJOR_SimpleAuth_Meetup 0
+#define COCOAPODS_VERSION_MINOR_SimpleAuth_Meetup 3
+#define COCOAPODS_VERSION_PATCH_SimpleAuth_Meetup 5
+
+// SimpleAuth/SinaWeiboWeb
+#define COCOAPODS_POD_AVAILABLE_SimpleAuth_SinaWeiboWeb
+#define COCOAPODS_VERSION_MAJOR_SimpleAuth_SinaWeiboWeb 0
+#define COCOAPODS_VERSION_MINOR_SimpleAuth_SinaWeiboWeb 3
+#define COCOAPODS_VERSION_PATCH_SimpleAuth_SinaWeiboWeb 5
+
+// SimpleAuth/Tumblr
+#define COCOAPODS_POD_AVAILABLE_SimpleAuth_Tumblr
+#define COCOAPODS_VERSION_MAJOR_SimpleAuth_Tumblr 0
+#define COCOAPODS_VERSION_MINOR_SimpleAuth_Tumblr 3
+#define COCOAPODS_VERSION_PATCH_SimpleAuth_Tumblr 5
+
+// SimpleAuth/Twitter
+#define COCOAPODS_POD_AVAILABLE_SimpleAuth_Twitter
+#define COCOAPODS_VERSION_MAJOR_SimpleAuth_Twitter 0
+#define COCOAPODS_VERSION_MINOR_SimpleAuth_Twitter 3
+#define COCOAPODS_VERSION_PATCH_SimpleAuth_Twitter 5
+
+// SimpleAuth/TwitterWeb
+#define COCOAPODS_POD_AVAILABLE_SimpleAuth_TwitterWeb
+#define COCOAPODS_VERSION_MAJOR_SimpleAuth_TwitterWeb 0
+#define COCOAPODS_VERSION_MINOR_SimpleAuth_TwitterWeb 3
+#define COCOAPODS_VERSION_PATCH_SimpleAuth_TwitterWeb 5
+
+// SimpleAuth/UI
+#define COCOAPODS_POD_AVAILABLE_SimpleAuth_UI
+#define COCOAPODS_VERSION_MAJOR_SimpleAuth_UI 0
+#define COCOAPODS_VERSION_MINOR_SimpleAuth_UI 3
+#define COCOAPODS_VERSION_PATCH_SimpleAuth_UI 5
+
+// cocoa-oauth
+#define COCOAPODS_POD_AVAILABLE_cocoa_oauth
+#define COCOAPODS_VERSION_MAJOR_cocoa_oauth 0
+#define COCOAPODS_VERSION_MINOR_cocoa_oauth 0
+#define COCOAPODS_VERSION_PATCH_cocoa_oauth 1
+

@@ -1,0 +1,1 @@
+../../SimpleAuth/Providers/Meetup/SimpleAuthMeetupProvider.h
