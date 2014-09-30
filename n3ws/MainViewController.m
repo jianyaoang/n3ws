@@ -206,8 +206,11 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 -(void)configureANBlurredTableView
 {
     self.refreshNewsTable = [UIRefreshControl new];
-    self.refreshNewsTable.tintColor = [UIColor colorWithWhite:0.11 alpha:0.9];
-    self.refreshNewsTable.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull down to update news"];
+    self.refreshNewsTable.tintColor = [UIColor colorWithWhite:0.9 alpha:0.9];
+    
+    NSAttributedString *refreshMessage = [[NSAttributedString alloc] initWithString:@"Pull down to get news update" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    self.refreshNewsTable.attributedTitle = [[NSAttributedString alloc] initWithAttributedString:refreshMessage];
+    
     [self.refreshNewsTable addTarget:self action:@selector(updateNewsTable) forControlEvents:UIControlEventValueChanged];
     [self.newsTableView addSubview:self.refreshNewsTable];
     
@@ -221,7 +224,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 -(void)updateNewsTable
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.newsTableView reloadData];
+        [self obtainNewsArticles];
         [self.refreshNewsTable endRefreshing];
     });
 }
