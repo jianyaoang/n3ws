@@ -9,6 +9,7 @@
 static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 #import "MainViewController.h"
+#import "WebNewsViewController.h"
 #import <SWRevealViewController.h>
 #import <CoreLocation/CoreLocation.h>
 #import "Instagram.h"
@@ -121,7 +122,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
-    NSURL *url = [NSURL URLWithString:@"http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=news_desk:(%22Business%22)&begin_date=20140929&sort=newest&api-key=c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340"];
+    NSURL *url = [NSURL URLWithString:@"http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=news_desk:(%22Business%22%20%22Foreign%22)&begin_date=20140929&sort=newest&api-key=c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340"];
 
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
@@ -260,5 +261,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     }
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSIndexPath *indexPath = [self.newsTableView indexPathForSelectedRow];
+    News *news = [self.headlineNews objectAtIndex:indexPath.row];
+    WebNewsViewController *wnvc = segue.destinationViewController;
+    wnvc.news = news;
+}
 
 @end

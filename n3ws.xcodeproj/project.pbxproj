@@ -23,6 +23,7 @@
 		414D23AD19D29290001A7112 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 414D23AB19D29290001A7112 /* InfoPlist.strings */; };
 		414D23AF19D29290001A7112 /* n3wsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 414D23AE19D29290001A7112 /* n3wsTests.m */; };
 		4151901E19D94E3F0058684D /* News.m in Sources */ = {isa = PBXBuildFile; fileRef = 4151901D19D94E3F0058684D /* News.m */; };
+		418AB4A719DA75F800F16AE2 /* WebNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 418AB4A619DA75F800F16AE2 /* WebNewsViewController.m */; };
 		41BD94C419D296A600E785F1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C319D296A600E785F1 /* MenuViewController.m */; };
 		41BD94C719D2A15800E785F1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C619D2A15800E785F1 /* MainViewController.m */; };
 		41BD94CA19D2A43000E785F1 /* HeadlinesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C919D2A43000E785F1 /* HeadlinesViewController.m */; };
@@ -66,6 +67,8 @@
 		414D23AE19D29290001A7112 /* n3wsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = n3wsTests.m; sourceTree = "<group>"; };
 		4151901C19D94E3F0058684D /* News.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = News.h; sourceTree = "<group>"; };
 		4151901D19D94E3F0058684D /* News.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = News.m; sourceTree = "<group>"; };
+		418AB4A519DA75F800F16AE2 /* WebNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebNewsViewController.h; sourceTree = "<group>"; };
+		418AB4A619DA75F800F16AE2 /* WebNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebNewsViewController.m; sourceTree = "<group>"; };
 		41BD94C219D296A600E785F1 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		41BD94C319D296A600E785F1 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		41BD94C519D2A15800E785F1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -154,6 +157,8 @@
 				41BD94C319D296A600E785F1 /* MenuViewController.m */,
 				41BD94C519D2A15800E785F1 /* MainViewController.h */,
 				41BD94C619D2A15800E785F1 /* MainViewController.m */,
+				418AB4A519DA75F800F16AE2 /* WebNewsViewController.h */,
+				418AB4A619DA75F800F16AE2 /* WebNewsViewController.m */,
 				41FCCAC319D2C658000CEF62 /* Instagram.h */,
 				41FCCAC419D2C658000CEF62 /* Instagram.m */,
 				4147C0B319D3C7AA002737C2 /* Weather.h */,
@@ -346,6 +351,7 @@
 				414D239419D2928D001A7112 /* AppDelegate.m in Sources */,
 				414D239019D2928D001A7112 /* main.m in Sources */,
 				41FCCAC119D2BC4A000CEF62 /* SportsViewController.m in Sources */,
+				418AB4A719DA75F800F16AE2 /* WebNewsViewController.m in Sources */,
 				4147C0B519D3C7AA002737C2 /* Weather.m in Sources */,
 				41FCCABB19D2BB56000CEF62 /* FinanceViewController.m in Sources */,
 				41BD94C719D2A15800E785F1 /* MainViewController.m in Sources */,
