@@ -10,7 +10,9 @@
 
 @interface News : NSObject
 @property (strong, nonatomic) NSString *headlines;
+@property (strong, nonatomic) NSString *snippet;
 @property (strong, nonatomic) NSString *image;
-@property (strong, nonatomic) NSURL *imageURL;
+@property (strong, nonatomic) NSURL *web_url;
+
 
 @end

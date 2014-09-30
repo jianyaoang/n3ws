@@ -138,12 +138,14 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
             NSDictionary *newsDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             
             //getting headlines
-            NSDictionary *headlines = [newsDetails valueForKeyPath:@"response.docs.headline.main"];
+            NSDictionary *headlines = [newsDetails valueForKeyPath:@"response.docs"];
             
-            for (NSString *headline in headlines)
+            for (NSDictionary *docs in headlines)
             {
                 News *news = [News new];
-                news.headlines = headline;
+                news.headlines = [docs valueForKeyPath:@"headline.main"];
+                news.web_url = [docs valueForKeyPath:@"web_url"];
+                news.snippet = [docs valueForKeyPath:@"snippet"];
                [self.headlineNews addObject:news];
             }
         }
@@ -151,27 +153,6 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                 [self.newsTableView reloadData];
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         });
-        
-            //retrieve headlines images
-//            NSDictionary *headlinesImages = [newsDetails valueForKeyPath:@"response.docs.multimedia.legacy.xlarge"];
-//            
-//            [self.headlineNews removeAllObjects];
-//            for (NSArray *headlineImagesLink in headlinesImages)
-//            {
-//                
-//                if (headlineImagesLink.count != 0)
-//                {
-//                    self.news.image = [headlineImagesLink objectAtIndex:1];                    
-//                    [self.headlineNews addObject:self.news];
-//                }
-//                else if (headlineImagesLink.count == 0)
-//                {
-//                    NSLog(@"headlineImagesLink is nil");
-//                }
-//                
-//                NSLog(@"self.headlineNews ======------ %@", self.headlineNews);
-//            }
-        
     }];
 }
 
@@ -186,7 +167,31 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     News *news = [self.headlineNews objectAtIndex:indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsCell"];
     cell.textLabel.text = news.headlines;
+    cell.textLabel.numberOfLines = 0;
+    cell.detailTextLabel.text = news.snippet;
+    cell.detailTextLabel.numberOfLines = 0;
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.textLabel.textColor = [UIColor redColor];
+    cell.detailTextLabel.textColor = [UIColor redColor];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    News *news = [self.headlineNews objectAtIndex:indexPath.row];
+    NSString *headline = news.headlines;
+    CGFloat width = 280;
+    UIFont *font = [UIFont systemFontOfSize:5];
+    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:headline attributes:@{NSFontAttributeName: font}];
+    CGRect rect = [attributedText boundingRectWithSize:(CGSize){width,CGFLOAT_MAX} options:NSStringDrawingUsesLineFragmentOrigin context:nil];
+    rect = CGRectInset(rect, -100, -65);
+    CGSize size = rect.size;
+    return size.height;
+    
 }
 
 #pragma mark - weather
