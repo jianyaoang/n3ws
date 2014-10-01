@@ -12,7 +12,7 @@
 @interface Instagram : NSObject
 @property (strong, nonatomic) NSString *accessToken;
 @property (strong, nonatomic) NSData *data;
-@property BOOL isAcessTokenNil;
+@property BOOL isAccessTokenNil;
 
 -(void)accessingInstagram;
 -(void)requestInfoFromInstagram;

@@ -19,17 +19,15 @@
     
     if (self.accessToken == nil)
     {
-        self.isAcessTokenNil = YES;
+        self.isAccessTokenNil = YES;
         [SimpleAuth authorize:@"instagram" completion:^(id responseObject, NSError *error)
         {
-            
-//            NSString *accessToken = responseObject[@"credentials"][@"token"];
             self.accessToken = responseObject[@"credentials"][@"token"];
             [userDefaults setObject:self.accessToken forKey:@"accessToken"];
             [userDefaults synchronize];
-            self.isAcessTokenNil = NO;
+            self.isAccessTokenNil = NO;
             
-            if (self.isAcessTokenNil == NO)
+            if (self.isAccessTokenNil == NO)
             {
                 [self requestInfoFromInstagram];
             }
@@ -42,7 +40,7 @@
     NSLog(@"requestInfoFromInstagram");
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/locations/search?lat=41.8819&lng=-87.6278&access_token=%@",self.accessToken];
+    NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/66/media/recent/?access_token=%@",self.accessToken];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
     {

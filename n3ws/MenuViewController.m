@@ -31,7 +31,7 @@
 
 -(void)settingUpMenuTable
 {
-    self.menuTitles = @[@"Home", @"Headlines", @"Finance", @"Entertainment", @"Sports"];
+    self.menuTitles = @[@"Home", @"Headlines", @"Entertainment", @"Food", @"Travel"];
     
     self.tableView.backgroundColor = [UIColor clearColor];
     

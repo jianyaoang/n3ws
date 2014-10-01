@@ -32,9 +32,6 @@
 		41BD94C419D296A600E785F1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C319D296A600E785F1 /* MenuViewController.m */; };
 		41BD94C719D2A15800E785F1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C619D2A15800E785F1 /* MainViewController.m */; };
 		41BD94CA19D2A43000E785F1 /* HeadlinesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C919D2A43000E785F1 /* HeadlinesViewController.m */; };
-		41FCCABB19D2BB56000CEF62 /* FinanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FCCABA19D2BB56000CEF62 /* FinanceViewController.m */; };
-		41FCCABE19D2BC0D000CEF62 /* EntertainmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FCCABD19D2BC0D000CEF62 /* EntertainmentViewController.m */; };
-		41FCCAC119D2BC4A000CEF62 /* SportsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FCCAC019D2BC4A000CEF62 /* SportsViewController.m */; };
 		41FCCAC519D2C658000CEF62 /* Instagram.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FCCAC419D2C658000CEF62 /* Instagram.m */; };
 		FFF7FBB2F8C84F74AC41ECEB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E267D6231C5E4784BFFB59C8 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -88,12 +85,6 @@
 		41BD94C619D2A15800E785F1 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		41BD94C819D2A43000E785F1 /* HeadlinesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadlinesViewController.h; sourceTree = "<group>"; };
 		41BD94C919D2A43000E785F1 /* HeadlinesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadlinesViewController.m; sourceTree = "<group>"; };
-		41FCCAB919D2BB56000CEF62 /* FinanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinanceViewController.h; sourceTree = "<group>"; };
-		41FCCABA19D2BB56000CEF62 /* FinanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinanceViewController.m; sourceTree = "<group>"; };
-		41FCCABC19D2BC0D000CEF62 /* EntertainmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntertainmentViewController.h; sourceTree = "<group>"; };
-		41FCCABD19D2BC0D000CEF62 /* EntertainmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntertainmentViewController.m; sourceTree = "<group>"; };
-		41FCCABF19D2BC4A000CEF62 /* SportsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SportsViewController.h; sourceTree = "<group>"; };
-		41FCCAC019D2BC4A000CEF62 /* SportsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SportsViewController.m; sourceTree = "<group>"; };
 		41FCCAC319D2C658000CEF62 /* Instagram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Instagram.h; sourceTree = "<group>"; };
 		41FCCAC419D2C658000CEF62 /* Instagram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Instagram.m; sourceTree = "<group>"; };
 		DB765A6F9622462988B1B3DD /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
@@ -234,14 +225,8 @@
 		41FCCAC219D2BF0F000CEF62 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				41FCCABF19D2BC4A000CEF62 /* SportsViewController.h */,
-				41FCCAC019D2BC4A000CEF62 /* SportsViewController.m */,
-				41FCCABC19D2BC0D000CEF62 /* EntertainmentViewController.h */,
-				41FCCABD19D2BC0D000CEF62 /* EntertainmentViewController.m */,
 				41BD94C819D2A43000E785F1 /* HeadlinesViewController.h */,
 				41BD94C919D2A43000E785F1 /* HeadlinesViewController.m */,
-				41FCCAB919D2BB56000CEF62 /* FinanceViewController.h */,
-				41FCCABA19D2BB56000CEF62 /* FinanceViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -382,14 +367,11 @@
 				414D239419D2928D001A7112 /* AppDelegate.m in Sources */,
 				414D239019D2928D001A7112 /* main.m in Sources */,
 				418AB4D319DACD4200F16AE2 /* UIImage+BoxBlur.m in Sources */,
-				41FCCAC119D2BC4A000CEF62 /* SportsViewController.m in Sources */,
 				418AB4A719DA75F800F16AE2 /* WebNewsViewController.m in Sources */,
 				4147C0B519D3C7AA002737C2 /* Weather.m in Sources */,
-				41FCCABB19D2BB56000CEF62 /* FinanceViewController.m in Sources */,
 				418AB4C819DAA44A00F16AE2 /* Stock.m in Sources */,
 				41BD94C719D2A15800E785F1 /* MainViewController.m in Sources */,
 				41BD94C419D296A600E785F1 /* MenuViewController.m in Sources */,
-				41FCCABE19D2BC0D000CEF62 /* EntertainmentViewController.m in Sources */,
 				418AB4D219DACD4200F16AE2 /* ANBlurredTableView.m in Sources */,
 				4151901E19D94E3F0058684D /* News.m in Sources */,
 				41FCCAC519D2C658000CEF62 /* Instagram.m in Sources */,
