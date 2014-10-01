@@ -21,6 +21,13 @@
 {
     [super viewDidLoad];
     [self configureBarButtonItemAbility];
+    self.testLabel.text = self.instagram.caption;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO];
 }
 
 -(void)configureBarButtonItemAbility

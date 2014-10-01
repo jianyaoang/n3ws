@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Instagram.h"
 
 @interface HeadlinesViewController : UIViewController
-
+@property (strong, nonatomic) IBOutlet UILabel *testLabel;
+@property (strong, nonatomic) Instagram *instagram;
 @end

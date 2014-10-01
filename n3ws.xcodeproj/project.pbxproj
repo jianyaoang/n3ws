@@ -162,20 +162,7 @@
 				414D239319D2928D001A7112 /* AppDelegate.m */,
 				414D239519D2928D001A7112 /* Main.storyboard */,
 				41FCCAC219D2BF0F000CEF62 /* ViewControllers */,
-				41BD94C219D296A600E785F1 /* MenuViewController.h */,
-				41BD94C319D296A600E785F1 /* MenuViewController.m */,
-				41BD94C519D2A15800E785F1 /* MainViewController.h */,
-				41BD94C619D2A15800E785F1 /* MainViewController.m */,
-				418AB4A519DA75F800F16AE2 /* WebNewsViewController.h */,
-				418AB4A619DA75F800F16AE2 /* WebNewsViewController.m */,
-				41FCCAC319D2C658000CEF62 /* Instagram.h */,
-				41FCCAC419D2C658000CEF62 /* Instagram.m */,
-				4147C0B319D3C7AA002737C2 /* Weather.h */,
-				4147C0B419D3C7AA002737C2 /* Weather.m */,
-				4151901C19D94E3F0058684D /* News.h */,
-				4151901D19D94E3F0058684D /* News.m */,
-				418AB4C619DAA44900F16AE2 /* Stock.h */,
-				418AB4C719DAA44A00F16AE2 /* Stock.m */,
+				41EDC61E19DBCC5900058556 /* Custom NSObjects */,
 				414D239B19D2928E001A7112 /* Images.xcassets */,
 				414D238A19D2928C001A7112 /* Supporting Files */,
 			);
@@ -222,11 +209,32 @@
 			name = ANBlurredTableView;
 			sourceTree = "<group>";
 		};
+		41EDC61E19DBCC5900058556 /* Custom NSObjects */ = {
+			isa = PBXGroup;
+			children = (
+				41FCCAC319D2C658000CEF62 /* Instagram.h */,
+				41FCCAC419D2C658000CEF62 /* Instagram.m */,
+				4147C0B319D3C7AA002737C2 /* Weather.h */,
+				4147C0B419D3C7AA002737C2 /* Weather.m */,
+				4151901C19D94E3F0058684D /* News.h */,
+				4151901D19D94E3F0058684D /* News.m */,
+				418AB4C619DAA44900F16AE2 /* Stock.h */,
+				418AB4C719DAA44A00F16AE2 /* Stock.m */,
+			);
+			name = "Custom NSObjects";
+			sourceTree = "<group>";
+		};
 		41FCCAC219D2BF0F000CEF62 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				41BD94C519D2A15800E785F1 /* MainViewController.h */,
+				41BD94C619D2A15800E785F1 /* MainViewController.m */,
+				41BD94C219D296A600E785F1 /* MenuViewController.h */,
+				41BD94C319D296A600E785F1 /* MenuViewController.m */,
 				41BD94C819D2A43000E785F1 /* HeadlinesViewController.h */,
 				41BD94C919D2A43000E785F1 /* HeadlinesViewController.m */,
+				418AB4A519DA75F800F16AE2 /* WebNewsViewController.h */,
+				418AB4A619DA75F800F16AE2 /* WebNewsViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";

@@ -9,10 +9,12 @@
 #import "MenuViewController.h"
 #import "HeadlinesViewController.h"
 #import "MainViewController.h"
+#import "Instagram.h"
 
 @interface MenuViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *menuTitles;
+@property (strong, nonatomic) Instagram *instagram;
 
 @end
 
@@ -27,6 +29,21 @@
     self.menuTitles = [NSArray new];
     
     [self settingUpMenuTable];
+    
+    self.instagram = [Instagram new];
+    self.instagram.caption = @"Hello there!";
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO];
 }
 
 -(void)settingUpMenuTable
@@ -66,9 +83,15 @@
 {
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     
-    UINavigationController *destinationVC = (UINavigationController*)segue.destinationViewController;
-    
-    destinationVC.title = [self.menuTitles objectAtIndex:indexPath.row];
+    if ([segue.identifier isEqualToString:@"Headlines"])
+    {
+//        UINavigationController *destinationVC = (UINavigationController*)segue.destinationViewController;
+        UINavigationController *nav = segue.destinationViewController;
+        HeadlinesViewController *hvc = [HeadlinesViewController new];
+        hvc = nav.viewControllers[0];
+        hvc.instagram = self.instagram;
+//        hvc = (HeadlinesViewController*)([destinationVC viewControllers][0]);
+    }
 }
 
 @end
