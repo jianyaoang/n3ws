@@ -12,6 +12,8 @@
 @interface Instagram : NSObject
 @property (strong, nonatomic) NSString *accessToken;
 @property (strong, nonatomic) NSString *caption;
+@property (strong, nonatomic) NSString *imagesURL;
+@property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSData *data;
 @property BOOL isAccessTokenNil;
 

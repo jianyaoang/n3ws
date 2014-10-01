@@ -10,6 +10,6 @@
 #import "Instagram.h"
 
 @interface HeadlinesViewController : UIViewController
-@property (strong, nonatomic) IBOutlet UILabel *testLabel;
 @property (strong, nonatomic) Instagram *instagram;
+@property (strong, nonatomic) NSMutableArray *instagramAccountsMutableArray;
 @end
