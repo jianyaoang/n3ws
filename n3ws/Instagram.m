@@ -12,38 +12,48 @@
 
 -(void)accessingInstagram
 {
+//accessToken = 258596838.0389991.12fd1cd16e60428fa56c32c286d15d01
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     self.accessToken = [userDefaults objectForKey:@"accessToken"];
     
     if (self.accessToken == nil)
     {
+        self.isAcessTokenNil = YES;
         [SimpleAuth authorize:@"instagram" completion:^(id responseObject, NSError *error)
         {
             
-            NSString *accessToken = responseObject[@"credentials"][@"token"];
-            [userDefaults setObject:accessToken forKey:@"accessToken"];
+//            NSString *accessToken = responseObject[@"credentials"][@"token"];
+            self.accessToken = responseObject[@"credentials"][@"token"];
+            [userDefaults setObject:self.accessToken forKey:@"accessToken"];
             [userDefaults synchronize];
-        }];
-    }
-    else
-    {
-        NSLog(@"logged in");
-        
-        NSURLSession *session = [NSURLSession sharedSession];
-        NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/locations/search?lat=41.8819&lng=-87.6278&access_token=%@",self.accessToken];
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
-        {
-            self.data = [[NSData alloc] initWithContentsOfURL:location];
+            self.isAcessTokenNil = NO;
             
-            NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:self.data options:NSJSONReadingAllowFragments error:&error];
-            
-            NSLog(@"responseDictionary %@", responseDictionary);
+            if (self.isAcessTokenNil == NO)
+            {
+                [self requestInfoFromInstagram];
+            }
         }];
-        [task resume];
     }
 }
 
+-(void)requestInfoFromInstagram
+{
+    NSLog(@"requestInfoFromInstagram");
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/locations/search?lat=41.8819&lng=-87.6278&access_token=%@",self.accessToken];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
+    {
+        self.data = [[NSData alloc] initWithContentsOfURL:location];
+                                          
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:self.data options:NSJSONReadingAllowFragments error:&error];
+                                          
+        NSLog(@"responseDictionary %@", responseDictionary);
+    }];
+    
+    [task resume];
+}
 
 @end

@@ -37,6 +37,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 @property (strong, nonatomic) UIRefreshControl *refreshNewsTable;
 
 @property (strong, nonatomic) NSMutableArray *stockInfoMutableArray;
+@property (strong, nonatomic) IBOutlet UIScrollView *stockScrollView;
 
 @property (strong, nonatomic) Weather *weather;
 @property (strong, nonatomic) News *news;
@@ -119,6 +120,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     Instagram *instagram = [Instagram new];
     
     [instagram accessingInstagram];
+    
+    if (instagram.accessToken != nil)
+    {
+        NSLog(@"it is not nil");
+        [instagram requestInfoFromInstagram]; 
+    }
 }
 
 #pragma mark - CLLocation
