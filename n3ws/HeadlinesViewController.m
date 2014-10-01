@@ -36,8 +36,12 @@
 {
     [super viewDidAppear:animated];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.instagramTableView setSeparatorColor:[UIColor blackColor]];
-        [self.instagramTableView reloadData];
+        
+        [UIView transitionWithView:self.instagramTableView duration:1.5f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
+         {
+             [self.instagramTableView setSeparatorColor:[UIColor clearColor]];
+             [self.instagramTableView reloadData];
+         } completion:nil];
     });
 }
 
@@ -64,8 +68,20 @@
     self.instagram = [self.instagramAccountsMutableArray objectAtIndex:indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InstagramInfoCell"];
 
-    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.instagram.imagesURL]]]];
-    cell.textLabel.text = [NSString stringWithFormat:@"\n\n\n\n\n\n\n\n\n\n@%@",self.instagram.username];
+    UIImage *imageFromInstagram = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.instagram.imagesURL]]];
+    CGSize resizeImage = CGSizeMake(320, 420);
+    UIGraphicsBeginImageContext(resizeImage);
+    [imageFromInstagram drawInRect:CGRectMake(0, 0, resizeImage.width, resizeImage.height)];
+    UIImage *resizedImageFromInstagram = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        cell.backgroundView = [[UIImageView alloc] initWithImage:resizedImageFromInstagram];
+        cell.textLabel.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.75];
+        cell.detailTextLabel.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.75];
+    });
+
+    cell.textLabel.text = [NSString stringWithFormat:@"@%@",self.instagram.username];
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.font = [UIFont systemFontOfSize:25];
@@ -75,7 +91,6 @@
     cell.detailTextLabel.numberOfLines = 0;
     cell.detailTextLabel.textColor = [UIColor whiteColor];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:15];
-    cell.detailTextLabel.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.75];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -87,7 +102,7 @@
     Instagram *instagramAccount = [self.instagramAccountsMutableArray objectAtIndex:indexPath.row];
     NSString *caption = instagramAccount.caption;
     CGFloat width = 320;
-    UIFont *font = [UIFont systemFontOfSize:14];
+    UIFont *font = [UIFont systemFontOfSize:1];
     NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:caption attributes:@{NSFontAttributeName: font}];
     CGRect rect = [attributedText boundingRectWithSize:(CGSize){width,CGFLOAT_MAX} options:NSStringDrawingUsesLineFragmentOrigin context:nil];
     rect = CGRectInset(rect, -320, -210);
