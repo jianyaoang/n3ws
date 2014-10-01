@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSArray *menuTitles;
 @property (strong, nonatomic) Instagram *instagram;
 @property (strong, nonatomic) NSMutableArray *instagramHeadlinesAccountsMutableArray;
+@property (strong, nonatomic) NSMutableArray *instagramEntertainmentAccountsMutableArray;
 @property (strong, nonatomic) NSData *data;
 @end
 
@@ -28,14 +29,17 @@
     self.view.backgroundColor = [UIColor blackColor];
     
     self.instagramHeadlinesAccountsMutableArray = [NSMutableArray new];
-
+    self.instagramEntertainmentAccountsMutableArray = [NSMutableArray new];
+    
     self.menuTitles = [NSArray new];
     
     [self settingUpMenuTable];
     
     NSArray *headlinesID = @[@"217723373", @"1269598", @"21943587", @"247784713", @"1347193480"];
-
+    NSArray *entertainmentID = @[@"12996727", @"1907035"];
+    
     [self extractingHeadlinesInstagramAccountData:headlinesID];
+    [self extractingEntertainmentInstagramAccountData:entertainmentID];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -50,7 +54,7 @@
     [self.navigationController setNavigationBarHidden:NO];
 }
 
-#pragma mark - Extract Instagram info
+#pragma mark - Extract Instagram Headline info
 -(void)extractingHeadlinesInstagramAccountData:(NSArray*)headlinesID
 {
     for (NSString *headlineAccountID in headlinesID)
@@ -85,16 +89,12 @@
             {
                 Instagram *instagramAccount = [Instagram new];
                 instagramAccount.imagesURL = [accountInfo valueForKeyPath:@"images.standard_resolution.url"];
-//                instagramAccount.caption = [accountInfo valueForKeyPath:@"caption.text"];
                 instagramAccount.username = [accountInfo valueForKeyPath:@"caption.from.username"];
                 
                 NSString *testInstagramCaptionLimit = [accountInfo valueForKeyPath:@"caption.text"];
-                
                 NSRange stringRange = {0, MIN([testInstagramCaptionLimit length], 450)};
-            
                 // adjust the range to include dependent chars
                 stringRange = [testInstagramCaptionLimit rangeOfComposedCharacterSequencesForRange:stringRange];
-                
                 // Now you can create the short string
                 instagramAccount.caption = [testInstagramCaptionLimit substringWithRange:stringRange];
                 
@@ -104,6 +104,58 @@
     }];
     [task resume];
 }
+
+#pragma mark - Entertainment Instagram Info
+-(void)extractingEntertainmentInstagramAccountData:(NSArray*)entertainmentID
+{
+    for (NSString *entertainmentAccountID in entertainmentID)
+    {
+        [self extractEntertainmentInstagramPhotosByID:entertainmentAccountID];
+    }
+}
+
+-(void)extractEntertainmentInstagramPhotosByID:(NSString*)accountID
+{
+    self.instagram = [Instagram new];
+    [self.instagram accessingInstagram];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/media/recent/?count=12&access_token=%@",accountID,self.instagram.accessToken];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
+    {
+        if (error)
+        {
+            NSLog(@"%@", error);
+        }
+        else
+        {
+              self.data = [[NSData alloc] initWithContentsOfURL:location];
+              
+              NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:self.data options:NSJSONReadingAllowFragments error:&error];
+              
+              NSDictionary *data = [responseDictionary valueForKeyPath:@"data"];
+              
+              for (NSDictionary *accountInfo in data)
+              {
+                  Instagram *instagramAccount = [Instagram new];
+                  instagramAccount.imagesURL = [accountInfo valueForKeyPath:@"images.standard_resolution.url"];
+                  instagramAccount.username = [accountInfo valueForKeyPath:@"caption.from.username"];
+                  
+                  NSString *testInstagramCaptionLimit = [accountInfo valueForKeyPath:@"caption.text"];
+                  NSRange stringRange = {0, MIN([testInstagramCaptionLimit length], 450)};
+                  // adjust the range to include dependent chars
+                  stringRange = [testInstagramCaptionLimit rangeOfComposedCharacterSequencesForRange:stringRange];
+                  // Now you can create the short string
+                  instagramAccount.caption = [testInstagramCaptionLimit substringWithRange:stringRange];
+                  
+                  [self.instagramEntertainmentAccountsMutableArray addObject:instagramAccount];
+              }
+          }
+      }];
+    [task resume];
+}
+
 
 #pragma mark - menu table
 -(void)settingUpMenuTable
@@ -156,8 +208,11 @@
     }
     else if ([segue.identifier isEqualToString:@"Entertainment"])
     {
+        self.instagram = [self.instagramEntertainmentAccountsMutableArray objectAtIndex:indexPath.row];
         hvc = nav.viewControllers[0];
+        
         hvc.instagram = self.instagram;
+        hvc.instagramAccountsMutableArray = self.instagramEntertainmentAccountsMutableArray;
     }
     else if ([segue.identifier isEqualToString:@"Food"])
     {

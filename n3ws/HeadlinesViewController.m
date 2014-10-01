@@ -77,6 +77,8 @@
     cell.detailTextLabel.font = [UIFont systemFontOfSize:15];
     cell.detailTextLabel.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.75];
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 
