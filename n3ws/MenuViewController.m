@@ -39,7 +39,7 @@
     
     [self settingUpMenuTable];
     
-    NSArray *headlinesID = @[@"21943587"];
+    NSArray *headlinesID = @[@"21943587", @"188154866"];
     NSArray *entertainmentID = @[@"12996727", @"1907035"];
     NSArray *foodID = @[@"11798576", @"25872982", @"974702434", @"303633557"];
     NSArray *travelID = @[@"12485872", @"217653153", @"11227616"];
