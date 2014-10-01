@@ -204,7 +204,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         }
                dispatch_async(dispatch_get_main_queue(), ^{
                 
-                [UIView transitionWithView:self.newsTableView duration:1.5f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
+                [UIView transitionWithView:self.newsTableView duration:1.0f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
                 {
                     [self.newsTableView reloadData];
                 } completion:nil];
