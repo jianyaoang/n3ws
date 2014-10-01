@@ -82,16 +82,30 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    UINavigationController *nav = segue.destinationViewController;
+    HeadlinesViewController *hvc = [HeadlinesViewController new];
     
     if ([segue.identifier isEqualToString:@"Headlines"])
     {
-//        UINavigationController *destinationVC = (UINavigationController*)segue.destinationViewController;
-        UINavigationController *nav = segue.destinationViewController;
-        HeadlinesViewController *hvc = [HeadlinesViewController new];
         hvc = nav.viewControllers[0];
         hvc.instagram = self.instagram;
-//        hvc = (HeadlinesViewController*)([destinationVC viewControllers][0]);
     }
+    else if ([segue.identifier isEqualToString:@"Entertainment"])
+    {
+        hvc = nav.viewControllers[0];
+        hvc.instagram = self.instagram;
+    }
+    else if ([segue.identifier isEqualToString:@"Food"])
+    {
+        hvc = nav.viewControllers[0];
+        hvc.instagram = self.instagram;
+    }
+    else if ([segue.identifier isEqualToString:@"Travel"])
+    {
+        hvc = nav.viewControllers[0];
+        hvc.instagram = self.instagram;
+    }
+    
 }
 
 @end
