@@ -178,7 +178,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     
     NSString *currentTime = [dateFormmatter stringFromDate:today];
     
+    self.timeView.backgroundColor = [UIColor colorWithRed:0.11 green:0.60 blue:0.84 alpha:0.8];
     self.timeNumberLabel.text = currentTime;
+    self.timeNumberLabel.textColor = [UIColor whiteColor];
+    self.timeNumberLabel.font = [UIFont fontWithName:@"Palatino" size:35];
+    self.timeLabel.font = [UIFont fontWithName:@"Palatino" size:15];
+    self.timeLabel.textColor = [UIColor whiteColor];
     
     NSLog(@"this is the currentTime: %@",currentTime);
 }
