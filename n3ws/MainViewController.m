@@ -284,7 +284,23 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     cell.textLabel.numberOfLines = 0;
     cell.detailTextLabel.text = news.sectionName;
     cell.detailTextLabel.numberOfLines = 0;
-    cell.detailTextLabel.textColor = [UIColor whiteColor];
+    
+    if ([news.sectionName isEqualToString:@"Business"])
+    {
+        cell.detailTextLabel.textColor = [UIColor redColor];
+    }
+    else if ([news.sectionName isEqualToString:@"Technology"])
+    {
+        cell.detailTextLabel.textColor = [UIColor colorWithRed:0.12 green:0.64 blue:0.84 alpha:1];;
+    }
+    else if ([news.sectionName isEqualToString:@"World news"])
+    {
+        cell.detailTextLabel.textColor = [UIColor yellowColor];
+    }
+    else if ([news.sectionName isEqualToString:@"Sport"])
+    {
+        cell.detailTextLabel.textColor = [UIColor purpleColor];
+    }
     return cell;
 }
 
