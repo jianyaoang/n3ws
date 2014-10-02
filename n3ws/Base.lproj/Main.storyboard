@@ -220,7 +220,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="5Ii-oP-9kE" customClass="ANBlurredTableView">
-                                <rect key="frame" x="0.0" y="286" width="320" height="282"/>
+                                <rect key="frame" x="0.0" y="203" width="320" height="365"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -257,10 +257,6 @@
                                     <outlet property="delegate" destination="26k-f5-YLb" id="ccw-61-YT6"/>
                                 </connections>
                             </tableView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eMG-wS-iGm">
-                                <rect key="frame" x="0.0" y="202" width="320" height="83"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -270,7 +266,6 @@
                     <connections>
                         <outlet property="menuBarButtonItem" destination="0dm-8T-aMi" id="aFj-uc-Uzo"/>
                         <outlet property="newsTableView" destination="5Ii-oP-9kE" id="F3c-BH-j0W"/>
-                        <outlet property="stockScrollView" destination="eMG-wS-iGm" id="fgX-gs-pya"/>
                         <outlet property="temperatureImage" destination="E0B-M1-2Xk" id="VTE-l8-d52"/>
                         <outlet property="temperatureLabel" destination="0k7-Xh-hO6" id="JwH-ZF-Uz1"/>
                         <outlet property="timeLabel" destination="c8u-eK-drR" id="ZQG-dK-bNa"/>

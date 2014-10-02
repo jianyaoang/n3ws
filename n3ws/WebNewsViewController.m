@@ -27,7 +27,7 @@
 -(void)configureNewsWebView
 {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSString *urlString = [NSString stringWithFormat:@"%@",self.news.web_url];
+        NSString *urlString = [NSString stringWithFormat:@"%@",self.news.webUrl];
         NSURL *newsURL = [NSURL URLWithString:urlString];
         self.request = [NSURLRequest requestWithURL:newsURL];
     });

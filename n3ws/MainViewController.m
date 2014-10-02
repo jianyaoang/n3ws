@@ -173,8 +173,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
-    NSURL *url = [NSURL URLWithString:@"http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=news_desk:(%22Business%22%20%22Foreign%22)&begin_date=20140929&sort=newest&api-key=c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340"];
-
+//    NSURL *url = [NSURL URLWithString:@"http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=news_desk:(%22Business%22%20%22Foreign%22)&begin_date=20140929&sort=newest&api-key=c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340"];
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://content.guardianapis.com/search?page-size=15&section=world|technology|sport|business&api-key=cjj5325rskk27bs7s3nby8uc"];
+    
+    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
@@ -190,15 +194,19 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
             NSDictionary *newsDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             
             //getting headlines
-            NSDictionary *headlines = [newsDetails valueForKeyPath:@"response.docs"];
+            NSDictionary *headlines = [newsDetails valueForKeyPath:@"response.results"];
             
             [self.headlineNews removeAllObjects];
-            for (NSDictionary *docs in headlines)
+            for (NSDictionary *results in headlines)
             {
                 News *news = [News new];
-                news.headlines = [docs valueForKeyPath:@"headline.main"];
-                news.web_url = [docs valueForKeyPath:@"web_url"];
-                news.snippet = [docs valueForKeyPath:@"snippet"];
+                news.webTitle = [results valueForKeyPath:@"webTitle"];
+                news.sectionName = [results valueForKeyPath:@"sectionName"];
+                news.webUrl = [results valueForKeyPath:@"webUrl"];
+                
+//                news.headlines = [results valueForKeyPath:@"headline.main"];
+//                news.web_url = [results valueForKeyPath:@"web_url"];
+//                news.snippet = [results valueForKeyPath:@"snippet"];
                [self.headlineNews addObject:news];
             }
         }
@@ -252,9 +260,9 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsCell"];
     cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.text = news.headlines;
+    cell.textLabel.text = news.webTitle;
     cell.textLabel.numberOfLines = 0;
-    cell.detailTextLabel.text = news.snippet;
+    cell.detailTextLabel.text = news.sectionName;
     cell.detailTextLabel.numberOfLines = 0;
     cell.detailTextLabel.textColor = [UIColor whiteColor];
     return cell;
@@ -270,7 +278,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     News *news = [self.headlineNews objectAtIndex:indexPath.row];
-    NSString *headline = news.headlines;
+    NSString *headline = news.webTitle;
     CGFloat width = 280;
     UIFont *font = [UIFont systemFontOfSize:5];
     NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:headline attributes:@{NSFontAttributeName: font}];

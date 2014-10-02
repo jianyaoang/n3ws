@@ -14,5 +14,9 @@
 @property (strong, nonatomic) NSString *image;
 @property (strong, nonatomic) NSURL *web_url;
 
+@property (strong, nonatomic) NSString *webTitle;
+@property (strong, nonatomic) NSString *sectionName;
+@property (strong, nonatomic) NSString *webUrl;
+
 
 @end
