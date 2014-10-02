@@ -51,7 +51,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 {
     [super viewDidLoad];
     
-    self.title = @"n3ws";
+    [self settingNavigationTitle];
     
     self.weather = [Weather new];
     self.news = [News new];
@@ -66,6 +66,18 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     [self obtainNewsArticles];
     [self configureYahooFinanceAPI];
 
+}
+
+#pragma mark - navigation Title
+-(void)settingNavigationTitle
+{
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = @"n3ws";
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.font = [UIFont fontWithName:@"Palatino" size:22];
+    [self.navigationItem setTitleView:titleLabel];
 }
 
 #pragma mark - YQL

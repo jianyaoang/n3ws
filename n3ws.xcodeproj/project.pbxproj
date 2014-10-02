@@ -32,6 +32,7 @@
 		41BD94C719D2A15800E785F1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C619D2A15800E785F1 /* MainViewController.m */; };
 		41BD94CA19D2A43000E785F1 /* HeadlinesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C919D2A43000E785F1 /* HeadlinesViewController.m */; };
 		41DB8DE619DD1B9A0029980C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41DB8DE519DD1B9A0029980C /* Images.xcassets */; };
+		41DB8DE919DD27FB0029980C /* Palatino in Resources */ = {isa = PBXBuildFile; fileRef = 41DB8DE819DD27FB0029980C /* Palatino */; };
 		41FCCAC519D2C658000CEF62 /* Instagram.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FCCAC419D2C658000CEF62 /* Instagram.m */; };
 		FFF7FBB2F8C84F74AC41ECEB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E267D6231C5E4784BFFB59C8 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -85,6 +86,7 @@
 		41BD94C819D2A43000E785F1 /* HeadlinesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadlinesViewController.h; sourceTree = "<group>"; };
 		41BD94C919D2A43000E785F1 /* HeadlinesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadlinesViewController.m; sourceTree = "<group>"; };
 		41DB8DE519DD1B9A0029980C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		41DB8DE819DD27FB0029980C /* Palatino */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Palatino; sourceTree = "<group>"; };
 		41FCCAC319D2C658000CEF62 /* Instagram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Instagram.h; sourceTree = "<group>"; };
 		41FCCAC419D2C658000CEF62 /* Instagram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Instagram.m; sourceTree = "<group>"; };
 		DB765A6F9622462988B1B3DD /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				414D239319D2928D001A7112 /* AppDelegate.m */,
 				414D239519D2928D001A7112 /* Main.storyboard */,
 				41DB8DE519DD1B9A0029980C /* Images.xcassets */,
+				41DB8DE719DD27E40029980C /* Font */,
 				41FCCAC219D2BF0F000CEF62 /* ViewControllers */,
 				41EDC61E19DBCC5900058556 /* Custom NSObjects */,
 				414D238A19D2928C001A7112 /* Supporting Files */,
@@ -207,6 +210,15 @@
 				418AB4D119DACD4200F16AE2 /* UIImage+BoxBlur.m */,
 			);
 			name = ANBlurredTableView;
+			sourceTree = "<group>";
+		};
+		41DB8DE719DD27E40029980C /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				41DB8DE819DD27FB0029980C /* Palatino */,
+			);
+			name = Font;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		41EDC61E19DBCC5900058556 /* Custom NSObjects */ = {
@@ -317,6 +329,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41DB8DE919DD27FB0029980C /* Palatino in Resources */,
 				41DB8DE619DD1B9A0029980C /* Images.xcassets in Resources */,
 				414D238E19D2928D001A7112 /* InfoPlist.strings in Resources */,
 				414D239719D2928D001A7112 /* Main.storyboard in Resources */,

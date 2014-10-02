@@ -292,7 +292,7 @@
     
     cell.textLabel.text = [self.menuTitles objectAtIndex:indexPath.row];
     cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.highlightedTextColor = [UIColor purpleColor];
+    cell.textLabel.highlightedTextColor = [UIColor colorWithRed:0.12 green:0.63 blue:0.87 alpha:1];
     
     cell.backgroundColor = [UIColor blackColor];
     cell.contentView.backgroundColor = [UIColor blackColor];

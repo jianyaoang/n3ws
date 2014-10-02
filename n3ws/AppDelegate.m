@@ -15,7 +15,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window.tintColor = [UIColor purpleColor];
+    self.window.tintColor = [UIColor colorWithRed:0.12 green:0.63 blue:0.87 alpha:1];
     
     SimpleAuth.configuration[@"instagram"] = @{@"client_id": clientID,
                                                SimpleAuthRedirectURIKey: @"http://idrawcode.tumblr.com"};
