@@ -167,7 +167,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="7ll-We-wJV">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="KES-dY-Cgv"/>
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="KES-dY-Cgv"/>
                     </navigationItem>
                     <connections>
                         <outlet property="instagramTableView" destination="WQb-5T-xge" id="MIj-ja-W8D"/>
