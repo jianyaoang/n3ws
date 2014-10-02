@@ -261,7 +261,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="WcE-jx-06R">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="0dm-8T-aMi"/>
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="0dm-8T-aMi"/>
                     </navigationItem>
                     <connections>
                         <outlet property="menuBarButtonItem" destination="0dm-8T-aMi" id="aFj-uc-Uzo"/>
@@ -369,6 +369,9 @@
             <point key="canvasLocation" x="1655" y="-947"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="menu" width="44" height="44"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -51,6 +51,8 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 {
     [super viewDidLoad];
     
+    self.title = @"n3ws";
+    
     self.weather = [Weather new];
     self.news = [News new];
     self.headlineNews = [NSMutableArray new];
@@ -108,6 +110,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     
     if (revealVC)
     {
+        [self.menuBarButtonItem setImage:[UIImage imageNamed:@"menu"]];
         [self.menuBarButtonItem setTarget:self.revealViewController];
         [self.menuBarButtonItem setAction:@selector(revealToggle:)];
         [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
