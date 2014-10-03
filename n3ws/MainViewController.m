@@ -13,6 +13,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 #import "ANBlurredTableView.h"
 #import <SWRevealViewController.h>
 #import <CoreLocation/CoreLocation.h>
+#import "EventTableViewCell.h"
 #import "Instagram.h"
 #import "Weather.h"
 #import "News.h"
@@ -41,6 +42,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 @property (strong, nonatomic) IBOutlet UITableView *eventTableView;
 @property (strong, nonatomic) NSMutableArray *eventMutableArray;
+
 
 
 @property (strong, nonatomic) Weather *weather;
@@ -130,6 +132,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     {
         self.event = [Event new];
         self.event.eventTitle = calendar.title;
+        
         [self.eventMutableArray addObject:self.event];
     }
     
@@ -333,37 +336,58 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.headlineNews.count;
+    if (tableView == self.newsTableView)
+    {
+            return self.headlineNews.count;
+    }
+    else
+    {
+        return self.eventMutableArray.count;
+    }
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    News *news = [self.headlineNews objectAtIndex:indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsCell"];
-    cell.backgroundColor = [UIColor clearColor];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.text = news.webTitle;
-    cell.textLabel.numberOfLines = 0;
-    cell.detailTextLabel.text = news.sectionName;
-    cell.detailTextLabel.numberOfLines = 0;
-    
-    if ([news.sectionName isEqualToString:@"Business"])
+    if (tableView == self.newsTableView)
     {
-        cell.detailTextLabel.textColor = [UIColor redColor];
+        News *news = [self.headlineNews objectAtIndex:indexPath.row];
+        cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.text = news.webTitle;
+        cell.textLabel.numberOfLines = 0;
+        cell.detailTextLabel.text = news.sectionName;
+        cell.detailTextLabel.numberOfLines = 0;
+        
+        if ([news.sectionName isEqualToString:@"Business"])
+        {
+            cell.detailTextLabel.textColor = [UIColor redColor];
+        }
+        else if ([news.sectionName isEqualToString:@"Technology"])
+        {
+            cell.detailTextLabel.textColor = [UIColor colorWithRed:0.12 green:0.64 blue:0.84 alpha:1];;
+        }
+        else if ([news.sectionName isEqualToString:@"World news"])
+        {
+            cell.detailTextLabel.textColor = [UIColor yellowColor];
+        }
+        else if ([news.sectionName isEqualToString:@"Sport"])
+        {
+            cell.detailTextLabel.textColor = [UIColor purpleColor];
+        }
+        return cell;
     }
-    else if ([news.sectionName isEqualToString:@"Technology"])
+    else if (tableView == self.eventTableView)
     {
-        cell.detailTextLabel.textColor = [UIColor colorWithRed:0.12 green:0.64 blue:0.84 alpha:1];;
+        EventTableViewCell *eventTableViewCell = [tableView dequeueReusableCellWithIdentifier:@"EventCellID"];
+        eventTableViewCell.eventTitleLabel.text = @"hello";
+        eventTableViewCell.eventTitleTime.text = @"bye";
+        return eventTableViewCell;
     }
-    else if ([news.sectionName isEqualToString:@"World news"])
+    else
     {
-        cell.detailTextLabel.textColor = [UIColor yellowColor];
+        return cell;
     }
-    else if ([news.sectionName isEqualToString:@"Sport"])
-    {
-        cell.detailTextLabel.textColor = [UIColor purpleColor];
-    }
-    return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
