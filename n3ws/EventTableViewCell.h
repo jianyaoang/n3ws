@@ -10,6 +10,7 @@
 
 @interface EventTableViewCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *eventTitleLabel;
-@property (strong, nonatomic) IBOutlet UILabel *eventTitleTime;
+@property (strong, nonatomic) IBOutlet UILabel *eventStartDate;
+@property (strong, nonatomic) IBOutlet UILabel *eventLocation;
 
 @end

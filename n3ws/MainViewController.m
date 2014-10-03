@@ -128,10 +128,14 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     NSArray *events = [self.event.eventStore eventsMatchingPredicate:fetchCalendarEvents];
     
     [self.eventMutableArray removeAllObjects];
-    for (EKCalendar *calendar in events)
+    for (EKEvent *event in events)
     {
         self.event = [Event new];
-        self.event.eventTitle = calendar.title;
+        self.event.eventTitle = event.title;
+        self.event.eventEndDate = event.endDate;
+        self.event.eventStartDate = event.startDate;
+        self.event.eventLocation = event.location;
+        self.event.eventNotes = event.notes;
         
         [self.eventMutableArray addObject:self.event];
     }
@@ -349,7 +353,24 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsCell"];
-    if (tableView == self.newsTableView)
+    
+    if (tableView == self.eventTableView)
+    {
+        self.event = [self.eventMutableArray objectAtIndex:indexPath.row];
+        EventTableViewCell *eventTableViewCell = [tableView dequeueReusableCellWithIdentifier:@"EventCellID"];
+        
+        eventTableViewCell.eventTitleLabel.text = self.event.eventTitle;
+        eventTableViewCell.eventTitleLabel.numberOfLines = 0;
+        
+        eventTableViewCell.eventStartDate.text = [NSString stringWithFormat:@"%@",self.event.eventStartDate];
+        eventTableViewCell.eventStartDate.numberOfLines = 0;
+        
+        eventTableViewCell.eventLocation.text = self.event.eventLocation;
+        eventTableViewCell.eventLocation.numberOfLines = 0;
+        
+        return eventTableViewCell;
+    }
+    else
     {
         News *news = [self.headlineNews objectAtIndex:indexPath.row];
         cell.backgroundColor = [UIColor clearColor];
@@ -375,17 +396,6 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         {
             cell.detailTextLabel.textColor = [UIColor purpleColor];
         }
-        return cell;
-    }
-    else if (tableView == self.eventTableView)
-    {
-        EventTableViewCell *eventTableViewCell = [tableView dequeueReusableCellWithIdentifier:@"EventCellID"];
-        eventTableViewCell.eventTitleLabel.text = @"hello";
-        eventTableViewCell.eventTitleTime.text = @"bye";
-        return eventTableViewCell;
-    }
-    else
-    {
         return cell;
     }
 }
