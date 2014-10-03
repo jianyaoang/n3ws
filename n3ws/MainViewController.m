@@ -17,6 +17,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 #import "Weather.h"
 #import "News.h"
 #import "Stock.h"
+#import "Event.h"
 
 @interface MainViewController () <CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -37,11 +38,15 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 @property (strong, nonatomic) UIRefreshControl *refreshNewsTable;
 
 @property (strong, nonatomic) NSMutableArray *stockInfoMutableArray;
-@property (strong, nonatomic) IBOutlet UIScrollView *stockScrollView;
+
+@property (strong, nonatomic) IBOutlet UITableView *eventTableView;
+@property (strong, nonatomic) NSMutableArray *eventMutableArray;
+
 
 @property (strong, nonatomic) Weather *weather;
 @property (strong, nonatomic) News *news;
 @property (strong, nonatomic) Stock *stock;
+@property (strong, nonatomic) Event *event;
 
 @end
 
@@ -57,6 +62,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     self.news = [News new];
     self.headlineNews = [NSMutableArray new];
     self.stockInfoMutableArray = [NSMutableArray new];
+    self.eventMutableArray = [NSMutableArray new];
     
     [self configureBarButtonItemAbility];
     [self configureANBlurredTableView];
@@ -65,6 +71,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     [self obtainAndDisplayTime];
     [self obtainNewsArticles];
     [self configureYahooFinanceAPI];
+    [self accessEventStore];
 
 }
 
@@ -76,9 +83,64 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.text = @"n3ws";
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.font = [UIFont fontWithName:@"Palatino" size:22];
+    titleLabel.font = [UIFont fontWithName:@"Cochin-Bold" size:25];
     [self.navigationItem setTitleView:titleLabel];
 }
+
+#pragma mark - event
+-(void)accessEventStore
+{
+    self.event = [Event new];
+    self.event.eventStore = [EKEventStore new];
+    [self.event.eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        if (granted)
+        {
+            NSLog(@"Granted access to retrieve events");
+        }
+        else
+        {
+            NSLog(@"Unable to retrieve events. Permission denied");
+        }
+    }];
+    
+    [self retrieveEventsInfo];
+}
+
+-(void)retrieveEventsInfo
+{
+    NSDate *today = [NSDate date];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    [gregorian setLocale:[NSLocale currentLocale]];
+    
+    NSDateComponents *nowComponents = [gregorian components:NSYearCalendarUnit | NSWeekCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate:today];
+    [nowComponents setWeekday:1];
+    [nowComponents setWeek:[nowComponents week] +1]; // get a week from today
+    [nowComponents setHour:7]; //7am
+    [nowComponents setMinute:0];
+    [nowComponents setSecond:0];
+    
+    NSDate *endDate = [gregorian dateFromComponents:nowComponents];
+    
+    NSArray *calendarArray = [self.event.eventStore calendarsForEntityType:EKEntityTypeEvent];
+    NSPredicate *fetchCalendarEvents = [self.event.eventStore predicateForEventsWithStartDate:[NSDate date] endDate:endDate calendars:calendarArray];
+    NSArray *events = [self.event.eventStore eventsMatchingPredicate:fetchCalendarEvents];
+    
+    [self.eventMutableArray removeAllObjects];
+    for (EKCalendar *calendar in events)
+    {
+        self.event = [Event new];
+        self.event.eventTitle = calendar.title;
+        [self.eventMutableArray addObject:self.event];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView transitionWithView:self.newsTableView duration:1.0f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
+         {
+             [self.eventTableView reloadData];
+         } completion:nil];
+    });
+}
+
 
 #pragma mark - YQL
 -(void)configureYahooFinanceAPI
@@ -178,12 +240,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     
     NSString *currentTime = [dateFormmatter stringFromDate:today];
     
-    self.timeView.backgroundColor = [UIColor colorWithRed:0.11 green:0.60 blue:0.84 alpha:0.8];
+    self.timeView.backgroundColor = [UIColor whiteColor];
     self.timeNumberLabel.text = currentTime;
-    self.timeNumberLabel.textColor = [UIColor whiteColor];
-    self.timeNumberLabel.font = [UIFont fontWithName:@"Palatino" size:35];
-    self.timeLabel.font = [UIFont fontWithName:@"Palatino" size:15];
-    self.timeLabel.textColor = [UIColor whiteColor];
+    self.timeNumberLabel.textColor = [UIColor colorWithRed:0.11 green:0.60 blue:0.84 alpha:0.8];
+    self.timeNumberLabel.font = [UIFont fontWithName:@"Palatino-Bold" size:35];
+    self.timeLabel.font = [UIFont fontWithName:@"Palatino" size:20];
+    self.timeLabel.textColor = [UIColor colorWithRed:0.11 green:0.60 blue:0.84 alpha:0.8];
     
     NSLog(@"this is the currentTime: %@",currentTime);
 }

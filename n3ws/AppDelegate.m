@@ -20,6 +20,16 @@
     SimpleAuth.configuration[@"instagram"] = @{@"client_id": clientID,
                                                SimpleAuthRedirectURIKey: @"http://idrawcode.tumblr.com"};
     
+    for (NSString* family in [UIFont familyNames])
+    {
+        NSLog(@"family name : %@", family);
+        
+        for (NSString* name in [UIFont fontNamesForFamilyName: family])
+        {
+            NSLog(@"name:  %@", name);
+        }
+    }
+    
     return YES;
 }
 							

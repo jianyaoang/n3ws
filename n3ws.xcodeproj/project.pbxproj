@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		414364C419DE60B40023CB9A /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 414364C319DE60B40023CB9A /* Event.m */; };
 		4147C0B519D3C7AA002737C2 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = 4147C0B419D3C7AA002737C2 /* Weather.m */; };
 		4147C0B719D3C891002737C2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4147C0B619D3C891002737C2 /* CoreLocation.framework */; };
 		414D238419D2928C001A7112 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 414D238319D2928C001A7112 /* Foundation.framework */; };
@@ -48,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		414364C219DE60B40023CB9A /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		414364C319DE60B40023CB9A /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		4147C0B319D3C7AA002737C2 /* Weather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weather.h; sourceTree = "<group>"; };
 		4147C0B419D3C7AA002737C2 /* Weather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weather.m; sourceTree = "<group>"; };
 		4147C0B619D3C891002737C2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -87,6 +90,9 @@
 		41BD94C919D2A43000E785F1 /* HeadlinesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadlinesViewController.m; sourceTree = "<group>"; };
 		41DB8DE519DD1B9A0029980C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		41DB8DE819DD27FB0029980C /* Palatino */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Palatino; sourceTree = "<group>"; };
+		41DB8DEA19DD6BC90029980C /* texgyrepagella-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "texgyrepagella-bold.otf"; sourceTree = "<group>"; };
+		41DB8DEB19DD6BC90029980C /* texgyrepagella-bolditalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "texgyrepagella-bolditalic.otf"; sourceTree = "<group>"; };
+		41DB8DEC19DD6BC90029980C /* texgyrepagella-italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "texgyrepagella-italic.otf"; sourceTree = "<group>"; };
 		41FCCAC319D2C658000CEF62 /* Instagram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Instagram.h; sourceTree = "<group>"; };
 		41FCCAC419D2C658000CEF62 /* Instagram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Instagram.m; sourceTree = "<group>"; };
 		DB765A6F9622462988B1B3DD /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
@@ -216,6 +222,9 @@
 			isa = PBXGroup;
 			children = (
 				41DB8DE819DD27FB0029980C /* Palatino */,
+				41DB8DEA19DD6BC90029980C /* texgyrepagella-bold.otf */,
+				41DB8DEB19DD6BC90029980C /* texgyrepagella-bolditalic.otf */,
+				41DB8DEC19DD6BC90029980C /* texgyrepagella-italic.otf */,
 			);
 			name = Font;
 			path = ..;
@@ -224,6 +233,8 @@
 		41EDC61E19DBCC5900058556 /* Custom NSObjects */ = {
 			isa = PBXGroup;
 			children = (
+				414364C219DE60B40023CB9A /* Event.h */,
+				414364C319DE60B40023CB9A /* Event.m */,
 				41FCCAC319D2C658000CEF62 /* Instagram.h */,
 				41FCCAC419D2C658000CEF62 /* Instagram.m */,
 				4147C0B319D3C7AA002737C2 /* Weather.h */,
@@ -387,6 +398,7 @@
 				41BD94CA19D2A43000E785F1 /* HeadlinesViewController.m in Sources */,
 				414D239419D2928D001A7112 /* AppDelegate.m in Sources */,
 				414D239019D2928D001A7112 /* main.m in Sources */,
+				414364C419DE60B40023CB9A /* Event.m in Sources */,
 				418AB4D319DACD4200F16AE2 /* UIImage+BoxBlur.m in Sources */,
 				418AB4A719DA75F800F16AE2 /* WebNewsViewController.m in Sources */,
 				4147C0B519D3C7AA002737C2 /* Weather.m in Sources */,
