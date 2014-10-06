@@ -75,44 +75,51 @@
 
 -(void)extractInstagramPhotosByID:(NSString*)accountID
 {
-    self.instagram = [Instagram new];
-    [self.instagram accessingInstagram];
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/media/recent/?count=5&access_token=%@",accountID,self.instagram.accessToken];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
-    {
-        if (error)
-        {
-            NSLog(@"%@", error);
-        }
-        else
-        {
-            self.data = [[NSData alloc] initWithContentsOfURL:location];
-            
-            NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:self.data options:NSJSONReadingAllowFragments error:&error];
-            
-            NSDictionary *data = [responseDictionary valueForKeyPath:@"data"];
-            
-            for (NSDictionary *accountInfo in data)
-            {
-                Instagram *instagramAccount = [Instagram new];
-                instagramAccount.imagesURL = [accountInfo valueForKeyPath:@"images.standard_resolution.url"];
-                instagramAccount.username = [accountInfo valueForKeyPath:@"caption.from.username"];
-                
-                NSString *testInstagramCaptionLimit = [accountInfo valueForKeyPath:@"caption.text"];
-                NSRange stringRange = {0, MIN([testInstagramCaptionLimit length], 500)};
-                // adjust the range to include dependent chars
-                stringRange = [testInstagramCaptionLimit rangeOfComposedCharacterSequencesForRange:stringRange];
-                // Now you can create the short string
-                instagramAccount.caption = [testInstagramCaptionLimit substringWithRange:stringRange];
-                
-                [self.instagramHeadlinesAccountsMutableArray addObject:instagramAccount];
-            }
-        }
-    }];
-    [task resume];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        self.instagram = [Instagram new];
+        [self.instagram accessingInstagram];
+        
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/media/recent/?count=5&access_token=%@",accountID,self.instagram.accessToken];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
+      {
+          if (error)
+          {
+              NSLog(@"%@", error);
+          }
+          else
+          {
+              self.data = [[NSData alloc] initWithContentsOfURL:location];
+              
+              NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:self.data options:NSJSONReadingAllowFragments error:&error];
+              
+              NSDictionary *data = [responseDictionary valueForKeyPath:@"data"];
+              
+              for (NSDictionary *accountInfo in data)
+              {
+                  Instagram *instagramAccount = [Instagram new];
+                  instagramAccount.imagesURL = [accountInfo valueForKeyPath:@"images.standard_resolution.url"];
+                  instagramAccount.username = [accountInfo valueForKeyPath:@"caption.from.username"];
+                  
+                  NSString *testInstagramCaptionLimit = [accountInfo valueForKeyPath:@"caption.text"];
+                  NSRange stringRange = {0, MIN([testInstagramCaptionLimit length], 500)};
+                  // adjust the range to include dependent chars
+                  stringRange = [testInstagramCaptionLimit rangeOfComposedCharacterSequencesForRange:stringRange];
+                  // Now you can create the short string
+                  instagramAccount.caption = [testInstagramCaptionLimit substringWithRange:stringRange];
+                  
+                  [self.instagramHeadlinesAccountsMutableArray addObject:instagramAccount];
+                  
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      [self.tableView reloadData];
+                  });
+              }
+          }
+      }];
+        [task resume];
+
+    });
 }
 
 #pragma mark - Entertainment Instagram Info
@@ -126,20 +133,21 @@
 
 -(void)extractEntertainmentInstagramPhotosByID:(NSString*)accountID
 {
-    self.instagram = [Instagram new];
-    [self.instagram accessingInstagram];
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/media/recent/?count=5&access_token=%@",accountID,self.instagram.accessToken];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
-    {
-        if (error)
-        {
-            NSLog(@"%@", error);
-        }
-        else
-        {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        self.instagram = [Instagram new];
+        [self.instagram accessingInstagram];
+        
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/media/recent/?count=5&access_token=%@",accountID,self.instagram.accessToken];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
+      {
+          if (error)
+          {
+              NSLog(@"%@", error);
+          }
+          else
+          {
               self.data = [[NSData alloc] initWithContentsOfURL:location];
               
               NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:self.data options:NSJSONReadingAllowFragments error:&error];
@@ -160,10 +168,16 @@
                   instagramAccount.caption = [testInstagramCaptionLimit substringWithRange:stringRange];
                   
                   [self.instagramEntertainmentAccountsMutableArray addObject:instagramAccount];
+                  
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      [self.tableView reloadData];
+                  });
               }
           }
       }];
-    [task resume];
+        [task resume];
+
+    });
 }
 
 #pragma mark - Food Instagram Info
@@ -177,13 +191,14 @@
 
 -(void)extractFoodInstagramPhotosByID:(NSString*)accountID
 {
-    self.instagram = [Instagram new];
-    [self.instagram accessingInstagram];
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/media/recent/?count=5&access_token=%@",accountID,self.instagram.accessToken];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        self.instagram = [Instagram new];
+        [self.instagram accessingInstagram];
+        
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/media/recent/?count=5&access_token=%@",accountID,self.instagram.accessToken];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
       {
           if (error)
           {
@@ -211,10 +226,16 @@
                   instagramAccount.caption = [testInstagramCaptionLimit substringWithRange:stringRange];
                   
                   [self.instagramFoodAccountsMutableArray addObject:instagramAccount];
+                  
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      [self.tableView reloadData];
+                  });
               }
           }
       }];
-    [task resume];
+        [task resume];
+
+    });
 }
 
 #pragma mark - Travel Instagram Info
@@ -228,44 +249,51 @@
 
 -(void)extractTravelInstagramPhotosByID:(NSString*)accountID
 {
-    self.instagram = [Instagram new];
-    [self.instagram accessingInstagram];
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/media/recent/?count=5&access_token=%@",accountID,self.instagram.accessToken];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        self.instagram = [Instagram new];
+        [self.instagram accessingInstagram];
+        
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/media/recent/?count=5&access_token=%@",accountID,self.instagram.accessToken];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
       {
-          if (error)
+      if (error)
+      {
+          NSLog(@"%@", error);
+      }
+      else
+      {
+          self.data = [[NSData alloc] initWithContentsOfURL:location];
+          
+          NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:self.data options:NSJSONReadingAllowFragments error:&error];
+          
+          NSDictionary *data = [responseDictionary valueForKeyPath:@"data"];
+          
+          for (NSDictionary *accountInfo in data)
           {
-              NSLog(@"%@", error);
+              Instagram *instagramAccount = [Instagram new];
+              instagramAccount.imagesURL = [accountInfo valueForKeyPath:@"images.standard_resolution.url"];
+              instagramAccount.username = [accountInfo valueForKeyPath:@"caption.from.username"];
+              
+              NSString *testInstagramCaptionLimit = [accountInfo valueForKeyPath:@"caption.text"];
+              NSRange stringRange = {0, MIN([testInstagramCaptionLimit length], 500)};
+              // adjust the range to include dependent chars
+              stringRange = [testInstagramCaptionLimit rangeOfComposedCharacterSequencesForRange:stringRange];
+              // Now you can create the short string
+              instagramAccount.caption = [testInstagramCaptionLimit substringWithRange:stringRange];
+              
+              [self.instagramTravelAccountsMutableArray addObject:instagramAccount];
+              
+              dispatch_async(dispatch_get_main_queue(), ^{
+                  [self.tableView reloadData];
+              });
           }
-          else
-          {
-              self.data = [[NSData alloc] initWithContentsOfURL:location];
-              
-              NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:self.data options:NSJSONReadingAllowFragments error:&error];
-              
-              NSDictionary *data = [responseDictionary valueForKeyPath:@"data"];
-              
-              for (NSDictionary *accountInfo in data)
-              {
-                  Instagram *instagramAccount = [Instagram new];
-                  instagramAccount.imagesURL = [accountInfo valueForKeyPath:@"images.standard_resolution.url"];
-                  instagramAccount.username = [accountInfo valueForKeyPath:@"caption.from.username"];
-                  
-                  NSString *testInstagramCaptionLimit = [accountInfo valueForKeyPath:@"caption.text"];
-                  NSRange stringRange = {0, MIN([testInstagramCaptionLimit length], 500)};
-                  // adjust the range to include dependent chars
-                  stringRange = [testInstagramCaptionLimit rangeOfComposedCharacterSequencesForRange:stringRange];
-                  // Now you can create the short string
-                  instagramAccount.caption = [testInstagramCaptionLimit substringWithRange:stringRange];
-                  
-                  [self.instagramTravelAccountsMutableArray addObject:instagramAccount];
-              }
-          }
-      }];
-    [task resume];
+      }
+  }];
+        [task resume];
+
+    });
 }
 
 
@@ -314,35 +342,69 @@
     
     if ([segue.identifier isEqualToString:@"Headlines"])
     {
-        self.instagram = [self.instagramHeadlinesAccountsMutableArray objectAtIndex:indexPath.row];
-        hvc = nav.viewControllers[0];
-        
-        hvc.instagram = self.instagram;
-        hvc.instagramAccountsMutableArray = self.instagramHeadlinesAccountsMutableArray;
+        if (self.instagramHeadlinesAccountsMutableArray.count != 0)
+        {
+            self.instagram = [self.instagramHeadlinesAccountsMutableArray objectAtIndex:indexPath.row];
+            hvc = nav.viewControllers[0];
+            
+            hvc.instagram = self.instagram;
+            hvc.instagramAccountsMutableArray = self.instagramHeadlinesAccountsMutableArray;
+        }
+        else
+        {
+            UIAlertView *retrievingData = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Just a sec..we are searching headline news for you" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [retrievingData show];
+        }
     }
     else if ([segue.identifier isEqualToString:@"Entertainment"])
     {
-        self.instagram = [self.instagramEntertainmentAccountsMutableArray objectAtIndex:indexPath.row];
-        hvc = nav.viewControllers[0];
+        if (self.instagramEntertainmentAccountsMutableArray.count != 0)
+        {
+            self.instagram = [self.instagramEntertainmentAccountsMutableArray objectAtIndex:indexPath.row];
+            hvc = nav.viewControllers[0];
+            
+            hvc.instagram = self.instagram;
+            hvc.instagramAccountsMutableArray = self.instagramEntertainmentAccountsMutableArray;
+        }
+        else
+        {
+            UIAlertView *retrievingData = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Just a sec..we are searching juicy entertainment news for you" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [retrievingData show];
+        }
         
-        hvc.instagram = self.instagram;
-        hvc.instagramAccountsMutableArray = self.instagramEntertainmentAccountsMutableArray;
     }
     else if ([segue.identifier isEqualToString:@"Food"])
     {
-        self.instagram = [self.instagramFoodAccountsMutableArray objectAtIndex:indexPath.row];
-        hvc = nav.viewControllers[0];
-        
-        hvc.instagram = self.instagram;
-        hvc.instagramAccountsMutableArray = self.instagramFoodAccountsMutableArray;
+        if (self.instagramFoodAccountsMutableArray.count != 0)
+        {
+            self.instagram = [self.instagramFoodAccountsMutableArray objectAtIndex:indexPath.row];
+            hvc = nav.viewControllers[0];
+            
+            hvc.instagram = self.instagram;
+            hvc.instagramAccountsMutableArray = self.instagramFoodAccountsMutableArray;
+        }
+        else
+        {
+            UIAlertView *retrievingData = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Just a sec..we are searching delicious news for you" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [retrievingData show];
+        }
+
     }
     else if ([segue.identifier isEqualToString:@"Travel"])
     {
-        self.instagram = [self.instagramTravelAccountsMutableArray objectAtIndex:indexPath.row];
-        hvc = nav.viewControllers[0];
-        
-        hvc.instagram = self.instagram;
-        hvc.instagramAccountsMutableArray = self.instagramTravelAccountsMutableArray;
+        if (self.instagramTravelAccountsMutableArray.count != 0)
+        {
+            self.instagram = [self.instagramTravelAccountsMutableArray objectAtIndex:indexPath.row];
+            hvc = nav.viewControllers[0];
+            
+            hvc.instagram = self.instagram;
+            hvc.instagramAccountsMutableArray = self.instagramTravelAccountsMutableArray;
+        }
+        else
+        {
+            UIAlertView *retrievingData = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Just a sec..we are retrieving info regarding the latest getaway" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [retrievingData show];
+        }
         
     }
     

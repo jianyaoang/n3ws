@@ -37,7 +37,7 @@
     [super viewDidAppear:animated];
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        [UIView transitionWithView:self.instagramTableView duration:1.5f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
+        [UIView transitionWithView:self.instagramTableView duration:1.0f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
          {
              [self.instagramTableView setSeparatorColor:[UIColor clearColor]];
              [self.instagramTableView reloadData];

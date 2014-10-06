@@ -262,53 +262,54 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        NSString *urlString = [NSString stringWithFormat:@"http://content.guardianapis.com/search?page-size=15&section=world|technology|sport|business&api-key=cjj5325rskk27bs7s3nby8uc"];
+        
+        NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
+         {
+             if (connectionError)
+             {
+                 NSLog(@"%@", connectionError);
+             }
+             else
+             {
+                 NSError *error;
+                 
+                 NSDictionary *newsDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                 
+                 //getting headlines
+                 NSDictionary *headlines = [newsDetails valueForKeyPath:@"response.results"];
+                 
+                 [self.headlineNews removeAllObjects];
+                 for (NSDictionary *results in headlines)
+                 {
+                     News *news = [News new];
+                     news.webTitle = [results valueForKeyPath:@"webTitle"];
+                     news.sectionName = [results valueForKeyPath:@"sectionName"];
+                     news.webUrl = [results valueForKeyPath:@"webUrl"];
+                     
+                     //                news.headlines = [results valueForKeyPath:@"headline.main"];
+                     //                news.web_url = [results valueForKeyPath:@"web_url"];
+                     //                news.snippet = [results valueForKeyPath:@"snippet"];
+                     [self.headlineNews addObject:news];
+                 }
+             }
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 
+                 [UIView transitionWithView:self.newsTableView duration:1.0f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
+                  {
+                      [self.newsTableView reloadData];
+                  } completion:nil];
+                 
+                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+             });
+         }];
+    });
 //    NSURL *url = [NSURL URLWithString:@"http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=news_desk:(%22Business%22%20%22Foreign%22)&begin_date=20140929&sort=newest&api-key=c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340"];
-    
-    NSString *urlString = [NSString stringWithFormat:@"http://content.guardianapis.com/search?page-size=15&section=world|technology|sport|business&api-key=cjj5325rskk27bs7s3nby8uc"];
-    
-    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
-    {
-        if (connectionError)
-        {
-            NSLog(@"%@", connectionError);
-        }
-        else
-        {
-            NSError *error;
-            
-            NSDictionary *newsDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-            
-            //getting headlines
-            NSDictionary *headlines = [newsDetails valueForKeyPath:@"response.results"];
-            
-            [self.headlineNews removeAllObjects];
-            for (NSDictionary *results in headlines)
-            {
-                News *news = [News new];
-                news.webTitle = [results valueForKeyPath:@"webTitle"];
-                news.sectionName = [results valueForKeyPath:@"sectionName"];
-                news.webUrl = [results valueForKeyPath:@"webUrl"];
-                
-//                news.headlines = [results valueForKeyPath:@"headline.main"];
-//                news.web_url = [results valueForKeyPath:@"web_url"];
-//                news.snippet = [results valueForKeyPath:@"snippet"];
-               [self.headlineNews addObject:news];
-            }
-        }
-               dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [UIView transitionWithView:self.newsTableView duration:1.0f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
-                {
-                    [self.newsTableView reloadData];
-                } completion:nil];
-                
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        });
-    }];
 }
 
 #pragma mark - News TableView
@@ -352,8 +353,6 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsCell"];
-    
     if (tableView == self.eventTableView)
     {
         
@@ -383,6 +382,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     }
     else
     {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsCell"];
         News *news = [self.headlineNews objectAtIndex:indexPath.row];
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.textColor = [UIColor whiteColor];
