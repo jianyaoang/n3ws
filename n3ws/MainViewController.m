@@ -250,8 +250,8 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     self.timeView.backgroundColor = [UIColor whiteColor];
     self.timeNumberLabel.text = currentTime;
     self.timeNumberLabel.textColor = [UIColor colorWithRed:0.11 green:0.60 blue:0.84 alpha:0.8];
-    self.timeNumberLabel.font = [UIFont fontWithName:@"Palatino-Bold" size:35];
-    self.timeLabel.font = [UIFont fontWithName:@"Palatino" size:20];
+    self.timeNumberLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:35];
+    self.timeLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:20];
     self.timeLabel.textColor = [UIColor colorWithRed:0.11 green:0.60 blue:0.84 alpha:0.8];
     
     NSLog(@"this is the currentTime: %@",currentTime);
@@ -376,13 +376,15 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.textLabel.text = news.webTitle;
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:20];
         cell.textLabel.numberOfLines = 0;
         cell.detailTextLabel.text = news.sectionName;
         cell.detailTextLabel.numberOfLines = 0;
+        cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:14];
         
         if ([news.sectionName isEqualToString:@"Business"])
         {
-            cell.detailTextLabel.textColor = [UIColor redColor];
+            cell.detailTextLabel.textColor = [UIColor colorWithRed:0.73 green:0.34 blue:0.34 alpha:1];
         }
         else if ([news.sectionName isEqualToString:@"Technology"])
         {
@@ -394,7 +396,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         }
         else if ([news.sectionName isEqualToString:@"Sport"])
         {
-            cell.detailTextLabel.textColor = [UIColor purpleColor];
+            cell.detailTextLabel.textColor = [UIColor colorWithRed:0.79 green:0.45 blue:0.79 alpha:1];
         }
         return cell;
     }
