@@ -76,23 +76,29 @@
     UIGraphicsEndImageContext();
     
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        
         cell.backgroundView = [[UIImageView alloc] initWithImage:resizedImageFromInstagram];
         cell.textLabel.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.75];
         cell.detailTextLabel.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.75];
+        
+        cell.textLabel.text = [NSString stringWithFormat:@"@%@",self.instagram.username];
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.font = [UIFont systemFontOfSize:25];
+        cell.textLabel.numberOfLines = 0;
+        
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",self.instagram.caption];
+        cell.detailTextLabel.numberOfLines = 0;
+        cell.detailTextLabel.textColor = [UIColor whiteColor];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:15];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     });
 
-    cell.textLabel.text = [NSString stringWithFormat:@"@%@",self.instagram.username];
-    cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.font = [UIFont systemFontOfSize:25];
-    cell.textLabel.numberOfLines = 0;
-    
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",self.instagram.caption];
-    cell.detailTextLabel.numberOfLines = 0;
-    cell.detailTextLabel.textColor = [UIColor whiteColor];
-    cell.detailTextLabel.font = [UIFont systemFontOfSize:15];
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }

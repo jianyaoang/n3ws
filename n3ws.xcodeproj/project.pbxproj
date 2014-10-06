@@ -91,6 +91,9 @@
 		41BD94C619D2A15800E785F1 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		41BD94C819D2A43000E785F1 /* HeadlinesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadlinesViewController.h; sourceTree = "<group>"; };
 		41BD94C919D2A43000E785F1 /* HeadlinesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadlinesViewController.m; sourceTree = "<group>"; };
+		41DA093019E2350C00F992D3 /* Helvetica.dfont */ = {isa = PBXFileReference; lastKnownFileType = file; path = Helvetica.dfont; sourceTree = "<group>"; };
+		41DA093119E2350C00F992D3 /* HelveticaNeue.dfont */ = {isa = PBXFileReference; lastKnownFileType = file; path = HelveticaNeue.dfont; sourceTree = "<group>"; };
+		41DA093219E2350C00F992D3 /* HelveticaNeueDeskUI.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = HelveticaNeueDeskUI.ttc; sourceTree = "<group>"; };
 		41DB8DE519DD1B9A0029980C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		41DB8DE819DD27FB0029980C /* Palatino */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Palatino; sourceTree = "<group>"; };
 		41DB8DEA19DD6BC90029980C /* texgyrepagella-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "texgyrepagella-bold.otf"; sourceTree = "<group>"; };
@@ -226,6 +229,9 @@
 		41DB8DE719DD27E40029980C /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				41DA093019E2350C00F992D3 /* Helvetica.dfont */,
+				41DA093119E2350C00F992D3 /* HelveticaNeue.dfont */,
+				41DA093219E2350C00F992D3 /* HelveticaNeueDeskUI.ttc */,
 				41DB8DE819DD27FB0029980C /* Palatino */,
 				41DB8DEA19DD6BC90029980C /* texgyrepagella-bold.otf */,
 				41DB8DEB19DD6BC90029980C /* texgyrepagella-bolditalic.otf */,

@@ -28,7 +28,9 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor blackColor];
+    UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sidemenu"]];
+    [self.view addSubview:backgroundImage];
+    [self.view sendSubviewToBack:backgroundImage];
     
     self.instagramHeadlinesAccountsMutableArray = [NSMutableArray new];
     self.instagramEntertainmentAccountsMutableArray = [NSMutableArray new];
@@ -273,6 +275,7 @@
     self.menuTitles = @[@"Home", @"Headlines", @"Entertainment", @"Food", @"Travel"];
     
     self.tableView.backgroundColor = [UIColor clearColor];
+//    [self.tableView setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sidemenu"]]];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -291,11 +294,12 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
     
     cell.textLabel.text = [self.menuTitles objectAtIndex:indexPath.row];
-    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:22];
+    cell.textLabel.textColor = [UIColor colorWithRed:0.19 green:0.19 blue:0.19 alpha:1];
     cell.textLabel.highlightedTextColor = [UIColor colorWithRed:0.12 green:0.63 blue:0.87 alpha:1];
     
-    cell.backgroundColor = [UIColor blackColor];
-    cell.contentView.backgroundColor = [UIColor blackColor];
+    cell.backgroundColor = [UIColor clearColor];
+    cell.contentView.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
     return cell;

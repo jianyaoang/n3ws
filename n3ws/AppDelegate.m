@@ -22,13 +22,14 @@
     
     for (NSString* family in [UIFont familyNames])
     {
-        NSLog(@"family name : %@", family);
+        NSLog(@"%@", family);
         
         for (NSString* name in [UIFont fontNamesForFamilyName: family])
         {
-            NSLog(@"name:  %@", name);
+            NSLog(@"  %@", name);
         }
     }
+    
     
     return YES;
 }
