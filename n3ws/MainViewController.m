@@ -356,16 +356,27 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     
     if (tableView == self.eventTableView)
     {
+        
+        if (self.eventMutableArray == nil)
+        {
+            EventTableViewCell *eventTableViewCell = [tableView dequeueReusableCellWithIdentifier:@"EventCellID"];
+            eventTableViewCell.eventTitleLabel.text = @"Unable to retrieve Calendar info. Please configure Calendar settings";
+            return eventTableViewCell;
+        }
+        
         self.event = [self.eventMutableArray objectAtIndex:indexPath.row];
         EventTableViewCell *eventTableViewCell = [tableView dequeueReusableCellWithIdentifier:@"EventCellID"];
         
         eventTableViewCell.eventTitleLabel.text = self.event.eventTitle;
+        eventTableViewCell.eventTitleLabel.font = [UIFont fontWithName:@"Helvetica" size:15];
         eventTableViewCell.eventTitleLabel.numberOfLines = 0;
         
         eventTableViewCell.eventStartDate.text = [NSString stringWithFormat:@"%@",self.event.eventStartDate];
+        eventTableViewCell.eventStartDate.font = [UIFont fontWithName:@"Helvetica" size:12];
         eventTableViewCell.eventStartDate.numberOfLines = 0;
         
         eventTableViewCell.eventLocation.text = self.event.eventLocation;
+        eventTableViewCell.eventLocation.font = [UIFont fontWithName:@"Helvetica" size:13];
         eventTableViewCell.eventLocation.numberOfLines = 0;
         
         return eventTableViewCell;
