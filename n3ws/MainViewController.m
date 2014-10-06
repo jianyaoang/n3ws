@@ -85,7 +85,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.text = @"n3ws";
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.font = [UIFont fontWithName:@"Cochin-Bold" size:25];
+    titleLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:25];
     [self.navigationItem setTitleView:titleLabel];
 }
 

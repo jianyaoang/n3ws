@@ -33,7 +33,7 @@
 		41BD94C419D296A600E785F1 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C319D296A600E785F1 /* MenuViewController.m */; };
 		41BD94C719D2A15800E785F1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C619D2A15800E785F1 /* MainViewController.m */; };
 		41BD94CA19D2A43000E785F1 /* HeadlinesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BD94C919D2A43000E785F1 /* HeadlinesViewController.m */; };
-		41DB8DE619DD1B9A0029980C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41DB8DE519DD1B9A0029980C /* Images.xcassets */; };
+		41CF42EC19E27021009D3894 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41CF42EB19E27021009D3894 /* Images.xcassets */; };
 		41DB8DE919DD27FB0029980C /* Palatino in Resources */ = {isa = PBXBuildFile; fileRef = 41DB8DE819DD27FB0029980C /* Palatino */; };
 		41FCCAC519D2C658000CEF62 /* Instagram.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FCCAC419D2C658000CEF62 /* Instagram.m */; };
 		FFF7FBB2F8C84F74AC41ECEB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E267D6231C5E4784BFFB59C8 /* libPods.a */; };
@@ -91,10 +91,10 @@
 		41BD94C619D2A15800E785F1 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		41BD94C819D2A43000E785F1 /* HeadlinesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadlinesViewController.h; sourceTree = "<group>"; };
 		41BD94C919D2A43000E785F1 /* HeadlinesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadlinesViewController.m; sourceTree = "<group>"; };
+		41CF42EB19E27021009D3894 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		41DA093019E2350C00F992D3 /* Helvetica.dfont */ = {isa = PBXFileReference; lastKnownFileType = file; path = Helvetica.dfont; sourceTree = "<group>"; };
 		41DA093119E2350C00F992D3 /* HelveticaNeue.dfont */ = {isa = PBXFileReference; lastKnownFileType = file; path = HelveticaNeue.dfont; sourceTree = "<group>"; };
 		41DA093219E2350C00F992D3 /* HelveticaNeueDeskUI.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = HelveticaNeueDeskUI.ttc; sourceTree = "<group>"; };
-		41DB8DE519DD1B9A0029980C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		41DB8DE819DD27FB0029980C /* Palatino */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Palatino; sourceTree = "<group>"; };
 		41DB8DEA19DD6BC90029980C /* texgyrepagella-bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "texgyrepagella-bold.otf"; sourceTree = "<group>"; };
 		41DB8DEB19DD6BC90029980C /* texgyrepagella-bolditalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "texgyrepagella-bolditalic.otf"; sourceTree = "<group>"; };
@@ -177,7 +177,7 @@
 				414D239519D2928D001A7112 /* Main.storyboard */,
 				414364C519DE6F5C0023CB9A /* EventTableViewCell.h */,
 				414364C619DE6F5C0023CB9A /* EventTableViewCell.m */,
-				41DB8DE519DD1B9A0029980C /* Images.xcassets */,
+				41CF42EB19E27021009D3894 /* Images.xcassets */,
 				41DB8DE719DD27E40029980C /* Font */,
 				41FCCAC219D2BF0F000CEF62 /* ViewControllers */,
 				41EDC61E19DBCC5900058556 /* Custom NSObjects */,
@@ -352,7 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				41DB8DE919DD27FB0029980C /* Palatino in Resources */,
-				41DB8DE619DD1B9A0029980C /* Images.xcassets in Resources */,
+				41CF42EC19E27021009D3894 /* Images.xcassets in Resources */,
 				414D238E19D2928D001A7112 /* InfoPlist.strings in Resources */,
 				414D239719D2928D001A7112 /* Main.storyboard in Resources */,
 			);
