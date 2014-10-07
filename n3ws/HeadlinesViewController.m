@@ -8,6 +8,7 @@
 
 #import "HeadlinesViewController.h"
 #import <SWRevealViewController.h>
+#import "InstagramTableViewCell.h"
 
 @interface HeadlinesViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *menuBarButtonItem;
@@ -70,7 +71,7 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.instagram = [self.instagramMutableArray objectAtIndex:indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InstagramInfoCell"];
+    InstagramTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InstagramInfoCell"];
 
     UIImage *imageFromInstagram = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.instagram.imagesURL]]];
     CGSize resizeImage = CGSizeMake(320, 420);
@@ -84,19 +85,18 @@
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         
         cell.backgroundView = [[UIImageView alloc] initWithImage:resizedImageFromInstagram];
-        cell.textLabel.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.75];
-        cell.detailTextLabel.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.75];
+        cell.instagramUsername.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.75];
+        cell.instagramCaption.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.75];
         
-        cell.textLabel.text = [NSString stringWithFormat:@"@%@",self.instagram.username];
-        cell.textLabel.backgroundColor = [UIColor clearColor];
-        cell.textLabel.textColor = [UIColor whiteColor];
-        cell.textLabel.font = [UIFont systemFontOfSize:25];
-        cell.textLabel.numberOfLines = 0;
+        cell.instagramUsername.text = [NSString stringWithFormat:@"@%@", self.instagram.username];
+        cell.instagramUsername.textColor = [UIColor whiteColor];
+        cell.instagramUsername.font = [UIFont fontWithName:@"Helvetica Neue" size:22];
+        cell.instagramUsername.numberOfLines = 0;
         
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",self.instagram.caption];
-        cell.detailTextLabel.numberOfLines = 0;
-        cell.detailTextLabel.textColor = [UIColor whiteColor];
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:15];
+        cell.instagramCaption.text = [NSString stringWithFormat:@"%@",self.instagram.caption];
+        cell.instagramCaption.numberOfLines = 0;
+        cell.instagramCaption.textColor = [UIColor whiteColor];
+        cell.instagramCaption.font = [UIFont fontWithName:@"Helvetica Neue" size:14];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
@@ -112,7 +112,7 @@
     Instagram *instagramAccount = [self.instagramMutableArray objectAtIndex:indexPath.row];
     NSString *caption = instagramAccount.caption;
     CGFloat width = 320;
-    UIFont *font = [UIFont systemFontOfSize:1];
+    UIFont *font = [UIFont systemFontOfSize:0.3];
     NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:caption attributes:@{NSFontAttributeName: font}];
     CGRect rect = [attributedText boundingRectWithSize:(CGSize){width,CGFLOAT_MAX} options:NSStringDrawingUsesLineFragmentOrigin context:nil];
     rect = CGRectInset(rect, -320, -210);
