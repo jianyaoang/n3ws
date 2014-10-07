@@ -64,13 +64,11 @@
 #pragma mark - table
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    return self.instagramAccountsMutableArray.count;
     return self.instagramMutableArray.count;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    self.instagram = [self.instagramAccountsMutableArray objectAtIndex:indexPath.row];
     self.instagram = [self.instagramMutableArray objectAtIndex:indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InstagramInfoCell"];
 
@@ -111,7 +109,6 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    Instagram *instagramAccount = [self.instagramAccountsMutableArray objectAtIndex:indexPath.row];
     Instagram *instagramAccount = [self.instagramMutableArray objectAtIndex:indexPath.row];
     NSString *caption = instagramAccount.caption;
     CGFloat width = 320;
