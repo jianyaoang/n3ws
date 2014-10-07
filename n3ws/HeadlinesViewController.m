@@ -162,6 +162,7 @@
 -(void)extractInstagramPhotosByID:(NSString*)accountID
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        
         self.instagram = [Instagram new];
         [self.instagram accessingInstagram];
         
@@ -198,7 +199,9 @@
                   [self.instagramMutableArray addObject:instagramAccount];
                   
                   dispatch_async(dispatch_get_main_queue(), ^{
+                      [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
                       [self.instagramTableView reloadData];
+                      [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                   });
               }
           }
