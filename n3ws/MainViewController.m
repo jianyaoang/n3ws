@@ -13,6 +13,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 #import "ANBlurredTableView.h"
 #import <SWRevealViewController.h>
 #import <CoreLocation/CoreLocation.h>
+#import <QuartzCore/QuartzCore.h>
 #import "EventTableViewCell.h"
 #import "Instagram.h"
 #import "Weather.h"
@@ -31,6 +32,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 @property (strong, nonatomic) IBOutlet UIView *timeView;
 
 @property (strong, nonatomic) IBOutlet UILabel *temperatureLabel;
+@property (strong, nonatomic) IBOutlet UILabel *temperatureStatusLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *temperatureImage;
 
 @property (strong, nonatomic) NSArray *newsImages;
@@ -239,22 +241,22 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 #pragma mark - Time
 -(void)obtainAndDisplayTime
 {
-    NSDate *today = [NSDate date];
-    
-    NSDateFormatter *dateFormmatter = [NSDateFormatter new];
-    [dateFormmatter setTimeStyle:NSDateFormatterShortStyle];
-    [dateFormmatter setTimeZone:[NSTimeZone localTimeZone]];
-    
-    NSString *currentTime = [dateFormmatter stringFromDate:today];
-    
-    self.timeView.backgroundColor = [UIColor whiteColor];
-    self.timeNumberLabel.text = currentTime;
-    self.timeNumberLabel.textColor = [UIColor colorWithRed:0.11 green:0.60 blue:0.84 alpha:0.8];
-    self.timeNumberLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:35];
-    self.timeLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:20];
-    self.timeLabel.textColor = [UIColor colorWithRed:0.11 green:0.60 blue:0.84 alpha:0.8];
-    
-    NSLog(@"this is the currentTime: %@",currentTime);
+//    NSDate *today = [NSDate date];
+//    
+//    NSDateFormatter *dateFormmatter = [NSDateFormatter new];
+//    [dateFormmatter setTimeStyle:NSDateFormatterShortStyle];
+//    [dateFormmatter setTimeZone:[NSTimeZone localTimeZone]];
+//    
+//    NSString *currentTime = [dateFormmatter stringFromDate:today];
+//    
+//    self.timeView.backgroundColor = [UIColor whiteColor];
+//    self.timeNumberLabel.text = currentTime;
+//    self.timeNumberLabel.textColor = [UIColor colorWithRed:0.11 green:0.60 blue:0.84 alpha:0.8];
+//    self.timeNumberLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:35];
+//    self.timeLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:20];
+//    self.timeLabel.textColor = [UIColor colorWithRed:0.11 green:0.60 blue:0.84 alpha:0.8];
+//    
+//    NSLog(@"this is the currentTime: %@",currentTime);
 }
 
 #pragma mark - news
@@ -466,9 +468,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
              
              self.weather = [Weather new];
              self.weather.locationWeatherCelcius = [current_observation[@"temp_c"]floatValue];
+             self.weather.weatherStatus = [current_observation valueForKeyPath:@"weather"];
+             self.weather.temperature_String = [current_observation valueForKeyPath:@"temperature_string"];
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  self.temperatureLabel.text = [NSString stringWithFormat:@"%.f ºC",self.weather.locationWeatherCelcius];
+                 self.temperatureStatusLabel.text = self.weather.weatherStatus;
                  
                  [self settingTemperatureImageAnimation];
              });
@@ -481,11 +486,29 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 {
     if (self.weather.locationWeatherCelcius < 20.f)
     {
-        NSArray *coldWeatherImage = @[[UIImage imageNamed:@"hot1"],
-                                     [UIImage imageNamed:@"hot2"]];
+        NSArray *coldWeatherImage = @[[UIImage imageNamed:@"warm1"],
+                                      [UIImage imageNamed:@"warm2"],
+                                      [UIImage imageNamed:@"warm3-1"],
+                                      [UIImage imageNamed:@"warm4"],
+                                      [UIImage imageNamed:@"warm5-1"],
+                                      [UIImage imageNamed:@"warm6-1"],
+                                      [UIImage imageNamed:@"warm7-1"],
+                                      [UIImage imageNamed:@"warm8-1"],
+                                      [UIImage imageNamed:@"warm9-1"],
+                                      [UIImage imageNamed:@"warm10-1"],
+                                      [UIImage imageNamed:@"warm9-1"],
+                                      [UIImage imageNamed:@"warm8-1"],
+                                      [UIImage imageNamed:@"warm7-1"],
+                                      [UIImage imageNamed:@"warm6-1"],
+                                      [UIImage imageNamed:@"warm5-1"],
+                                      [UIImage imageNamed:@"warm4-1"],
+                                      [UIImage imageNamed:@"warm3-1"],
+                                      [UIImage imageNamed:@"warm2"],
+                                      [UIImage imageNamed:@"warm1"]];
+
         
         self.temperatureImage.animationImages = coldWeatherImage;
-        self.temperatureImage.animationDuration = 2;
+        self.temperatureImage.animationDuration = 10;
         [self.temperatureImage startAnimating];
         
     }

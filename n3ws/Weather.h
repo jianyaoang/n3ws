@@ -14,6 +14,8 @@
 @property float userLongitudeCoordinate;
 
 @property float locationWeatherCelcius;
+@property (strong, nonatomic) NSString *weatherStatus;
+@property (strong, nonatomic) NSString *temperature_String;
 
 //-(void)userLatitudeCoordinate:(float)userLatitudeCoordinate userLongitudeCoordinate:(float)userLongitudeCoordinate;
 
