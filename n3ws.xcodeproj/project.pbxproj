@@ -24,6 +24,7 @@
 		414D23AD19D29290001A7112 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 414D23AB19D29290001A7112 /* InfoPlist.strings */; };
 		414D23AF19D29290001A7112 /* n3wsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 414D23AE19D29290001A7112 /* n3wsTests.m */; };
 		4151901E19D94E3F0058684D /* News.m in Sources */ = {isa = PBXBuildFile; fileRef = 4151901D19D94E3F0058684D /* News.m */; };
+		416121B619E3BAF200D2027B /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 416121B519E3BAF200D2027B /* Section.m */; };
 		418AB4A719DA75F800F16AE2 /* WebNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 418AB4A619DA75F800F16AE2 /* WebNewsViewController.m */; };
 		418AB4C819DAA44A00F16AE2 /* Stock.m in Sources */ = {isa = PBXBuildFile; fileRef = 418AB4C719DAA44A00F16AE2 /* Stock.m */; };
 		418AB4CA19DACCC600F16AE2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 418AB4C919DACCC600F16AE2 /* QuartzCore.framework */; };
@@ -75,6 +76,8 @@
 		414D23AE19D29290001A7112 /* n3wsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = n3wsTests.m; sourceTree = "<group>"; };
 		4151901C19D94E3F0058684D /* News.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = News.h; sourceTree = "<group>"; };
 		4151901D19D94E3F0058684D /* News.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = News.m; sourceTree = "<group>"; };
+		416121B419E3BAF200D2027B /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Section.h; path = ../Section.h; sourceTree = "<group>"; };
+		416121B519E3BAF200D2027B /* Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Section.m; path = ../Section.m; sourceTree = "<group>"; };
 		418AB4A519DA75F800F16AE2 /* WebNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebNewsViewController.h; sourceTree = "<group>"; };
 		418AB4A619DA75F800F16AE2 /* WebNewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebNewsViewController.m; sourceTree = "<group>"; };
 		418AB4C619DAA44900F16AE2 /* Stock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stock.h; path = ../Stock.h; sourceTree = "<group>"; };
@@ -171,6 +174,8 @@
 		414D238919D2928C001A7112 /* n3ws */ = {
 			isa = PBXGroup;
 			children = (
+				416121B419E3BAF200D2027B /* Section.h */,
+				416121B519E3BAF200D2027B /* Section.m */,
 				418AB4CD19DACD2A00F16AE2 /* ANBlurredTableView */,
 				414D239219D2928D001A7112 /* AppDelegate.h */,
 				414D239319D2928D001A7112 /* AppDelegate.m */,
@@ -417,6 +422,7 @@
 				418AB4C819DAA44A00F16AE2 /* Stock.m in Sources */,
 				41BD94C719D2A15800E785F1 /* MainViewController.m in Sources */,
 				41BD94C419D296A600E785F1 /* MenuViewController.m in Sources */,
+				416121B619E3BAF200D2027B /* Section.m in Sources */,
 				418AB4D219DACD4200F16AE2 /* ANBlurredTableView.m in Sources */,
 				4151901E19D94E3F0058684D /* News.m in Sources */,
 				41FCCAC519D2C658000CEF62 /* Instagram.m in Sources */,
