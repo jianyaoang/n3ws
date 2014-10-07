@@ -74,7 +74,7 @@
     InstagramTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InstagramInfoCell"];
 
     UIImage *imageFromInstagram = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.instagram.imagesURL]]];
-    CGSize resizeImage = CGSizeMake(320, 420);
+    CGSize resizeImage = CGSizeMake(320, 320);
     UIGraphicsBeginImageContext(resizeImage);
     [imageFromInstagram drawInRect:CGRectMake(0, 0, resizeImage.width, resizeImage.height)];
     UIImage *resizedImageFromInstagram = UIGraphicsGetImageFromCurrentImageContext();
@@ -88,11 +88,14 @@
         cell.instagramUsername.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.75];
         cell.instagramCaption.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.75];
         
+        CGSize instagramUsernameTextSize = [[cell.instagramUsername text] sizeWithAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"Helvetica Neue" size:22]}];
+        CGFloat instagramUsernameLabelWidth = instagramUsernameTextSize.width;
+        CGFloat instagramUsernameLabelHeight = instagramUsernameTextSize.height;
+        
+        cell.instagramUsername.frame = CGRectMake(20, 0, instagramUsernameLabelWidth, instagramUsernameLabelHeight);
         cell.instagramUsername.text = [NSString stringWithFormat:@"@%@", self.instagram.username];
         cell.instagramUsername.textColor = [UIColor whiteColor];
-        cell.instagramUsername.font = [UIFont fontWithName:@"Helvetica Neue" size:22];
-        cell.instagramUsername.numberOfLines = 0;
-        
+
         cell.instagramCaption.text = [NSString stringWithFormat:@"%@",self.instagram.caption];
         cell.instagramCaption.numberOfLines = 0;
         cell.instagramCaption.textColor = [UIColor whiteColor];
@@ -115,7 +118,7 @@
     UIFont *font = [UIFont systemFontOfSize:0.3];
     NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:caption attributes:@{NSFontAttributeName: font}];
     CGRect rect = [attributedText boundingRectWithSize:(CGSize){width,CGFLOAT_MAX} options:NSStringDrawingUsesLineFragmentOrigin context:nil];
-    rect = CGRectInset(rect, -320, -210);
+    rect = CGRectInset(rect, -320, -162);
     CGSize size = rect.size;
     return size.height;
     
