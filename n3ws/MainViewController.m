@@ -317,20 +317,27 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 #pragma mark - News TableView
 -(void)configureANBlurredTableView
 {
-    self.refreshNewsTable = [UIRefreshControl new];
-    self.refreshNewsTable.tintColor = [UIColor colorWithWhite:0.9 alpha:0.9];
-    
-    NSAttributedString *refreshMessage = [[NSAttributedString alloc] initWithString:@"Pull down to get news update" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-    self.refreshNewsTable.attributedTitle = [[NSAttributedString alloc] initWithAttributedString:refreshMessage];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.refreshNewsTable = [UIRefreshControl new];
+        self.refreshNewsTable.tintColor = [UIColor colorWithWhite:0.9 alpha:0.9];
+        
+        self.newsTableView.layer.borderWidth = 1.0;
+        self.newsTableView.layer.borderColor = [UIColor colorWithWhite:0.5 alpha:1].CGColor;
+        
+        NSAttributedString *refreshMessage = [[NSAttributedString alloc] initWithString:@"Pull down to get news update" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+        self.refreshNewsTable.attributedTitle = [[NSAttributedString alloc] initWithAttributedString:refreshMessage];
+        
+        
+        [self.newsTableView setBlurTintColor:[UIColor colorWithWhite:0.11 alpha:0.1]];
+        [self.newsTableView setAnimateTintAlpha:YES];
+        [self.newsTableView setStartTintAlpha:0.6f];
+        [self.newsTableView setEndTintAlpha:0.85f];
+        [self.newsTableView setBackgroundImage:[UIImage imageNamed:@"news2"]];
+    });
     
     [self.refreshNewsTable addTarget:self action:@selector(updateNewsTable) forControlEvents:UIControlEventValueChanged];
     [self.newsTableView addSubview:self.refreshNewsTable];
-    
-    [self.newsTableView setBlurTintColor:[UIColor colorWithWhite:0.11 alpha:0.1]];
-    [self.newsTableView setAnimateTintAlpha:YES];
-    [self.newsTableView setStartTintAlpha:0.45f];
-    [self.newsTableView setEndTintAlpha:0.75f];
-    [self.newsTableView setBackgroundImage:[UIImage imageNamed:@"background"]];
 }
 
 -(void)updateNewsTable
@@ -369,15 +376,15 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         EventTableViewCell *eventTableViewCell = [tableView dequeueReusableCellWithIdentifier:@"EventCellID"];
         
         eventTableViewCell.eventTitleLabel.text = self.event.eventTitle;
-        eventTableViewCell.eventTitleLabel.font = [UIFont fontWithName:@"Helvetica" size:15];
+        eventTableViewCell.eventTitleLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:15];
         eventTableViewCell.eventTitleLabel.numberOfLines = 0;
         
         eventTableViewCell.eventStartDate.text = [NSString stringWithFormat:@"%@",self.event.eventStartDate];
-        eventTableViewCell.eventStartDate.font = [UIFont fontWithName:@"Helvetica" size:12];
+        eventTableViewCell.eventStartDate.font = [UIFont fontWithName:@"Helvetica Neue" size:12];
         eventTableViewCell.eventStartDate.numberOfLines = 0;
         
         eventTableViewCell.eventLocation.text = self.event.eventLocation;
-        eventTableViewCell.eventLocation.font = [UIFont fontWithName:@"Helvetica" size:13];
+        eventTableViewCell.eventLocation.font = [UIFont fontWithName:@"Helvetica Neue" size:13];
         eventTableViewCell.eventLocation.numberOfLines = 0;
         
         return eventTableViewCell;
