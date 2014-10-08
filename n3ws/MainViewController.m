@@ -472,8 +472,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
              self.weather.temperature_String = [current_observation valueForKeyPath:@"temperature_string"];
              
              dispatch_async(dispatch_get_main_queue(), ^{
-                 self.temperatureLabel.text = [NSString stringWithFormat:@"%.f ºC",self.weather.locationWeatherCelcius];
+                 self.temperatureLabel.text = [NSString stringWithFormat:@"%@",self.weather.temperature_String];
+                 self.temperatureLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:27];
+                 
                  self.temperatureStatusLabel.text = self.weather.weatherStatus;
+                 self.temperatureStatusLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:20];
+                 [self.temperatureStatusLabel sizeToFit];
                  
                  [self settingTemperatureImageAnimation];
              });
@@ -484,43 +488,25 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 -(void)settingTemperatureImageAnimation
 {
-    if (self.weather.locationWeatherCelcius < 20.f)
+    if ([self.weather.weatherStatus isEqualToString:@"Partly Cloudy"] || [self.weather.weatherStatus isEqualToString:@"Mostly Cloudy"] || [self.weather.weatherStatus isEqualToString:@"Scattered Clouds"])
     {
-        NSArray *coldWeatherImage = @[[UIImage imageNamed:@"warm1"],
-                                      [UIImage imageNamed:@"warm2"],
-                                      [UIImage imageNamed:@"warm3-1"],
-                                      [UIImage imageNamed:@"warm4"],
-                                      [UIImage imageNamed:@"warm5-1"],
-                                      [UIImage imageNamed:@"warm6-1"],
-                                      [UIImage imageNamed:@"warm7-1"],
-                                      [UIImage imageNamed:@"warm8-1"],
-                                      [UIImage imageNamed:@"warm9-1"],
-                                      [UIImage imageNamed:@"warm10-1"],
-                                      [UIImage imageNamed:@"warm9-1"],
-                                      [UIImage imageNamed:@"warm8-1"],
-                                      [UIImage imageNamed:@"warm7-1"],
-                                      [UIImage imageNamed:@"warm6-1"],
-                                      [UIImage imageNamed:@"warm5-1"],
-                                      [UIImage imageNamed:@"warm4-1"],
-                                      [UIImage imageNamed:@"warm3-1"],
-                                      [UIImage imageNamed:@"warm2"],
-                                      [UIImage imageNamed:@"warm1"]];
-
-        
-        self.temperatureImage.animationImages = coldWeatherImage;
-        self.temperatureImage.animationDuration = 10;
-        [self.temperatureImage startAnimating];
-        
+        self.temperatureImage.image = [UIImage imageNamed:@"cloudy"];
     }
-    else if (self.weather.locationWeatherCelcius > 20.f)
+    else if ([self.weather.weatherStatus isEqualToString:@"Drizzle"] || [self.weather.weatherStatus isEqualToString:@"Rain"] || [self.weather.weatherStatus isEqualToString:@"Thunderstorm"] || [self.weather.weatherStatus isEqualToString:@"Thuderstorms and Rain"] || [self.weather.weatherStatus isEqualToString:@"Rain Showers"] || [self.weather.weatherStatus isEqualToString:@"Rain mist"] || [self.weather.weatherStatus isEqualToString:@"Freezing Drizzle"] || [self.weather.weatherStatus isEqualToString:@"Freezing Rain"])
     {
-        NSArray *hotWeatherImage = @[[UIImage imageNamed:@"hot1"],
-                                     [UIImage imageNamed:@"hot2"]];
-        
-        self.temperatureImage.animationImages = hotWeatherImage;
-        self.temperatureImage.animationDuration = 2;
-        [self.temperatureImage startAnimating];
-        
+        self.temperatureImage.image = [UIImage imageNamed:@"rain"];
+    }
+    else if ([self.weather.weatherStatus isEqualToString:@"Clear"])
+    {
+        self.temperatureImage.image = [UIImage imageNamed:@"clear"];
+    }
+    else if ([self.weather.weatherStatus isEqualToString:@"Snow"] || [self.weather.weatherStatus isEqualToString:@"Snow Grains"] || [self.weather.weatherStatus isEqualToString:@"Snow Showers"] || [self.weather.weatherStatus isEqualToString:@"Snow Blowing Snow Mist"] || [self.weather.weatherStatus isEqualToString:@"Thunderstorms and Snow"])
+    {
+        self.temperatureImage.image = [UIImage imageNamed:@"snow"];
+    }
+    else
+    {
+        self.temperatureImage.image = [UIImage imageNamed:@"default"];
     }
 }
 
