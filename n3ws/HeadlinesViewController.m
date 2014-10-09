@@ -45,7 +45,9 @@
         [UIView transitionWithView:self.instagramTableView duration:1.0f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
          {
              [self.instagramTableView setSeparatorColor:[UIColor clearColor]];
-             [self.instagramTableView reloadData];
+             
+             
+//             [self.instagramTableView reloadData];
          } completion:nil];
     });
 }
@@ -200,7 +202,16 @@
                   
                   dispatch_async(dispatch_get_main_queue(), ^{
                       [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-                      [self.instagramTableView reloadData];
+                      
+
+                      [UIView transitionWithView:self.instagramTableView duration:2.0f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
+                       {
+                            [self.instagramTableView reloadData];
+                           
+                       } completion:nil];
+                      
+                      
+                      
                       [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                   });
               }

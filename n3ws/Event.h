@@ -16,5 +16,6 @@
 @property (strong, nonatomic) NSString *eventNotes;
 @property (strong, nonatomic) NSDate *eventStartDate;
 @property (strong, nonatomic) NSDate *eventEndDate;
+@property (strong, nonatomic) NSString *formattedEventStartDate;
 @property (strong, nonatomic) NSArray *eventAttendees;
 @end

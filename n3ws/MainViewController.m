@@ -135,7 +135,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         self.event = [Event new];
         self.event.eventTitle = event.title;
         self.event.eventEndDate = event.endDate;
-        self.event.eventStartDate = event.startDate;
+        
+        NSDateFormatter *eventStartDateFormat = [NSDateFormatter new];
+        [eventStartDateFormat setDateFormat:@"MMM dd, yyyy HH:mm"];
+        NSString *eventStartDateString = [eventStartDateFormat stringFromDate:event.startDate];
+        self.event.formattedEventStartDate = eventStartDateString;
+        
         self.event.eventLocation = event.location;
         self.event.eventNotes = event.notes;
         
@@ -294,9 +299,6 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                      news.sectionName = [results valueForKeyPath:@"sectionName"];
                      news.webUrl = [results valueForKeyPath:@"webUrl"];
                      
-                     //                news.headlines = [results valueForKeyPath:@"headline.main"];
-                     //                news.web_url = [results valueForKeyPath:@"web_url"];
-                     //                news.snippet = [results valueForKeyPath:@"snippet"];
                      [self.headlineNews addObject:news];
                  }
              }
@@ -311,7 +313,6 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
              });
          }];
     });
-//    NSURL *url = [NSURL URLWithString:@"http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=news_desk:(%22Business%22%20%22Foreign%22)&begin_date=20140929&sort=newest&api-key=c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340"];
 }
 
 #pragma mark - News TableView
@@ -331,7 +332,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         
         [self.newsTableView setBlurTintColor:[UIColor colorWithWhite:0.11 alpha:0.1]];
         [self.newsTableView setAnimateTintAlpha:YES];
-        [self.newsTableView setStartTintAlpha:0.6f];
+        [self.newsTableView setStartTintAlpha:0.75f];
         [self.newsTableView setEndTintAlpha:0.85f];
         [self.newsTableView setBackgroundImage:[UIImage imageNamed:@"news2"]];
     });
@@ -350,13 +351,17 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (tableView == self.newsTableView)
+    if (tableView == self.eventTableView)
     {
-            return self.headlineNews.count;
+        return self.eventMutableArray.count;
+    }
+    else if (tableView == self.newsTableView)
+    {
+        return self.headlineNews.count;
     }
     else
     {
-        return self.eventMutableArray.count;
+        return 0;
     }
 }
 
@@ -376,15 +381,15 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         EventTableViewCell *eventTableViewCell = [tableView dequeueReusableCellWithIdentifier:@"EventCellID"];
         
         eventTableViewCell.eventTitleLabel.text = self.event.eventTitle;
-        eventTableViewCell.eventTitleLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:15];
+        eventTableViewCell.eventTitleLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:23];
         eventTableViewCell.eventTitleLabel.numberOfLines = 0;
         
-        eventTableViewCell.eventStartDate.text = [NSString stringWithFormat:@"%@",self.event.eventStartDate];
-        eventTableViewCell.eventStartDate.font = [UIFont fontWithName:@"Helvetica Neue" size:12];
+        eventTableViewCell.eventStartDate.text = [NSString stringWithFormat:@"%@",self.event.formattedEventStartDate];
+        eventTableViewCell.eventStartDate.font = [UIFont fontWithName:@"Helvetica Neue" size:15];
         eventTableViewCell.eventStartDate.numberOfLines = 0;
         
         eventTableViewCell.eventLocation.text = self.event.eventLocation;
-        eventTableViewCell.eventLocation.font = [UIFont fontWithName:@"Helvetica Neue" size:13];
+        eventTableViewCell.eventLocation.font = [UIFont fontWithName:@"Helvetica Neue" size:15];
         eventTableViewCell.eventLocation.numberOfLines = 0;
         
         return eventTableViewCell;
@@ -432,16 +437,22 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    News *news = [self.headlineNews objectAtIndex:indexPath.row];
-    NSString *headline = news.webTitle;
-    CGFloat width = 280;
-    UIFont *font = [UIFont systemFontOfSize:5];
-    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:headline attributes:@{NSFontAttributeName: font}];
-    CGRect rect = [attributedText boundingRectWithSize:(CGSize){width,CGFLOAT_MAX} options:NSStringDrawingUsesLineFragmentOrigin context:nil];
-    rect = CGRectInset(rect, -100, -65);
-    CGSize size = rect.size;
-    return size.height;
-    
+    if (tableView == self.newsTableView)
+    {
+        News *news = [self.headlineNews objectAtIndex:indexPath.row];
+        NSString *headline = news.webTitle;
+        CGFloat width = 280;
+        UIFont *font = [UIFont systemFontOfSize:5];
+        NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:headline attributes:@{NSFontAttributeName: font}];
+        CGRect rect = [attributedText boundingRectWithSize:(CGSize){width,CGFLOAT_MAX} options:NSStringDrawingUsesLineFragmentOrigin context:nil];
+        rect = CGRectInset(rect, -100, -65);
+        CGSize size = rect.size;
+        return size.height;
+    }
+    else
+    {
+        return 130;
+    }
 }
 
 #pragma mark - weather
