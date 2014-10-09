@@ -37,21 +37,25 @@
 
 -(void)requestInfoFromInstagram
 {
-    NSLog(@"requestInfoFromInstagram");
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/66/media/recent/?access_token=%@",self.accessToken];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
-    {
-        self.data = [[NSData alloc] initWithContentsOfURL:location];
-                                          
-        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:self.data options:NSJSONReadingAllowFragments error:&error];
-                                          
-        NSLog(@"responseDictionary %@", responseDictionary);
-    }];
-    
-    [task resume];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+       
+        NSLog(@"requestInfoFromInstagram");
+        
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSString *urlString = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/66/media/recent/?access_token=%@",self.accessToken];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
+          {
+              self.data = [[NSData alloc] initWithContentsOfURL:location];
+              
+              NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:self.data options:NSJSONReadingAllowFragments error:&error];
+              
+              NSLog(@"responseDictionary %@", responseDictionary);
+          }];
+        
+        [task resume];
+        
+    });
 }
 
 @end

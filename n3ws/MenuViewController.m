@@ -57,6 +57,7 @@
     self.menuTitles = @[@"Home", @"Headlines", @"Entertainment", @"Food", @"Travel"];
     
     self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.alwaysBounceVertical = NO;
 //    [self.tableView setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sidemenu"]]];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -76,7 +77,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
     
     cell.textLabel.text = [self.menuTitles objectAtIndex:indexPath.row];
-    cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:22];
+    cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:25];
     cell.textLabel.textColor = [UIColor colorWithRed:0.19 green:0.19 blue:0.19 alpha:1];
     cell.textLabel.highlightedTextColor = [UIColor colorWithRed:0.12 green:0.63 blue:0.87 alpha:1];
     

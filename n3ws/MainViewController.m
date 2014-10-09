@@ -42,7 +42,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 @property (strong, nonatomic) NSMutableArray *stockInfoMutableArray;
 
-@property (strong, nonatomic) IBOutlet UITableView *eventTableView;
+@property (strong, nonatomic) IBOutlet ANBlurredTableView *eventTableView;
 @property (strong, nonatomic) NSMutableArray *eventMutableArray;
 
 
@@ -326,15 +326,24 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         self.newsTableView.layer.borderWidth = 1.0;
         self.newsTableView.layer.borderColor = [UIColor colorWithWhite:0.5 alpha:1].CGColor;
         
+        self.eventTableView.layer.borderWidth = 1.0;
+        self.eventTableView.layer.borderColor = [UIColor colorWithWhite:0.5 alpha:1].CGColor;
+        
         NSAttributedString *refreshMessage = [[NSAttributedString alloc] initWithString:@"Pull down to get news update" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
         self.refreshNewsTable.attributedTitle = [[NSAttributedString alloc] initWithAttributedString:refreshMessage];
         
+    
+        [self.eventTableView setBlurTintColor:[UIColor colorWithWhite:0.11 alpha:0.1]];
+        [self.eventTableView setAnimateTintAlpha:YES];
+        [self.eventTableView setStartTintAlpha:0.65f];
+        [self.eventTableView setEndTintAlpha:0.75f];
+        [self.eventTableView setBackgroundImage:[UIImage imageNamed:@"sky"]];
         
         [self.newsTableView setBlurTintColor:[UIColor colorWithWhite:0.11 alpha:0.1]];
         [self.newsTableView setAnimateTintAlpha:YES];
         [self.newsTableView setStartTintAlpha:0.75f];
-        [self.newsTableView setEndTintAlpha:0.85f];
-        [self.newsTableView setBackgroundImage:[UIImage imageNamed:@"news2"]];
+        [self.newsTableView setEndTintAlpha:0.75f];
+        [self.newsTableView setBackgroundImage:[UIImage imageNamed:@"dew"]];
     });
     
     [self.refreshNewsTable addTarget:self action:@selector(updateNewsTable) forControlEvents:UIControlEventValueChanged];
@@ -380,16 +389,22 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         self.event = [self.eventMutableArray objectAtIndex:indexPath.row];
         EventTableViewCell *eventTableViewCell = [tableView dequeueReusableCellWithIdentifier:@"EventCellID"];
         
+        eventTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        eventTableViewCell.backgroundColor = [UIColor clearColor];
+        
         eventTableViewCell.eventTitleLabel.text = self.event.eventTitle;
+        eventTableViewCell.eventTitleLabel.textColor = [UIColor whiteColor];
         eventTableViewCell.eventTitleLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:23];
         eventTableViewCell.eventTitleLabel.numberOfLines = 0;
         
         eventTableViewCell.eventStartDate.text = [NSString stringWithFormat:@"%@",self.event.formattedEventStartDate];
-        eventTableViewCell.eventStartDate.font = [UIFont fontWithName:@"Helvetica Neue" size:15];
+        eventTableViewCell.eventStartDate.textColor = [UIColor whiteColor];
+        eventTableViewCell.eventStartDate.font = [UIFont fontWithName:@"Helvetica-Light" size:15];
         eventTableViewCell.eventStartDate.numberOfLines = 0;
         
         eventTableViewCell.eventLocation.text = self.event.eventLocation;
-        eventTableViewCell.eventLocation.font = [UIFont fontWithName:@"Helvetica Neue" size:15];
+        eventTableViewCell.eventLocation.textColor = [UIColor whiteColor];
+        eventTableViewCell.eventLocation.font = [UIFont fontWithName:@"Helvetica-Light" size:15];
         eventTableViewCell.eventLocation.numberOfLines = 0;
         
         return eventTableViewCell;
@@ -405,7 +420,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         cell.textLabel.numberOfLines = 0;
         cell.detailTextLabel.text = news.sectionName;
         cell.detailTextLabel.numberOfLines = 0;
-        cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:14];
+        cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:14];
         
         if ([news.sectionName isEqualToString:@"Business"])
         {
@@ -492,19 +507,20 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
              dispatch_async(dispatch_get_main_queue(), ^{
                  self.temperatureLabel.text = [NSString stringWithFormat:@"%@",self.weather.temperature_String];
                  self.temperatureLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:27];
+                 self.temperatureLabel.textAlignment = NSTextAlignmentRight;
                  
                  self.temperatureStatusLabel.text = self.weather.weatherStatus;
-                 self.temperatureStatusLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:20];
-                 [self.temperatureStatusLabel sizeToFit];
+                 self.temperatureStatusLabel.textAlignment = NSTextAlignmentRight;
+                 self.temperatureStatusLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:22];
                  
-                 [self settingTemperatureImageAnimation];
+                 [self settingTemperatureImage];
              });
          }
          
      }];
 }
 
--(void)settingTemperatureImageAnimation
+-(void)settingTemperatureImage
 {
     if ([self.weather.weatherStatus isEqualToString:@"Partly Cloudy"] || [self.weather.weatherStatus isEqualToString:@"Mostly Cloudy"] || [self.weather.weatherStatus isEqualToString:@"Scattered Clouds"])
     {
@@ -521,6 +537,10 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     else if ([self.weather.weatherStatus isEqualToString:@"Snow"] || [self.weather.weatherStatus isEqualToString:@"Snow Grains"] || [self.weather.weatherStatus isEqualToString:@"Snow Showers"] || [self.weather.weatherStatus isEqualToString:@"Snow Blowing Snow Mist"] || [self.weather.weatherStatus isEqualToString:@"Thunderstorms and Snow"])
     {
         self.temperatureImage.image = [UIImage imageNamed:@"snow"];
+    }
+    else if ([self.weather.weatherStatus isEqualToString:@"Haze"])
+    {
+        self.temperatureImage.image = [UIImage imageNamed:@"haze"];
     }
     else
     {
