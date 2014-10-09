@@ -73,35 +73,36 @@
     self.instagram = [self.instagramMutableArray objectAtIndex:indexPath.row];
     InstagramTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InstagramInfoCell"];
 
-    UIImage *imageFromInstagram = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.instagram.imagesURL]]];
-    CGSize resizeImage = CGSizeMake(320, 320);
-    UIGraphicsBeginImageContext(resizeImage);
-    [imageFromInstagram drawInRect:CGRectMake(0, 0, resizeImage.width, resizeImage.height)];
-    UIImage *resizedImageFromInstagram = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        UIImage *imageFromInstagram = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.instagram.imagesURL]]];
+        CGSize resizeImage = CGSizeMake(320, 320);
+        UIGraphicsBeginImageContext(resizeImage);
+        [imageFromInstagram drawInRect:CGRectMake(0, 0, resizeImage.width, resizeImage.height)];
+        UIImage *resizedImageFromInstagram = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
         
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        
-        cell.backgroundView = [[UIImageView alloc] initWithImage:resizedImageFromInstagram];
-        cell.instagramUsername.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
-        cell.instagramCaption.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
-        
-        cell.instagramUsername.text = [NSString stringWithFormat:@"@%@", self.instagram.username];
-        cell.instagramUsername.textColor = [UIColor whiteColor];
-        cell.instagramUsername.font = [UIFont fontWithName:@"Helvetica Neue" size:18];
-
-        cell.instagramCaption.text = [NSString stringWithFormat:@"%@",self.instagram.caption];
-        cell.instagramCaption.numberOfLines = 0;
-        cell.instagramCaption.textColor = [UIColor whiteColor];
-        cell.instagramCaption.font = [UIFont fontWithName:@"Helvetica Neue" size:16];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+            
+            cell.backgroundView = [[UIImageView alloc] initWithImage:resizedImageFromInstagram];
+            cell.instagramUsername.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
+            cell.instagramCaption.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
+            
+            cell.instagramUsername.text = [NSString stringWithFormat:@"@%@", self.instagram.username];
+            cell.instagramUsername.textColor = [UIColor whiteColor];
+            cell.instagramUsername.font = [UIFont fontWithName:@"Helvetica Neue" size:18];
+            
+            cell.instagramCaption.text = [NSString stringWithFormat:@"%@",self.instagram.caption];
+            cell.instagramCaption.numberOfLines = 0;
+            cell.instagramCaption.textColor = [UIColor whiteColor];
+            cell.instagramCaption.font = [UIFont fontWithName:@"Helvetica Neue" size:16];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        });
     });
-
     
     return cell;
 }
