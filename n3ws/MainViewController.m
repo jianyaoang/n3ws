@@ -44,6 +44,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 @property (strong, nonatomic) IBOutlet ANBlurredTableView *eventTableView;
 @property (strong, nonatomic) NSMutableArray *eventMutableArray;
+@property (strong, nonatomic) NSMutableArray *noEventMutableArray;
 
 @property BOOL isGuardianConnectionErrorShown;
 @property BOOL isConnectionErrorShown;
@@ -71,6 +72,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     self.headlineNews = [NSMutableArray new];
     self.stockInfoMutableArray = [NSMutableArray new];
     self.eventMutableArray = [NSMutableArray new];
+    self.noEventMutableArray = [NSMutableArray new];
     
     [self configureBarButtonItemAbility];
     [self configureANBlurredTableView];
@@ -132,6 +134,13 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     NSArray *calendarArray = [self.event.eventStore calendarsForEntityType:EKEntityTypeEvent];
     NSPredicate *fetchCalendarEvents = [self.event.eventStore predicateForEventsWithStartDate:[NSDate date] endDate:endDate calendars:calendarArray];
     NSArray *events = [self.event.eventStore eventsMatchingPredicate:fetchCalendarEvents];
+    
+    if (events.count == 0 )
+    {
+        NSString *noEventsForThisWeek = @"There are no events stated in your Calendar for this week";
+        
+        [self.noEventMutableArray addObject:noEventsForThisWeek];
+    }
     
     [self.eventMutableArray removeAllObjects];
     for (EKEvent *event in events)
@@ -373,7 +382,14 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 {
     if (tableView == self.eventTableView)
     {
+        if (self.eventMutableArray.count == 0)
+        {
+            return self.noEventMutableArray.count;
+        }
+        else
+        {
         return self.eventMutableArray.count;
+        }
     }
     else if (tableView == self.newsTableView)
     {
