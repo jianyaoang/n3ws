@@ -558,11 +558,11 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     }
     else if ([self.weather.weatherStatus isEqualToString:@"Haze"])
     {
-        self.temperatureImage.image = [UIImage imageNamed:@"haze"];
+        self.temperatureImage.image = [UIImage imageNamed:@"haze1"];
     }
     else
     {
-        self.temperatureImage.image = [UIImage imageNamed:@"defaultTemperature"];
+        self.temperatureImage.image = [UIImage imageNamed:@"defaultTemperatureImage"];
     }
 }
 

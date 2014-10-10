@@ -2,12 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "defaultTemperatureImage.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "haze.png"
+      "filename" : "defaultTemperatureImage-1.png"
     }
   ],
   "info" : {
