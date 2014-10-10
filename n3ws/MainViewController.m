@@ -488,6 +488,8 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
      {
          if (connectionError)
          {
+             NSLog(@"connection Error: %@", connectionError);
+             
              UIAlertView *connectionError = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Hmm..We are unable to detect your current location. Please check your settings or internet connectivity." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
              [connectionError show];
          }
@@ -544,7 +546,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     }
     else
     {
-        self.temperatureImage.image = [UIImage imageNamed:@"default"];
+        self.temperatureImage.image = [UIImage imageNamed:@"defaultTemperature"];
     }
 }
 
