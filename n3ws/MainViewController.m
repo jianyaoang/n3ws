@@ -570,7 +570,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 - (IBAction)onRefreshButtonPressed:(id)sender
 {
-    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     if (self.weather.userLatitudeCoordinate != 0 && self.weather.userLongitudeCoordinate != 0)
     {
         [self configureCLLocationManager];
@@ -579,6 +579,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     
     
     [self obtainNewsArticles];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 #pragma mark - segue
