@@ -195,7 +195,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7ll-We-wJV">
-                        <barButtonItem key="leftBarButtonItem" image="menu1" id="KES-dY-Cgv"/>
+                        <barButtonItem key="leftBarButtonItem" image="menu2" id="KES-dY-Cgv"/>
                     </navigationItem>
                     <connections>
                         <outlet property="instagramTableView" destination="WQb-5T-xge" id="MIj-ja-W8D"/>
@@ -370,7 +370,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="WcE-jx-06R">
-                        <barButtonItem key="leftBarButtonItem" image="menu" id="0dm-8T-aMi"/>
+                        <barButtonItem key="leftBarButtonItem" image="menu2" id="0dm-8T-aMi"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="w30-jy-up0">
                             <connections>
                                 <action selector="onRefreshButtonPressed:" destination="26k-f5-YLb" id="oRP-P7-fEA"/>
@@ -491,8 +491,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="menu" width="44" height="44"/>
-        <image name="menu1" width="22" height="22"/>
+        <image name="menu2" width="22" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

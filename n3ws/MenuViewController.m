@@ -103,6 +103,8 @@
             hvc = nav.viewControllers[0];
             
             hvc.section = self.section;
+            
+            hvc.title = @"Headlines";
         }
     }
     else if ([segue.identifier isEqualToString:@"Entertainment"])
@@ -112,6 +114,8 @@
             hvc = nav.viewControllers[0];
             
             hvc.section = self.section;
+            
+            hvc.title = @"Entertainment";
         }
     }
     else if ([segue.identifier isEqualToString:@"Food"])
@@ -121,6 +125,8 @@
             hvc = nav.viewControllers[0];
             
             hvc.section = self.section;
+            
+            hvc.title = @"Food";
         }
     }
     else if ([segue.identifier isEqualToString:@"Travel"])
@@ -130,6 +136,8 @@
             hvc = nav.viewControllers[0];
             
             hvc.section = self.section;
+            
+            hvc.title = @"Travel";
         }
     }
 }
