@@ -594,8 +594,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         [self configureCLLocationManager];
         [self obtainWeatherInfoForUserLocation];
     }
-    
-    
+    [self accessEventStore];
     [self obtainNewsArticles];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
