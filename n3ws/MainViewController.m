@@ -45,7 +45,8 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 @property (strong, nonatomic) IBOutlet ANBlurredTableView *eventTableView;
 @property (strong, nonatomic) NSMutableArray *eventMutableArray;
 
-
+@property BOOL isGuardianConnectionErrorShown;
+@property BOOL isConnectionErrorShown;
 
 @property (strong, nonatomic) Weather *weather;
 @property (strong, nonatomic) News *news;
@@ -61,6 +62,9 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     [super viewDidLoad];
     
     [self settingNavigationTitle];
+    
+    self.isGuardianConnectionErrorShown = NO;
+    self.isConnectionErrorShown = NO;
     
     self.weather = [Weather new];
     self.news = [News new];
@@ -283,7 +287,11 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                  NSLog(@"connectionError guardian news api: %@", connectionError);
                  
                  UIAlertView *guardianConnectionError = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Yikes! We are facing a server side issue. We are terribly sorry." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                 [guardianConnectionError show];
+                 if (self.isGuardianConnectionErrorShown == NO)
+                 {
+                    [guardianConnectionError show];
+                     self.isGuardianConnectionErrorShown = YES;
+                 }
              }
              else
              {
@@ -494,7 +502,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
              NSLog(@"connection Error: %@", connectionError);
              
              UIAlertView *connectionError = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Hmm..We are either facing a server side issue or we are unable to detect your location. Please configure your settings. Thanks!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-             [connectionError show];
+             
+             if (self.isConnectionErrorShown == NO)
+             {
+                 [connectionError show];
+                 self.isConnectionErrorShown = YES;
+             }
          }
          else
          {
