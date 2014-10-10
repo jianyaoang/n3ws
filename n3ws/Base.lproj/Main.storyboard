@@ -345,6 +345,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="WcE-jx-06R">
                         <barButtonItem key="leftBarButtonItem" image="menu" id="0dm-8T-aMi"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="w30-jy-up0">
+                            <connections>
+                                <action selector="onRefreshButtonPressed:" destination="26k-f5-YLb" id="oRP-P7-fEA"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="eventTableView" destination="eGl-ZJ-l1w" id="Pxh-Sf-PBa"/>
@@ -371,7 +376,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q1D-hP-gVz">
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q1D-hP-gVz">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -379,12 +384,20 @@
                                     <outlet property="delegate" destination="GXl-O1-1td" id="tOx-US-W23"/>
                                 </connections>
                             </webView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="18P-rq-Mpk">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="18P-rq-Mpk">
                                 <rect key="frame" x="150" y="264" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="SIP-Da-td4" firstAttribute="top" secondItem="q1D-hP-gVz" secondAttribute="bottom" id="30z-T6-Rwj"/>
+                            <constraint firstItem="q1D-hP-gVz" firstAttribute="leading" secondItem="gVc-e1-asX" secondAttribute="leading" id="Mwj-5h-Naz"/>
+                            <constraint firstItem="q1D-hP-gVz" firstAttribute="centerX" secondItem="18P-rq-Mpk" secondAttribute="centerX" id="Xau-Nw-jJ3"/>
+                            <constraint firstAttribute="trailing" secondItem="q1D-hP-gVz" secondAttribute="trailing" id="ZDD-PF-a5h"/>
+                            <constraint firstItem="SIP-Da-td4" firstAttribute="top" secondItem="18P-rq-Mpk" secondAttribute="bottom" constant="196" id="fBF-pj-gqr"/>
+                            <constraint firstItem="q1D-hP-gVz" firstAttribute="top" secondItem="gVc-e1-asX" secondAttribute="top" id="iay-cA-dRA"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6bN-Su-hVO"/>
                     <connections>

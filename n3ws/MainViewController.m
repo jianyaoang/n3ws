@@ -240,7 +240,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     
     [self obtainWeatherInfoForUserLocation];
     
-    [self.locationManager stopUpdatingLocation];
+   [self.locationManager stopUpdatingLocation];
 }
 
 #pragma mark - Time
@@ -280,7 +280,10 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
          {
              if (connectionError)
              {
-                 NSLog(@"%@", connectionError);
+                 NSLog(@"connectionError guardian news api: %@", connectionError);
+                 
+                 UIAlertView *guardianConnectionError = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Yikes! We are facing a server side issue. We are terribly sorry." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                 [guardianConnectionError show];
              }
              else
              {
@@ -490,7 +493,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
          {
              NSLog(@"connection Error: %@", connectionError);
              
-             UIAlertView *connectionError = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Hmm..We are unable to detect your current location. Please check your settings or internet connectivity." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+             UIAlertView *connectionError = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Hmm..We are either facing a server side issue or we are unable to detect your location. Please configure your settings. Thanks!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
              [connectionError show];
          }
          else
@@ -548,6 +551,21 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     {
         self.temperatureImage.image = [UIImage imageNamed:@"defaultTemperature"];
     }
+}
+
+#pragma mark - refresh mainVC
+
+- (IBAction)onRefreshButtonPressed:(id)sender
+{
+    
+    if (self.weather.userLatitudeCoordinate != 0 && self.weather.userLongitudeCoordinate != 0)
+    {
+        [self configureCLLocationManager];
+        [self obtainWeatherInfoForUserLocation];
+    }
+    
+    
+    [self obtainNewsArticles];
 }
 
 #pragma mark - segue
