@@ -11,6 +11,7 @@
 
 @interface Event : NSObject
 @property (strong, nonatomic) EKEventStore *eventStore;
+@property (strong, nonatomic) NSString *noEvents;
 @property (strong, nonatomic) NSString *eventTitle;
 @property (strong, nonatomic) NSString *eventLocation;
 @property (strong, nonatomic) NSString *eventNotes;

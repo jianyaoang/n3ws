@@ -137,9 +137,10 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     
     if (events.count == 0 )
     {
-        NSString *noEventsForThisWeek = @"There are no events stated in your Calendar for this week";
+        self.event = [Event new];
+        self.event.noEvents = @"There are no events stated in your Calendar for this week";
         
-        [self.noEventMutableArray addObject:noEventsForThisWeek];
+        [self.noEventMutableArray addObject:self.event];
     }
     
     [self.eventMutableArray removeAllObjects];
@@ -406,10 +407,11 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     if (tableView == self.eventTableView)
     {
         
-        if (self.eventMutableArray == nil)
+        if (self.eventMutableArray.count == 0)
         {
+            self.event = [self.noEventMutableArray objectAtIndex:indexPath.row];
             EventTableViewCell *eventTableViewCell = [tableView dequeueReusableCellWithIdentifier:@"EventCellID"];
-            eventTableViewCell.eventTitleLabel.text = @"Unable to retrieve Calendar info. Please configure Calendar settings";
+            eventTableViewCell.eventTitleLabel.text = self.event.noEvents;
             return eventTableViewCell;
         }
         
