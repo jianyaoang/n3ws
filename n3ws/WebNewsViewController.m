@@ -21,6 +21,19 @@
 {
     [super viewDidLoad];
     [self configureNewsWebView];
+    [self settingNavigationTitle];
+}
+
+#pragma mark - navigation Title
+-(void)settingNavigationTitle
+{
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 40)];
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = @"n3ws";
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:25];
+    [self.navigationItem setTitleView:titleLabel];
 }
 
 #pragma mark - configure news webview
