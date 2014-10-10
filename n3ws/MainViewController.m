@@ -34,6 +34,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 @property (strong, nonatomic) IBOutlet UILabel *temperatureLabel;
 @property (strong, nonatomic) IBOutlet UILabel *temperatureStatusLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *temperatureImage;
+@property (strong, nonatomic) IBOutlet UIImageView *wundergroundImage;
 
 @property (strong, nonatomic) NSArray *newsImages;
 @property (strong, nonatomic) NSMutableArray *headlineNews;
@@ -542,12 +543,14 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  self.temperatureLabel.text = [NSString stringWithFormat:@"%@",self.weather.temperature_String];
-                 self.temperatureLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:27];
+                 self.temperatureLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:35];
                  self.temperatureLabel.textAlignment = NSTextAlignmentRight;
                  
                  self.temperatureStatusLabel.text = self.weather.weatherStatus;
                  self.temperatureStatusLabel.textAlignment = NSTextAlignmentRight;
                  self.temperatureStatusLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:22];
+                 
+                 self.wundergroundImage.image = [UIImage imageNamed:@"wunderground"];
                  
                  [self settingTemperatureImage];
              });
