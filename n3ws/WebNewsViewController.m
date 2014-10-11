@@ -85,6 +85,7 @@
 {
     UIImage *guardianButtonImage = [UIImage imageNamed:@"guardianBlack"];
     [self.guardianButton setImage:guardianButtonImage forState:UIControlStateNormal];
+    [self.guardianButton setTintColor:[UIColor blackColor]];
 }
 
 @end

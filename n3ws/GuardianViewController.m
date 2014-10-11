@@ -10,6 +10,7 @@
 
 @interface GuardianViewController () <UIWebViewDelegate>
 @property (strong, nonatomic) IBOutlet UIWebView *guardianWebView;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @end
 
@@ -49,12 +50,16 @@
 
 -(void)webViewDidStartLoad:(UIWebView *)webView
 {
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.activityIndicator startAnimating];
+    });
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.activityIndicator stopAnimating];
+    });
 }
 
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
