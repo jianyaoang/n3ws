@@ -594,6 +594,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     if (self.weather.userLatitudeCoordinate != 0 && self.weather.userLongitudeCoordinate != 0)
     {
+        
         [self configureCLLocationManager];
         [self obtainWeatherInfoForUserLocation];
     }

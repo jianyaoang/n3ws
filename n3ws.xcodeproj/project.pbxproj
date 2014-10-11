@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		412E4FEA19E8EA39008ABEB6 /* GuardianViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412E4FE919E8EA39008ABEB6 /* GuardianViewController.m */; };
 		414364C419DE60B40023CB9A /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 414364C319DE60B40023CB9A /* Event.m */; };
 		414364C719DE6F5C0023CB9A /* EventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 414364C619DE6F5C0023CB9A /* EventTableViewCell.m */; };
 		4147C0B519D3C7AA002737C2 /* Weather.m in Sources */ = {isa = PBXBuildFile; fileRef = 4147C0B419D3C7AA002737C2 /* Weather.m */; };
@@ -52,6 +53,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		412E4FE819E8EA39008ABEB6 /* GuardianViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuardianViewController.h; sourceTree = "<group>"; };
+		412E4FE919E8EA39008ABEB6 /* GuardianViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuardianViewController.m; sourceTree = "<group>"; };
 		414364C219DE60B40023CB9A /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		414364C319DE60B40023CB9A /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		414364C519DE6F5C0023CB9A /* EventTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTableViewCell.h; sourceTree = "<group>"; };
@@ -279,6 +282,8 @@
 				41BD94C919D2A43000E785F1 /* HeadlinesViewController.m */,
 				418AB4A519DA75F800F16AE2 /* WebNewsViewController.h */,
 				418AB4A619DA75F800F16AE2 /* WebNewsViewController.m */,
+				412E4FE819E8EA39008ABEB6 /* GuardianViewController.h */,
+				412E4FE919E8EA39008ABEB6 /* GuardianViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -433,6 +438,7 @@
 				416121B619E3BAF200D2027B /* Section.m in Sources */,
 				416121B919E3DC0600D2027B /* InstagramTableViewCell.m in Sources */,
 				418AB4D219DACD4200F16AE2 /* ANBlurredTableView.m in Sources */,
+				412E4FEA19E8EA39008ABEB6 /* GuardianViewController.m in Sources */,
 				4151901E19D94E3F0058684D /* News.m in Sources */,
 				41FCCAC519D2C658000CEF62 /* Instagram.m in Sources */,
 			);

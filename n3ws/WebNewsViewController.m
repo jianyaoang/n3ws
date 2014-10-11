@@ -10,6 +10,7 @@
 
 @interface WebNewsViewController () <UIWebViewDelegate>
 
+@property (strong, nonatomic) IBOutlet UIButton *guardianButton;
 @property (strong, nonatomic) IBOutlet UIWebView *newsWebView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) NSURLRequest *request;
@@ -22,6 +23,7 @@
     [super viewDidLoad];
     [self configureNewsWebView];
     [self settingNavigationTitle];
+    [self configureGuardianButtonImage];
 }
 
 #pragma mark - navigation Title
@@ -78,5 +80,11 @@
 
 }
 
+#pragma mark - setting guardian button image
+-(void)configureGuardianButtonImage
+{
+    UIImage *guardianButtonImage = [UIImage imageNamed:@"guardianBlack"];
+    [self.guardianButton setImage:guardianButtonImage forState:UIControlStateNormal];
+}
 
 @end
