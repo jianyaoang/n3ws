@@ -55,6 +55,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 @property (strong, nonatomic) Stock *stock;
 @property (strong, nonatomic) Event *event;
 
+
+@property (strong, nonatomic) NSURL *newsURL;
+@property (strong, nonatomic) NSURLRequest *newsUrlRequest;
+
+@property (strong, nonatomic) NSURL *weatherURL;
+@property (strong, nonatomic) NSURLRequest *weatherUrlRequest;
 @end
 
 @implementation MainViewController
@@ -287,22 +293,31 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSString *urlString = [NSString stringWithFormat:@"http://content.guardianapis.com/search?page-size=15&section=world|technology|sport|business&api-key=cjj5325rskk27bs7s3nby8uc"];
         
-        NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+//        NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        self.newsURL = [NSURL new];
+        self.newsURL = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
-        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
+//        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        
+        self.newsUrlRequest = [NSURLRequest new];
+        self.newsUrlRequest = [NSURLRequest requestWithURL:self.newsURL cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30];
+//        self.newsUrlRequest = [NSURLRequest requestWithURL:self.newsURL];
+//        NSURLRequest *request = [NSURLRequest requestWithURL:self.newsURL];
+        
+        [NSURLConnection sendAsynchronousRequest:self.newsUrlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
          {
              if (connectionError)
              {
                  NSLog(@"connectionError guardian news api: %@", connectionError);
                  
-                 UIAlertView *guardianConnectionError = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Yikes! We are facing a server side issue. We are terribly sorry." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                 UIAlertView *guardianConnectionError = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Yikes! We are facing a server side issue. We are terribly sorry. Please hit the refresh button in a few moments." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
                  if (self.isGuardianConnectionErrorShown == NO)
                  {
                     [guardianConnectionError show];
                      self.isGuardianConnectionErrorShown = YES;
                  }
+                 
              }
              else
              {
@@ -510,17 +525,22 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 {
     NSString *urlString = [NSString stringWithFormat:@"http://api.wunderground.com/api/72540bc830392f65/geolookup/conditions/q/%f,%f.json", userLatitudeCoordinate, userLongitudeCoordinate];
     
-    NSURL *url = [NSURL URLWithString:urlString];
+//    NSURL *url = [NSURL URLWithString:urlString];
+    self.weatherURL = [NSURL new];
+    self.weatherURL = [NSURL URLWithString:urlString];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    self.weatherUrlRequest = [NSURLRequest new];
+    self.weatherUrlRequest = [NSURLRequest requestWithURL:self.weatherURL cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30];
+//    self.weatherUrlRequest = [NSURLRequest requestWithURL:self.weatherURL];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
+    [NSURLConnection sendAsynchronousRequest:self.weatherUrlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
      {
          if (connectionError)
          {
              NSLog(@"connection Error: %@", connectionError);
              
-             UIAlertView *connectionError = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Hmm..We are either facing a server side issue or we are unable to detect your location. Please configure your settings. Thanks!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+             UIAlertView *connectionError = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Hmm..We are either facing a server side issue or we are unable to detect your location. Please configure your settings, while we check with our partner's server. Thanks!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
              
              if (self.isConnectionErrorShown == NO)
              {
@@ -545,10 +565,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                  self.temperatureLabel.text = [NSString stringWithFormat:@"%@",self.weather.temperature_String];
                  self.temperatureLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:35];
                  self.temperatureLabel.textAlignment = NSTextAlignmentRight;
+
                  
                  self.temperatureStatusLabel.text = self.weather.weatherStatus;
                  self.temperatureStatusLabel.textAlignment = NSTextAlignmentRight;
                  self.temperatureStatusLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:22];
+
                  
                  self.wundergroundImage.image = [UIImage imageNamed:@"wunderground"];
                  
@@ -565,9 +587,10 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     {
         self.temperatureImage.image = [UIImage imageNamed:@"cloudy"];
     }
-    else if ([self.weather.weatherStatus isEqualToString:@"Drizzle"] || [self.weather.weatherStatus isEqualToString:@"Rain"] || [self.weather.weatherStatus isEqualToString:@"Thunderstorm"] || [self.weather.weatherStatus isEqualToString:@"Thuderstorms and Rain"] || [self.weather.weatherStatus isEqualToString:@"Rain Showers"] || [self.weather.weatherStatus isEqualToString:@"Rain mist"] || [self.weather.weatherStatus isEqualToString:@"Freezing Drizzle"] || [self.weather.weatherStatus isEqualToString:@"Freezing Rain"])
+    else if ([self.weather.weatherStatus isEqualToString:@"Light Rain"] || [self.weather.weatherStatus isEqualToString:@"Drizzle"] || [self.weather.weatherStatus isEqualToString:@"Rain"] || [self.weather.weatherStatus isEqualToString:@"Thunderstorm"] || [self.weather.weatherStatus isEqualToString:@"Thuderstorms and Rain"] || [self.weather.weatherStatus isEqualToString:@"Rain Showers"] || [self.weather.weatherStatus isEqualToString:@"Rain mist"] || [self.weather.weatherStatus isEqualToString:@"Freezing Drizzle"] || [self.weather.weatherStatus isEqualToString:@"Freezing Rain"])
     {
-        self.temperatureImage.image = [UIImage imageNamed:@"rain"];
+//        self.temperatureImage.image = [UIImage imageNamed:@"rain"];
+        self.temperatureImage.image = [UIImage imageNamed:@"raining"];
     }
     else if ([self.weather.weatherStatus isEqualToString:@"Clear"])
     {
