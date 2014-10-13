@@ -20,16 +20,9 @@
     SimpleAuth.configuration[@"instagram"] = @{@"client_id": clientID,
                                                SimpleAuthRedirectURIKey: @"http://idrawcode.tumblr.com"};
     
-    for (NSString* family in [UIFont familyNames])
-    {
-        NSLog(@"%@", family);
-        
-        for (NSString* name in [UIFont fontNamesForFamilyName: family])
-        {
-            NSLog(@"  %@", name);
-        }
-    }
     
+    NSURLCache *urlCache = [[NSURLCache alloc] initWithMemoryCapacity:4*1024*1024 diskCapacity:20*1024*1024 diskPath:nil];
+    [NSURLCache setSharedURLCache:urlCache];
     
     return YES;
 }

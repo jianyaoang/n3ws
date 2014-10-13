@@ -21,7 +21,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 #import "Stock.h"
 #import "Event.h"
 
-@interface MainViewController () <CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface MainViewController () <CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate, NSURLConnectionDataDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *menuBarButtonItem;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -61,6 +61,9 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 @property (strong, nonatomic) NSURL *weatherURL;
 @property (strong, nonatomic) NSURLRequest *weatherUrlRequest;
+@property (strong, nonatomic) NSURLConnection *connection;
+
+@property (strong, nonatomic) NSData *theSavedWeatherData;
 @end
 
 @implementation MainViewController
@@ -80,6 +83,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     self.stockInfoMutableArray = [NSMutableArray new];
     self.eventMutableArray = [NSMutableArray new];
     self.noEventMutableArray = [NSMutableArray new];
+    self.theSavedWeatherData = [NSData new];
     
     [self configureBarButtonItemAbility];
     [self configureANBlurredTableView];
@@ -305,6 +309,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 //        self.newsUrlRequest = [NSURLRequest requestWithURL:self.newsURL];
 //        NSURLRequest *request = [NSURLRequest requestWithURL:self.newsURL];
         
+        
         [NSURLConnection sendAsynchronousRequest:self.newsUrlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
          {
              if (connectionError)
@@ -515,6 +520,14 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     }
 }
 
+#pragma mark  - DocumentsDirectoryPath
+-(NSString*)documentsDirectoryPath
+{
+    NSArray *directories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, 0);
+    
+    return directories[0];
+}
+
 #pragma mark - weather
 -(void)obtainWeatherInfoForUserLocation
 {
@@ -547,34 +560,82 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                  [connectionError show];
                  self.isConnectionErrorShown = YES;
              }
-         }
-         else
-         {
+             
              NSError *error;
-             
-             NSDictionary *weatherForecastDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-             
-             NSDictionary *current_observation = weatherForecastDetails[@"current_observation"];
-             
+             NSDictionary *weatherTestForecastDetails = [NSJSONSerialization JSONObjectWithData:self.theSavedWeatherData options:NSJSONReadingAllowFragments error:&error];
+             NSDictionary *current_observation = weatherTestForecastDetails[@"current_observation"];
              self.weather = [Weather new];
              self.weather.locationWeatherCelcius = [current_observation[@"temp_c"]floatValue];
              self.weather.weatherStatus = [current_observation valueForKeyPath:@"weather"];
-             self.weather.temperature_String = [current_observation valueForKeyPath:@"temperature_string"];
+             
+             NSLog(@"currentObservation === %@",current_observation);
+             NSLog(@"self.weather.weatherStatus is now this ==%@", self.weather.weatherStatus);
+             NSLog(@"weatherTestForecastDetails is =======>>>>>>> %@", weatherTestForecastDetails);
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  self.temperatureLabel.text = [NSString stringWithFormat:@"%@",self.weather.temperature_String];
                  self.temperatureLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:35];
                  self.temperatureLabel.textAlignment = NSTextAlignmentRight;
-
+                 
                  
                  self.temperatureStatusLabel.text = self.weather.weatherStatus;
                  self.temperatureStatusLabel.textAlignment = NSTextAlignmentRight;
                  self.temperatureStatusLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:22];
-
+                 
                  
                  self.wundergroundImage.image = [UIImage imageNamed:@"wunderground"];
                  
                  [self settingTemperatureImage];
+             });
+
+         }
+         else
+         {
+             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                
+                 NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                 
+                 NSString *documentDirectory = [paths objectAtIndex:0];
+                 
+                 NSString *weatherDataPath = [documentDirectory stringByAppendingPathComponent:@"weatherData"];
+                 
+                 NSLog(@"weatherDataPath == %@", weatherDataPath);
+                 
+                 [data writeToFile:weatherDataPath atomically:YES];
+                 
+                 NSArray *myPathList = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                 NSString *mainPath = [myPathList objectAtIndex:0];
+                 mainPath = [mainPath stringByAppendingPathComponent:@"weatherData"];
+                 self.theSavedWeatherData = [NSData dataWithContentsOfFile:mainPath];
+             });
+             
+             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                 NSError *error;
+                 
+                 NSDictionary *weatherForecastDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                 
+                 NSDictionary *current_observation = weatherForecastDetails[@"current_observation"];
+                 
+                 self.weather = [Weather new];
+                 self.weather.locationWeatherCelcius = [current_observation[@"temp_c"]floatValue];
+                 self.weather.weatherStatus = [current_observation valueForKeyPath:@"weather"];
+                 self.weather.temperature_String = [current_observation valueForKeyPath:@"temperature_string"];
+                 
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     self.temperatureLabel.text = [NSString stringWithFormat:@"%@",self.weather.temperature_String];
+                     self.temperatureLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:35];
+                     self.temperatureLabel.textAlignment = NSTextAlignmentRight;
+                     
+                     
+                     self.temperatureStatusLabel.text = self.weather.weatherStatus;
+                     self.temperatureStatusLabel.textAlignment = NSTextAlignmentRight;
+                     self.temperatureStatusLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:22];
+                     
+                     
+                     self.wundergroundImage.image = [UIImage imageNamed:@"wunderground"];
+                     
+                     [self settingTemperatureImage];
+                 });
              });
          }
          
@@ -609,6 +670,13 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         self.temperatureImage.image = [UIImage imageNamed:@"defaultTemperatureImage"];
     }
 }
+
+#pragma mark - NSURLConnectionDelegate
+-(NSCachedURLResponse*)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
+{
+    return cachedResponse;
+}
+
 
 #pragma mark - refresh mainVC
 
