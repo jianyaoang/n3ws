@@ -303,19 +303,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSString *urlString = [NSString stringWithFormat:@"http://content.guardianapis.com/search?page-size=15&section=world|technology|sport|business&api-key=cjj5325rskk27bs7s3nby8uc"];
         
-//        NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        
         self.newsURL = [NSURL new];
         self.newsURL = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
-//        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        
         self.newsUrlRequest = [NSURLRequest new];
         self.newsUrlRequest = [NSURLRequest requestWithURL:self.newsURL cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30];
-//        self.newsUrlRequest = [NSURLRequest requestWithURL:self.newsURL];
-//        NSURLRequest *request = [NSURLRequest requestWithURL:self.newsURL];
-        
-        
+
         [NSURLConnection sendAsynchronousRequest:self.newsUrlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
          {
              if (connectionError)
@@ -323,18 +316,60 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                  NSLog(@"connectionError guardian news api: %@", connectionError);
                  
                  UIAlertView *guardianConnectionError = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Yikes! We are facing a server side issue. We are terribly sorry. Please hit the refresh button in a few moments." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                 
                  if (self.isGuardianConnectionErrorShown == NO)
                  {
                     [guardianConnectionError show];
                      self.isGuardianConnectionErrorShown = YES;
                  }
+                 
+                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                     
+                     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                     NSString *path = [[paths lastObject] stringByAppendingPathComponent:@"newsData"];
+                     
+                     if ([[NSFileManager defaultManager] fileExistsAtPath:path])
+                     {
+                         self.theSavedNewsData = [[NSData alloc] initWithContentsOfFile:path];
+                     }
+                     
+                     NSError *error;
+                     
+                     NSDictionary *newsDetails = [NSJSONSerialization JSONObjectWithData:self.theSavedNewsData options:NSJSONReadingAllowFragments error:&error];
+                     
+                     //getting headlines
+                     NSDictionary *headlines = [newsDetails valueForKeyPath:@"response.results"];
+                     
+                     [self.headlineNews removeAllObjects];
+                     for (NSDictionary *results in headlines)
+                     {
+                         News *news = [News new];
+                         news.webTitle = [results valueForKeyPath:@"webTitle"];
+                         news.sectionName = [results valueForKeyPath:@"sectionName"];
+                         news.webUrl = [results valueForKeyPath:@"webUrl"];
+                         
+                         [self.headlineNews addObject:news];
+                     }
+                     
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         
+                         [UIView transitionWithView:self.newsTableView duration:1.0f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
+                          {
+                              [self.newsTableView reloadData];
+                          } completion:nil];
+                         
+                         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                     });
+
+                 });
+                
              }
              else
              {
                  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                      
                      NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                     
+
                      NSString *documentDirectory = [paths lastObject];
                      
                      NSString *newsDataPath = [documentDirectory stringByAppendingPathComponent:@"newsData"];
@@ -343,43 +378,36 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                      
                      [data writeToFile:newsDataPath atomically:YES];
                      
-                     NSArray *myPathList = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                     NSString *mainPath = [myPathList lastObject];
-                     mainPath = [mainPath stringByAppendingPathComponent:@"newsData"];
-                     self.theSavedNewsData = [NSData dataWithContentsOfFile:mainPath];
+                     NSError *error;
                      
+                     NSDictionary *newsDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
                      
-                     NSLog(@"mainPath == %@", mainPath);
-                     NSLog(@"self.theSavedNewsData ~~~ %@", self.theSavedNewsData);
+                     //getting headlines
+                     NSDictionary *headlines = [newsDetails valueForKeyPath:@"response.results"];
+                     
+                     [self.headlineNews removeAllObjects];
+                     for (NSDictionary *results in headlines)
+                     {
+                         News *news = [News new];
+                         news.webTitle = [results valueForKeyPath:@"webTitle"];
+                         news.sectionName = [results valueForKeyPath:@"sectionName"];
+                         news.webUrl = [results valueForKeyPath:@"webUrl"];
+                         
+                         [self.headlineNews addObject:news];
+                     }
+                     
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         
+                         [UIView transitionWithView:self.newsTableView duration:1.0f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
+                          {
+                              [self.newsTableView reloadData];
+                          } completion:nil];
+                         
+                         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                     });
+                     
                 });
-                 
-                 NSError *error;
-                 
-                 NSDictionary *newsDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-                 
-                 //getting headlines
-                 NSDictionary *headlines = [newsDetails valueForKeyPath:@"response.results"];
-                 
-                 [self.headlineNews removeAllObjects];
-                 for (NSDictionary *results in headlines)
-                 {
-                     News *news = [News new];
-                     news.webTitle = [results valueForKeyPath:@"webTitle"];
-                     news.sectionName = [results valueForKeyPath:@"sectionName"];
-                     news.webUrl = [results valueForKeyPath:@"webUrl"];
-                     
-                     [self.headlineNews addObject:news];
-                 }
              }
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 
-                 [UIView transitionWithView:self.newsTableView duration:1.0f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
-                  {
-                      [self.newsTableView reloadData];
-                  } completion:nil];
-                 
-                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-             });
          }];
     });
 }
@@ -619,11 +647,9 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                  NSString *documentDirectory = [paths objectAtIndex:0];
                  
                  NSString *weatherDataPath = [documentDirectory stringByAppendingPathComponent:@"weatherData"];
-                 
-                 NSLog(@"weatherDataPath == %@", weatherDataPath);
-                 
+                
                  [data writeToFile:weatherDataPath atomically:YES];
-                 
+                                  
                  NSError *error;
                  
                  NSDictionary *weatherForecastDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
