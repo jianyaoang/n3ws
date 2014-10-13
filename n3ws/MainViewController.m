@@ -64,6 +64,9 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 @property (strong, nonatomic) NSURLConnection *connection;
 
 @property (strong, nonatomic) NSData *theSavedWeatherData;
+@property (strong, nonatomic) NSString *weatherDataFilePath;
+@property (strong, nonatomic) NSData *theSavedNewsData;
+@property (strong, nonatomic) NSString *newsDataFilePath;
 @end
 
 @implementation MainViewController
@@ -84,6 +87,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     self.eventMutableArray = [NSMutableArray new];
     self.noEventMutableArray = [NSMutableArray new];
     self.theSavedWeatherData = [NSData new];
+    self.theSavedNewsData = [NSData new];
     
     [self configureBarButtonItemAbility];
     [self configureANBlurredTableView];
@@ -94,6 +98,8 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     [self configureYahooFinanceAPI];
     [self accessEventStore];
 
+    
+    NSLog(@"viewDidLoad self.theSavedWeatherData is already saved! === %@",self.theSavedWeatherData);
 }
 
 #pragma mark - navigation Title
@@ -322,10 +328,31 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                     [guardianConnectionError show];
                      self.isGuardianConnectionErrorShown = YES;
                  }
-                 
              }
              else
              {
+                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                     
+                     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                     
+                     NSString *documentDirectory = [paths lastObject];
+                     
+                     NSString *newsDataPath = [documentDirectory stringByAppendingPathComponent:@"newsData"];
+                     
+                     NSLog(@"weatherDataPath == %@", newsDataPath);
+                     
+                     [data writeToFile:newsDataPath atomically:YES];
+                     
+                     NSArray *myPathList = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                     NSString *mainPath = [myPathList lastObject];
+                     mainPath = [mainPath stringByAppendingPathComponent:@"newsData"];
+                     self.theSavedNewsData = [NSData dataWithContentsOfFile:mainPath];
+                     
+                     
+                     NSLog(@"mainPath == %@", mainPath);
+                     NSLog(@"self.theSavedNewsData ~~~ %@", self.theSavedNewsData);
+                });
+                 
                  NSError *error;
                  
                  NSDictionary *newsDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
@@ -520,14 +547,6 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     }
 }
 
-#pragma mark  - DocumentsDirectoryPath
--(NSString*)documentsDirectoryPath
-{
-    NSArray *directories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, 0);
-    
-    return directories[0];
-}
-
 #pragma mark - weather
 -(void)obtainWeatherInfoForUserLocation
 {
@@ -561,6 +580,14 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                  self.isConnectionErrorShown = YES;
              }
              
+             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+             NSString *weatherPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"weatherData"];
+             
+             if ([[NSFileManager defaultManager] fileExistsAtPath:weatherPath])
+             {
+                 self.theSavedWeatherData = [[NSData alloc] initWithContentsOfFile:weatherPath];
+             }
+             
              NSError *error;
              NSDictionary *weatherTestForecastDetails = [NSJSONSerialization JSONObjectWithData:self.theSavedWeatherData options:NSJSONReadingAllowFragments error:&error];
              NSDictionary *current_observation = weatherTestForecastDetails[@"current_observation"];
@@ -568,20 +595,14 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
              self.weather.locationWeatherCelcius = [current_observation[@"temp_c"]floatValue];
              self.weather.weatherStatus = [current_observation valueForKeyPath:@"weather"];
              
-             NSLog(@"currentObservation === %@",current_observation);
-             NSLog(@"self.weather.weatherStatus is now this ==%@", self.weather.weatherStatus);
-             NSLog(@"weatherTestForecastDetails is =======>>>>>>> %@", weatherTestForecastDetails);
-             
              dispatch_async(dispatch_get_main_queue(), ^{
                  self.temperatureLabel.text = [NSString stringWithFormat:@"%@",self.weather.temperature_String];
                  self.temperatureLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:35];
                  self.temperatureLabel.textAlignment = NSTextAlignmentRight;
                  
-                 
                  self.temperatureStatusLabel.text = self.weather.weatherStatus;
                  self.temperatureStatusLabel.textAlignment = NSTextAlignmentRight;
                  self.temperatureStatusLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:22];
-                 
                  
                  self.wundergroundImage.image = [UIImage imageNamed:@"wunderground"];
                  
@@ -603,13 +624,6 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                  
                  [data writeToFile:weatherDataPath atomically:YES];
                  
-                 NSArray *myPathList = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                 NSString *mainPath = [myPathList objectAtIndex:0];
-                 mainPath = [mainPath stringByAppendingPathComponent:@"weatherData"];
-                 self.theSavedWeatherData = [NSData dataWithContentsOfFile:mainPath];
-             });
-             
-             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                  NSError *error;
                  
                  NSDictionary *weatherForecastDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
@@ -635,8 +649,8 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                      self.wundergroundImage.image = [UIImage imageNamed:@"wunderground"];
                      
                      [self settingTemperatureImage];
-                 });
              });
+            });
          }
          
      }];
