@@ -64,9 +64,8 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 @property (strong, nonatomic) NSURLConnection *connection;
 
 @property (strong, nonatomic) NSData *theSavedWeatherData;
-@property (strong, nonatomic) NSString *weatherDataFilePath;
 @property (strong, nonatomic) NSData *theSavedNewsData;
-@property (strong, nonatomic) NSString *newsDataFilePath;
+
 @end
 
 @implementation MainViewController
@@ -97,9 +96,6 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     [self obtainNewsArticles];
     [self configureYahooFinanceAPI];
     [self accessEventStore];
-
-    
-    NSLog(@"viewDidLoad self.theSavedWeatherData is already saved! === %@",self.theSavedWeatherData);
 }
 
 #pragma mark - navigation Title
@@ -585,14 +581,11 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 {
     NSString *urlString = [NSString stringWithFormat:@"http://api.wunderground.com/api/72540bc830392f65/geolookup/conditions/q/%f,%f.json", userLatitudeCoordinate, userLongitudeCoordinate];
     
-//    NSURL *url = [NSURL URLWithString:urlString];
     self.weatherURL = [NSURL new];
     self.weatherURL = [NSURL URLWithString:urlString];
     
-//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     self.weatherUrlRequest = [NSURLRequest new];
     self.weatherUrlRequest = [NSURLRequest requestWithURL:self.weatherURL cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30];
-//    self.weatherUrlRequest = [NSURLRequest requestWithURL:self.weatherURL];
     
     [NSURLConnection sendAsynchronousRequest:self.weatherUrlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
      {
@@ -649,7 +642,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                  NSString *weatherDataPath = [documentDirectory stringByAppendingPathComponent:@"weatherData"];
                 
                  [data writeToFile:weatherDataPath atomically:YES];
-                                  
+                 
                  NSError *error;
                  
                  NSDictionary *weatherForecastDetails = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
@@ -670,7 +663,6 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                      self.temperatureStatusLabel.text = self.weather.weatherStatus;
                      self.temperatureStatusLabel.textAlignment = NSTextAlignmentRight;
                      self.temperatureStatusLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:22];
-                     
                      
                      self.wundergroundImage.image = [UIImage imageNamed:@"wunderground"];
                      
