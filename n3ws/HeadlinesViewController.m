@@ -16,6 +16,7 @@
 @property (strong, nonatomic) UIImage *cellBackgroundImage;
 @property (strong, nonatomic) NSMutableArray *instagramMutableArray;
 @property (strong, nonatomic) NSData *data;
+@property BOOL isHeadlineConnectionErrorShown;
 @end
 
 @implementation HeadlinesViewController
@@ -28,6 +29,8 @@
     self.instagramMutableArray = [NSMutableArray new];
     [self retrieveAccounts];
     [self configureBarButtonItemAbility];
+    
+    self.isHeadlineConnectionErrorShown = NO;
     
 }
 
@@ -176,6 +179,14 @@
           if (error)
           {
               NSLog(@"%@", error);
+              
+              UIAlertView *headlineConnectionError = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Error with connectivity." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+              
+              if (self.isHeadlineConnectionErrorShown == NO)
+              {
+                  [headlineConnectionError show];
+                  self.isHeadlineConnectionErrorShown = YES;
+              }
           }
           else
           {
@@ -221,8 +232,5 @@
         
     });
 }
-
-
-
 
 @end

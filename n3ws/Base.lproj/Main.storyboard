@@ -209,7 +209,7 @@
         <!--Main View Controller-->
         <scene sceneID="IXz-9x-LSx">
             <objects>
-                <viewController id="26k-f5-YLb" customClass="MainViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainViewController" id="26k-f5-YLb" customClass="MainViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3Ei-tK-moK"/>
                         <viewControllerLayoutGuide type="bottom" id="uFf-Es-p5w"/>
@@ -380,7 +380,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="WcE-jx-06R">
-                        <barButtonItem key="leftBarButtonItem" image="menu2" id="0dm-8T-aMi"/>
+                        <barButtonItem key="leftBarButtonItem" image="menu2" id="NiK-52-Vtj"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="w30-jy-up0">
                             <connections>
                                 <action selector="onRefreshButtonPressed:" destination="26k-f5-YLb" id="oRP-P7-fEA"/>
@@ -389,7 +389,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="eventTableView" destination="eGl-ZJ-l1w" id="Pxh-Sf-PBa"/>
-                        <outlet property="menuBarButtonItem" destination="0dm-8T-aMi" id="aFj-uc-Uzo"/>
+                        <outlet property="menuBarButtonItem" destination="NiK-52-Vtj" id="Q7z-tG-4NU"/>
                         <outlet property="newsTableView" destination="5Ii-oP-9kE" id="F3c-BH-j0W"/>
                         <outlet property="temperatureImage" destination="E0B-M1-2Xk" id="VTE-l8-d52"/>
                         <outlet property="temperatureLabel" destination="0k7-Xh-hO6" id="JwH-ZF-Uz1"/>

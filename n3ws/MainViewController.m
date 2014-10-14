@@ -21,7 +21,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 #import "Stock.h"
 #import "Event.h"
 
-@interface MainViewController () <CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate, NSURLConnectionDataDelegate>
+@interface MainViewController () <CLLocationManagerDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, NSURLConnectionDataDelegate>
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *menuBarButtonItem;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -189,32 +189,32 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     NSURL *stockURL = [NSURL URLWithString:@"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22AAPL+MSFT%22)&format=json&env=store://datatables.org/alltableswithkeys"];
     NSURLRequest *request = [NSURLRequest requestWithURL:stockURL];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
-    {
-        if (connectionError)
-        {
-            NSLog(@"YQL Connection Error: %@",connectionError);
-        }
-        else
-        {
-            NSError *error;
-            NSDictionary *mainStockInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-            
-            NSDictionary *queryStock = [mainStockInfo valueForKeyPath:@"query.results.quote"];
-            
-            [self.stockInfoMutableArray removeAllObjects];
-            for (NSDictionary *companies in queryStock)
-            {
-                Stock *stock = [Stock new];
-                stock.name          = [companies valueForKeyPath:@"Name"];
-                stock.ask           = [companies valueForKeyPath:@"Ask"];
-                stock.symbol        = [companies valueForKeyPath:@"symbol"];
-                stock.percentChange = [companies valueForKeyPath:@"PercentChange"];
-                
-                [self.stockInfoMutableArray addObject:stock];
-            }
-            
-        }
-    }];
+     {
+         if (connectionError)
+         {
+             NSLog(@"YQL Connection Error: %@",connectionError);
+         }
+         else
+         {
+             NSError *error;
+             NSDictionary *mainStockInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+             
+             NSDictionary *queryStock = [mainStockInfo valueForKeyPath:@"query.results.quote"];
+             
+             [self.stockInfoMutableArray removeAllObjects];
+             for (NSDictionary *companies in queryStock)
+             {
+                 Stock *stock = [Stock new];
+                 stock.name          = [companies valueForKeyPath:@"Name"];
+                 stock.ask           = [companies valueForKeyPath:@"Ask"];
+                 stock.symbol        = [companies valueForKeyPath:@"symbol"];
+                 stock.percentChange = [companies valueForKeyPath:@"PercentChange"];
+                 
+                 [self.stockInfoMutableArray addObject:stock];
+             }
+             
+         }
+     }];
     
 }
 
@@ -236,13 +236,43 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 -(void)configureInstagram
 {
     Instagram *instagram = [Instagram new];
+//    [instagram accessingInstagram];
     
-    [instagram accessingInstagram];
-    
-    if (instagram.accessToken != nil)
+        //accessToken = 258596838.0389991.12fd1cd16e60428fa56c32c286d15d01
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        
+       instagram.accessToken = [userDefaults objectForKey:@"accessToken"];
+        
+        if (instagram.accessToken == nil)
+        {
+            [SimpleAuth authorize:@"instagram" completion:^(id responseObject, NSError *error)
+             {
+                 if (!error)
+                 {
+                     instagram.accessToken = responseObject[@"credentials"][@"token"];
+                     [userDefaults setObject:instagram.accessToken forKey:@"accessToken"];
+                     [userDefaults synchronize];
+                 }
+                 else
+                 {
+                     instagram.loginErrorMessage = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Please login to Instagram account in order to use the following feature: Headlines, Entertainment, Food, Travel" delegate:self cancelButtonTitle:@"No Instagram Account" otherButtonTitles: @"Login Instagram", nil];
+                     instagram.loginErrorMessage.delegate = self;
+                     instagram.loginErrorMessage.tag = 1;
+                     [instagram.loginErrorMessage show];
+                 }
+             }];
+        }
+}
+
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
     {
-        NSLog(@"it is not nil");
-        [instagram requestInfoFromInstagram]; 
+        [self.navigationItem setLeftBarButtonItem:nil];
+    }
+    else if (buttonIndex == 1)
+    {
+        [self configureInstagram];
     }
 }
 
@@ -267,28 +297,28 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     
     [self obtainWeatherInfoForUserLocation];
     
-   [self.locationManager stopUpdatingLocation];
+    [self.locationManager stopUpdatingLocation];
 }
 
 #pragma mark - Time
 -(void)obtainAndDisplayTime
 {
-//    NSDate *today = [NSDate date];
-//    
-//    NSDateFormatter *dateFormmatter = [NSDateFormatter new];
-//    [dateFormmatter setTimeStyle:NSDateFormatterShortStyle];
-//    [dateFormmatter setTimeZone:[NSTimeZone localTimeZone]];
-//    
-//    NSString *currentTime = [dateFormmatter stringFromDate:today];
-//    
-//    self.timeView.backgroundColor = [UIColor whiteColor];
-//    self.timeNumberLabel.text = currentTime;
-//    self.timeNumberLabel.textColor = [UIColor colorWithRed:0.11 green:0.60 blue:0.84 alpha:0.8];
-//    self.timeNumberLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:35];
-//    self.timeLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:20];
-//    self.timeLabel.textColor = [UIColor colorWithRed:0.11 green:0.60 blue:0.84 alpha:0.8];
-//    
-//    NSLog(@"this is the currentTime: %@",currentTime);
+    //    NSDate *today = [NSDate date];
+    //
+    //    NSDateFormatter *dateFormmatter = [NSDateFormatter new];
+    //    [dateFormmatter setTimeStyle:NSDateFormatterShortStyle];
+    //    [dateFormmatter setTimeZone:[NSTimeZone localTimeZone]];
+    //
+    //    NSString *currentTime = [dateFormmatter stringFromDate:today];
+    //
+    //    self.timeView.backgroundColor = [UIColor whiteColor];
+    //    self.timeNumberLabel.text = currentTime;
+    //    self.timeNumberLabel.textColor = [UIColor colorWithRed:0.11 green:0.60 blue:0.84 alpha:0.8];
+    //    self.timeNumberLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:35];
+    //    self.timeLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:20];
+    //    self.timeLabel.textColor = [UIColor colorWithRed:0.11 green:0.60 blue:0.84 alpha:0.8];
+    //
+    //    NSLog(@"this is the currentTime: %@",currentTime);
 }
 
 #pragma mark - news
@@ -304,7 +334,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         
         self.newsUrlRequest = [NSURLRequest new];
         self.newsUrlRequest = [NSURLRequest requestWithURL:self.newsURL cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30];
-
+        
         [NSURLConnection sendAsynchronousRequest:self.newsUrlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
          {
              if (connectionError)
@@ -315,7 +345,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                  
                  if (self.isGuardianConnectionErrorShown == NO)
                  {
-                    [guardianConnectionError show];
+                     [guardianConnectionError show];
                      self.isGuardianConnectionErrorShown = YES;
                  }
                  
@@ -356,16 +386,16 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                          
                          [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                      });
-
+                     
                  });
-                
+                 
              }
              else
              {
                  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                      
                      NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-
+                     
                      NSString *documentDirectory = [paths lastObject];
                      
                      NSString *newsDataPath = [documentDirectory stringByAppendingPathComponent:@"newsData"];
@@ -402,7 +432,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                          [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                      });
                      
-                });
+                 });
              }
          }];
     });
@@ -425,7 +455,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         NSAttributedString *refreshMessage = [[NSAttributedString alloc] initWithString:@"Pull down to get news update" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
         self.refreshNewsTable.attributedTitle = [[NSAttributedString alloc] initWithAttributedString:refreshMessage];
         
-    
+        
         [self.eventTableView setBlurTintColor:[UIColor colorWithWhite:0.11 alpha:0.1]];
         [self.eventTableView setAnimateTintAlpha:YES];
         [self.eventTableView setStartTintAlpha:0.65f];
@@ -461,7 +491,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
         }
         else
         {
-        return self.eventMutableArray.count;
+            return self.eventMutableArray.count;
         }
     }
     else if (tableView == self.newsTableView)
@@ -629,18 +659,18 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                  
                  [self settingTemperatureImage];
              });
-
+             
          }
          else
          {
              dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                
+                 
                  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                  
                  NSString *documentDirectory = [paths objectAtIndex:0];
                  
                  NSString *weatherDataPath = [documentDirectory stringByAppendingPathComponent:@"weatherData"];
-                
+                 
                  [data writeToFile:weatherDataPath atomically:YES];
                  
                  NSError *error;
@@ -667,8 +697,8 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                      self.wundergroundImage.image = [UIImage imageNamed:@"wunderground"];
                      
                      [self settingTemperatureImage];
+                 });
              });
-            });
          }
          
      }];
@@ -682,7 +712,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     }
     else if ([self.weather.weatherStatus isEqualToString:@"Light Rain"] || [self.weather.weatherStatus isEqualToString:@"Drizzle"] || [self.weather.weatherStatus isEqualToString:@"Rain"] || [self.weather.weatherStatus isEqualToString:@"Thunderstorm"] || [self.weather.weatherStatus isEqualToString:@"Thuderstorms and Rain"] || [self.weather.weatherStatus isEqualToString:@"Rain Showers"] || [self.weather.weatherStatus isEqualToString:@"Rain mist"] || [self.weather.weatherStatus isEqualToString:@"Freezing Drizzle"] || [self.weather.weatherStatus isEqualToString:@"Freezing Rain"])
     {
-//        self.temperatureImage.image = [UIImage imageNamed:@"rain"];
+        //        self.temperatureImage.image = [UIImage imageNamed:@"rain"];
         self.temperatureImage.image = [UIImage imageNamed:@"raining"];
     }
     else if ([self.weather.weatherStatus isEqualToString:@"Clear"])

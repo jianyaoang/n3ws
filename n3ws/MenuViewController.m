@@ -11,14 +11,18 @@
 #import "MainViewController.h"
 #import "Instagram.h"
 #import "Section.h"
+#import <SWRevealViewController.h>
 
-@interface MenuViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MenuViewController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *menuTitles;
 @property (strong, nonatomic) Instagram *instagram;
 @property (strong, nonatomic) NSData *data;
 
 @property (strong, nonatomic) Section *section;
+
+@property int rowNumber;
+
 @end
 
 @implementation MenuViewController
@@ -28,6 +32,11 @@
     [super viewDidLoad];
     
     UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sidemenu"]];
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.alwaysBounceVertical = NO;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.separatorColor = [UIColor clearColor];
+    
     [self.view addSubview:backgroundImage];
     [self.view sendSubviewToBack:backgroundImage];
     
@@ -36,6 +45,7 @@
     self.menuTitles = [NSArray new];
     
     [self settingUpMenuTable];
+//    [self configureInstagram];
     
 }
 
@@ -58,7 +68,6 @@
     
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.alwaysBounceVertical = NO;
-//    [self.tableView setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sidemenu"]]];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -73,6 +82,8 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *cellID = [self.menuTitles objectAtIndex:indexPath.row];
+    
+    self.rowNumber = indexPath.row;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
     
@@ -141,5 +152,54 @@
         }
     }
 }
+
+//#pragma mark - Instagram
+//-(void)configureInstagram
+//{
+//    Instagram *instagram = [Instagram new];
+//    
+//    //accessToken = 258596838.0389991.12fd1cd16e60428fa56c32c286d15d01
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    
+//    instagram.accessToken = [userDefaults objectForKey:@"accessToken"];
+//    
+//    if (instagram.accessToken == nil)
+//    {
+//
+//        [SimpleAuth authorize:@"instagram" completion:^(id responseObject, NSError *error)
+//         {
+//             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+//             
+//             if (!error)
+//             {
+//                 instagram.accessToken = responseObject[@"credentials"][@"token"];
+//                 [userDefaults setObject:instagram.accessToken forKey:@"accessToken"];
+//                 [userDefaults synchronize];
+//
+//                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+//             }
+//             else
+//             {
+//                 UIAlertView *loginErrorMessage = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Please login to Instagram account in order to use the following features: Headlines, Entertainment, Food, Travel" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Login Instagram", nil];
+//                 loginErrorMessage.delegate = self;
+//                 loginErrorMessage.tag = 1;
+//                 [loginErrorMessage show];
+//             }
+//         }];
+//    }
+//}
+//
+//-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+//{
+//    if (buttonIndex == 0)
+//    {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"DisableCertainCell" object:self];
+//    }
+//    else if (buttonIndex == 1)
+//    {
+//        [self configureInstagram];
+//    }
+//    
+//}
 
 @end
