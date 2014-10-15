@@ -266,13 +266,16 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0)
+    if (alertView.tag == 1)
     {
-        [self.navigationItem setLeftBarButtonItem:nil];
-    }
-    else if (buttonIndex == 1)
-    {
-        [self configureInstagram];
+        if (buttonIndex == 0)
+        {
+            [self.navigationItem setLeftBarButtonItem:nil];
+        }
+        else if (buttonIndex == 1)
+        {
+            [self configureInstagram];
+        }
     }
 }
 
