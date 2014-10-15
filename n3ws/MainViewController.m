@@ -151,7 +151,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     if (events.count == 0 )
     {
         self.event = [Event new];
-        self.event.noEvents = @"There are no events stated in your Calendar for this week";
+        self.event.noEvents = @"No events for this week";
         
         [self.noEventMutableArray addObject:self.event];
     }
@@ -284,6 +284,22 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
     [self.locationManager startUpdatingLocation];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.weather.userLatitudeCoordinate == 0 && self.weather.userLongitudeCoordinate == 00)
+        {
+            self.temperatureLabel.text = @"Unable to track location";
+            self.temperatureLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:25];
+            self.temperatureLabel.textAlignment = NSTextAlignmentRight;
+            
+            self.temperatureStatusLabel.text = @"Please configure location settings";
+            self.temperatureStatusLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:18];
+            self.temperatureStatusLabel.textAlignment = NSTextAlignmentRight;
+            
+            self.temperatureImage.image = [UIImage imageNamed:@"cloudy"];
+            self.wundergroundImage.image = [UIImage imageNamed:@"wunderground"];
+        }
+    });
 }
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
@@ -646,7 +662,8 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
              self.weather.locationWeatherCelcius = [current_observation[@"temp_c"]floatValue];
              self.weather.weatherStatus = [current_observation valueForKeyPath:@"weather"];
              
-             dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+             
                  self.temperatureLabel.text = [NSString stringWithFormat:@"%@",self.weather.temperature_String];
                  self.temperatureLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:35];
                  self.temperatureLabel.textAlignment = NSTextAlignmentRight;
@@ -685,6 +702,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                  self.weather.temperature_String = [current_observation valueForKeyPath:@"temperature_string"];
                  
                  dispatch_async(dispatch_get_main_queue(), ^{
+                     
                      self.temperatureLabel.text = [NSString stringWithFormat:@"%@",self.weather.temperature_String];
                      self.temperatureLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:35];
                      self.temperatureLabel.textAlignment = NSTextAlignmentRight;
@@ -712,7 +730,6 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     }
     else if ([self.weather.weatherStatus isEqualToString:@"Light Rain"] || [self.weather.weatherStatus isEqualToString:@"Drizzle"] || [self.weather.weatherStatus isEqualToString:@"Rain"] || [self.weather.weatherStatus isEqualToString:@"Thunderstorm"] || [self.weather.weatherStatus isEqualToString:@"Thuderstorms and Rain"] || [self.weather.weatherStatus isEqualToString:@"Rain Showers"] || [self.weather.weatherStatus isEqualToString:@"Rain mist"] || [self.weather.weatherStatus isEqualToString:@"Freezing Drizzle"] || [self.weather.weatherStatus isEqualToString:@"Freezing Rain"])
     {
-        //        self.temperatureImage.image = [UIImage imageNamed:@"rain"];
         self.temperatureImage.image = [UIImage imageNamed:@"raining"];
     }
     else if ([self.weather.weatherStatus isEqualToString:@"Clear"])
@@ -726,6 +743,19 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     else if ([self.weather.weatherStatus isEqualToString:@"Haze"])
     {
         self.temperatureImage.image = [UIImage imageNamed:@"haze1"];
+    }
+    else if (self.weather.userLatitudeCoordinate == 0 && self.weather.userLongitudeCoordinate == 0)
+    {
+        self.temperatureLabel.text = @"Unable to track location";
+        self.temperatureLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:25];
+        self.temperatureLabel.textAlignment = NSTextAlignmentRight;
+        
+        self.temperatureStatusLabel.text = @"Please configure location settings";
+        self.temperatureStatusLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:18];
+        self.temperatureStatusLabel.textAlignment = NSTextAlignmentRight;
+        
+        self.temperatureImage.image = [UIImage imageNamed:@"cloudy"];
+        self.wundergroundImage.image = [UIImage imageNamed:@"wunderground"];
     }
     else
     {
@@ -745,12 +775,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
 - (IBAction)onRefreshButtonPressed:(id)sender
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    if (self.weather.userLatitudeCoordinate != 0 && self.weather.userLongitudeCoordinate != 0)
-    {
-        
+//    if (self.weather.userLatitudeCoordinate != 0 && self.weather.userLongitudeCoordinate != 0)
+//    {
+    
         [self configureCLLocationManager];
         [self obtainWeatherInfoForUserLocation];
-    }
+//    }
     [self accessEventStore];
     [self obtainNewsArticles];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
