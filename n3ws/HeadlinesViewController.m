@@ -137,7 +137,7 @@
     }
     else if ([self.section.sectionName isEqualToString:@"Entertainment"])
     {
-        NSArray *entertainmentID = @[@"12996727", @"1907035"];
+        NSArray *entertainmentID = @[@"12996727",@"12411705"];
 
         [self extractingHeadlinesInstagramAccountData:entertainmentID];
     }
