@@ -533,6 +533,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
             self.event = [self.noEventMutableArray objectAtIndex:indexPath.row];
             EventTableViewCell *eventTableViewCell = [tableView dequeueReusableCellWithIdentifier:@"EventCellID"];
             eventTableViewCell.eventTitleLabel.text = self.event.noEvents;
+            eventTableViewCell.eventTitleLabel.textColor = [UIColor whiteColor];
+            eventTableViewCell.eventTitleLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:23];
+            eventTableViewCell.eventStartDate.text = @"";
+            eventTableViewCell.eventLocation.text = @"";
+            
+            eventTableViewCell.backgroundColor = [UIColor clearColor];
             return eventTableViewCell;
         }
         
