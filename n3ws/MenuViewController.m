@@ -83,8 +83,6 @@
 {
     NSString *cellID = [self.menuTitles objectAtIndex:indexPath.row];
     
-    self.rowNumber = indexPath.row;
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
     
     cell.textLabel.text = [self.menuTitles objectAtIndex:indexPath.row];
