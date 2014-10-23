@@ -10,29 +10,29 @@
 	<string>n3ws</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>DAF9CED5-DF0C-4C2D-A115-474DEFD733F9</key>
+		<key>A070725091AEC3DCA5E5ABCE7C3B68944679249C</key>
 		<string>https://github.com/jianyaoang/n3ws.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>n3ws.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>DAF9CED5-DF0C-4C2D-A115-474DEFD733F9</key>
+		<key>A070725091AEC3DCA5E5ABCE7C3B68944679249C</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/jianyaoang/n3ws.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>DAF9CED5-DF0C-4C2D-A115-474DEFD733F9</string>
+	<string>A070725091AEC3DCA5E5ABCE7C3B68944679249C</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>DAF9CED5-DF0C-4C2D-A115-474DEFD733F9</string>
+			<string>A070725091AEC3DCA5E5ABCE7C3B68944679249C</string>
 			<key>IDESourceControlWCCName</key>
 			<string>n3ws</string>
 		</dict>

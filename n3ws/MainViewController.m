@@ -136,7 +136,12 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     [gregorian setLocale:[NSLocale currentLocale]];
     
     NSDateComponents *nowComponents = [gregorian components:NSYearCalendarUnit | NSWeekCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate:today];
-    [nowComponents setWeekday:1];
+//    nowComponents.weekday = 1; // Sunday
+//    nowComponents.weekOfMonth = 1;
+//    nowComponents.hour = 7;
+//    nowComponents.minute = 0;
+//    nowComponents.second = 0;
+    
     [nowComponents setWeek:[nowComponents week] +1]; // get a week from today
     [nowComponents setHour:7]; //7am
     [nowComponents setMinute:0];
@@ -535,6 +540,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
             eventTableViewCell.eventTitleLabel.text = self.event.noEvents;
             eventTableViewCell.eventTitleLabel.textColor = [UIColor whiteColor];
             eventTableViewCell.eventTitleLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:23];
+            eventTableViewCell.eventTitleLabel.numberOfLines = 0;
             eventTableViewCell.eventStartDate.text = @"";
             eventTableViewCell.eventLocation.text = @"";
             
@@ -676,6 +682,11 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                  self.temperatureLabel.text = [NSString stringWithFormat:@"%@",self.weather.temperature_String];
                  self.temperatureLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:35];
                  self.temperatureLabel.textAlignment = NSTextAlignmentRight;
+                
+                if (self.weather.temperature_String == nil)
+                {
+                    self.temperatureStatusLabel.text = @"Hit refresh to get weather update";
+                }
                  
                  self.temperatureStatusLabel.text = self.weather.weatherStatus;
                  self.temperatureStatusLabel.textAlignment = NSTextAlignmentRight;
