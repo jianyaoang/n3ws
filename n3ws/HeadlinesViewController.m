@@ -9,6 +9,8 @@
 #import "HeadlinesViewController.h"
 #import <SWRevealViewController.h>
 #import "InstagramTableViewCell.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <SAMCache/SAMCache.h>
 
 @interface HeadlinesViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *menuBarButtonItem;
@@ -17,6 +19,8 @@
 @property (strong, nonatomic) NSMutableArray *instagramMutableArray;
 @property (strong, nonatomic) NSData *data;
 @property BOOL isHeadlineConnectionErrorShown;
+@property (strong, nonatomic) UIImageView *backgroundView;
+
 @end
 
 @implementation HeadlinesViewController
@@ -48,9 +52,7 @@
         [UIView transitionWithView:self.instagramTableView duration:1.0f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
          {
              [self.instagramTableView setSeparatorColor:[UIColor clearColor]];
-             
-             
-//             [self.instagramTableView reloadData];
+            
          } completion:nil];
     });
 }
@@ -79,18 +81,31 @@
     InstagramTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InstagramInfoCell"];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        UIImage *imageFromInstagram = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.instagram.imagesURL]]];
-        CGSize resizeImage = CGSizeMake(320, 320);
-        UIGraphicsBeginImageContext(resizeImage);
-        [imageFromInstagram drawInRect:CGRectMake(0, 0, resizeImage.width, resizeImage.height)];
-        UIImage *resizedImageFromInstagram = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
+        
+//        UIImage *imageFromInstagram = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.instagram.imagesURL]]];
+////        UIImage *imageFromInstagram = self.instagram.instagramImage;
+////        UIImage *imageFromInstagram = [[SAMCache sharedCache] imageForKey:self.instagram.imageID];
+//        CGSize resizeImage = CGSizeMake(320, 320);
+//        UIGraphicsBeginImageContext(resizeImage);
+//        [imageFromInstagram drawInRect:CGRectMake(0, 0, resizeImage.width, resizeImage.height)];
+//        UIImage *resizedImageFromInstagram = UIGraphicsGetImageFromCurrentImageContext();
+//        UIGraphicsEndImageContext();
+        
+        UIImage *resizedImageFromInstagram = [[SAMCache sharedCache] imageForKey:self.instagram.imageID];
+        if (resizedImageFromInstagram)
+        {
+            self.backgroundView.image = resizedImageFromInstagram;
+            cell.backgroundView = self.backgroundView;
+        }
+        
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             
+
             cell.backgroundView = [[UIImageView alloc] initWithImage:resizedImageFromInstagram];
+
             cell.instagramUsername.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
             cell.instagramCaption.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
             
@@ -201,6 +216,17 @@
                   Instagram *instagramAccount = [Instagram new];
                   instagramAccount.imagesURL = [accountInfo valueForKeyPath:@"images.standard_resolution.url"];
                   instagramAccount.username = [accountInfo valueForKeyPath:@"caption.from.username"];
+                  instagramAccount.imageID = [accountInfo valueForKeyPath:@"id"];
+                  
+                  NSData *imageURLData = [NSData dataWithContentsOfURL:[NSURL URLWithString:instagramAccount.imagesURL]];
+                  UIImage *imageFromInstagram = [[UIImage alloc] initWithData:imageURLData];
+                  CGSize resizeImage = CGSizeMake(320, 320);
+                  UIGraphicsBeginImageContext(resizeImage);
+                  [imageFromInstagram drawInRect:CGRectMake(0, 0, resizeImage.width, resizeImage.height)];
+                  instagramAccount.instagramImage = UIGraphicsGetImageFromCurrentImageContext();
+                  UIGraphicsEndImageContext();
+                  
+                  [[SAMCache sharedCache] setImage:instagramAccount.instagramImage forKey:instagramAccount.imageID];
                   
                   NSString *testInstagramCaptionLimit = [accountInfo valueForKeyPath:@"caption.text"];
                   NSRange stringRange = {0, MIN([testInstagramCaptionLimit length], 500)};
@@ -214,14 +240,11 @@
                   dispatch_async(dispatch_get_main_queue(), ^{
                       [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
                       
-
-                      [UIView transitionWithView:self.instagramTableView duration:2.0f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
+                      [UIView transitionWithView:self.instagramTableView duration:1.0f options:UIViewAnimationOptionTransitionCrossDissolve animations:^
                        {
                             [self.instagramTableView reloadData];
                            
                        } completion:nil];
-                      
-                      
                       
                       [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                   });

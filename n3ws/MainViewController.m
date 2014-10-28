@@ -728,6 +728,11 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
                      self.temperatureLabel.textAlignment = NSTextAlignmentRight;
                      
                      
+                     if (self.weather.temperature_String == nil)
+                     {
+                         self.temperatureStatusLabel.text = @"Hit refresh to get weather update";
+                     }
+                     
                      self.temperatureStatusLabel.text = self.weather.weatherStatus;
                      self.temperatureStatusLabel.textAlignment = NSTextAlignmentRight;
                      self.temperatureStatusLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:22];

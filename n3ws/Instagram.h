@@ -14,9 +14,11 @@
 @property (strong, nonatomic) NSString *caption;
 @property (strong, nonatomic) NSString *imagesURL;
 @property (strong, nonatomic) NSString *username;
+@property (strong, nonatomic) NSString *imageID;
 @property (strong, nonatomic) NSData *data;
 @property (strong, nonatomic) UIAlertView *loginErrorMessage;
 @property BOOL isAccessTokenNil;
+@property (strong, nonatomic) UIImage *instagramImage;
 
 -(void)accessingInstagram;
 //-(void)requestInfoFromInstagram;
