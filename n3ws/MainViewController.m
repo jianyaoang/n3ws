@@ -291,6 +291,15 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     self.locationManager.delegate = self;
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+    
+    NSString *version = [[UIDevice currentDevice] systemVersion];
+    float versionInt = [version floatValue];
+    
+    if (versionInt >= 8.0)
+    {
+        [self.locationManager requestAlwaysAuthorization];
+    }
+    
     [self.locationManager startUpdatingLocation];
     
     dispatch_async(dispatch_get_main_queue(), ^{
