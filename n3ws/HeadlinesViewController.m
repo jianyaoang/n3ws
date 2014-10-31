@@ -80,7 +80,7 @@
     self.instagram = [self.instagramMutableArray objectAtIndex:indexPath.row];
     InstagramTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"InstagramInfoCell"];
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         
 //        UIImage *imageFromInstagram = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.instagram.imagesURL]]];
 ////        UIImage *imageFromInstagram = self.instagram.instagramImage;
@@ -91,20 +91,20 @@
 //        UIImage *resizedImageFromInstagram = UIGraphicsGetImageFromCurrentImageContext();
 //        UIGraphicsEndImageContext();
         
-        UIImage *resizedImageFromInstagram = [[SAMCache sharedCache] imageForKey:self.instagram.imageID];
-        if (resizedImageFromInstagram)
-        {
-            self.backgroundView.image = resizedImageFromInstagram;
-            cell.backgroundView = self.backgroundView;
-        }
-        
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             
 
-            cell.backgroundView = [[UIImageView alloc] initWithImage:resizedImageFromInstagram];
+            UIImage *resizedImageFromInstagram = [[SAMCache sharedCache] imageForKey:self.instagram.imageID];
+            if (resizedImageFromInstagram)
+            {
+                //            self.backgroundView.image = resizedImageFromInstagram;
+                //            cell.backgroundView = self.backgroundView;
+                cell.backgroundView = [[UIImageView alloc] initWithImage:resizedImageFromInstagram];
+            }
+
 
             cell.instagramUsername.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
             cell.instagramCaption.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
