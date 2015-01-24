@@ -96,7 +96,6 @@
             
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             
-
             UIImage *resizedImageFromInstagram = [[SAMCache sharedCache] imageForKey:self.instagram.imageID];
             if (resizedImageFromInstagram)
             {
@@ -164,8 +163,8 @@
     }
     else if ([self.section.sectionName isEqualToString:@"Travel"])
     {
-        NSArray *travelID = @[@"12485872", @"217653153", @"11227616"];
-
+        NSArray *travelID = @[@"217653153",@"11227616" , @"116480"];
+//@"12485872"
         [self extractingHeadlinesInstagramAccountData:travelID];
     }
 }
@@ -196,7 +195,7 @@
               NSLog(@"%@", error);
               
               UIAlertView *headlineConnectionError = [[UIAlertView alloc] initWithTitle:@"n3ws" message:@"Error with connectivity." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-              
+              headlineConnectionError.tag = 3;
               if (self.isHeadlineConnectionErrorShown == NO)
               {
                   [headlineConnectionError show];
@@ -229,11 +228,21 @@
                   [[SAMCache sharedCache] setImage:instagramAccount.instagramImage forKey:instagramAccount.imageID];
                   
                   NSString *testInstagramCaptionLimit = [accountInfo valueForKeyPath:@"caption.text"];
-                  NSRange stringRange = {0, MIN([testInstagramCaptionLimit length], 500)};
-                  // adjust the range to include dependent chars
-                  stringRange = [testInstagramCaptionLimit rangeOfComposedCharacterSequencesForRange:stringRange];
-                  // Now you can create the short string
-                  instagramAccount.caption = [testInstagramCaptionLimit substringWithRange:stringRange];
+                  
+                  if (testInstagramCaptionLimit == (id)[NSNull null] || [testInstagramCaptionLimit isEqualToString:@""] || [testInstagramCaptionLimit isKindOfClass: [NSNull class]])
+                  {
+                      instagramAccount.caption = @"";
+                  }
+                  else
+                  {
+                      
+                      NSRange stringRange = {0, MIN([testInstagramCaptionLimit length], 500)};
+                      // adjust the range to include dependent chars
+                      stringRange = [testInstagramCaptionLimit rangeOfComposedCharacterSequencesForRange:stringRange];
+                      // Now you can create the short string
+                      instagramAccount.caption = [testInstagramCaptionLimit substringWithRange:stringRange];
+                  }
+
                   
                   [self.instagramMutableArray addObject:instagramAccount];
                   
@@ -255,5 +264,7 @@
         
     });
 }
+
+
 
 @end

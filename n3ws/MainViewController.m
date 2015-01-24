@@ -779,7 +779,7 @@ static NSString *const API = @"c1adfeb2360f7ffc9e7645ad1f32b378:16:69887340";
     {
         self.temperatureImage.image = [UIImage imageNamed:@"haze1"];
     }
-    else if (self.weather.userLatitudeCoordinate == 0 && self.weather.userLongitudeCoordinate == 0)
+    else if ((self.weather.userLatitudeCoordinate == 0 && self.weather.userLongitudeCoordinate == 0) || [self.weather.temperature_String isEqualToString:@"null"] || [self.weather.temperature_String isEqualToString:@"nil"])
     {
         self.temperatureLabel.text = @"Unable to track location";
         self.temperatureLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:25];
